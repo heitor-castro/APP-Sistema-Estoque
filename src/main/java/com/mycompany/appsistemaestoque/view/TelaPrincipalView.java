@@ -4,14 +4,37 @@
  */
 package com.mycompany.appsistemaestoque.view;
 
+import com.mycompany.appsistemaestoque.model.Produto;
+
 /**
  *
  * @author Henrique
  */
 public class TelaPrincipalView extends javax.swing.JFrame {
     
+    /*
+    ███╗   ██╗  ██████╗  ████████╗  █████╗  ███████╗
+    ████╗  ██║ ██╔═══██╗ ╚══██╔══╝ ██╔══██╗ ██╔════╝
+    ██╔██╗ ██║ ██║   ██║    ██║    ███████║ ███████╗
+    ██║╚██╗██║ ██║   ██║    ██║    ██╔══██║ ╚════██║
+    ██║ ╚████║ ╚██████╔╝    ██║    ██║  ██║ ███████║
+    ╚═╝  ╚═══╝  ╚═════╝     ╚═╝    ╚═╝  ╚═╝ ╚══════╝
+    Coloquei atributos auxiliares, usei de referência um projeto que eu msm tinha feito,
+    que por sua vez, usei um projeto do Dantutu de base, mas nao lembro qual é
+    */
+    //===============================LIMITADO SOMENTE A 20 PRODUTOS, PRECISA ATUALIZAR============================
+    static Produto produtos[] = new Produto[20];
+    static Integer index = 0;
+    
+    public Produto[] getProdutos(){
+        return produtos;
+    }
+    //atributos auxiliares ao projeto
+    public Integer getIndex(){
+        return index;
+    }
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaPrincipalView.class.getName());
-
+    
     /**
      * Creates new form TelaPrincipal
      */
@@ -35,7 +58,7 @@ public class TelaPrincipalView extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        jMIProduto = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
@@ -50,11 +73,11 @@ public class TelaPrincipalView extends javax.swing.JFrame {
         jdFundo.setLayout(jdFundoLayout);
         jdFundoLayout.setHorizontalGroup(
             jdFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 410, Short.MAX_VALUE)
+            .addGap(0, 466, Short.MAX_VALUE)
         );
         jdFundoLayout.setVerticalGroup(
             jdFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 308, Short.MAX_VALUE)
+            .addGap(0, 347, Short.MAX_VALUE)
         );
 
         jMenu1.setText("Arq");
@@ -77,8 +100,9 @@ public class TelaPrincipalView extends javax.swing.JFrame {
         jMenuItem2.setText("Tipo de Produto");
         jMenu2.add(jMenuItem2);
 
-        jMenuItem3.setText("Produto");
-        jMenu2.add(jMenuItem3);
+        jMIProduto.setText("Produto");
+        jMIProduto.addActionListener(this::jMIProdutoActionPerformed);
+        jMenu2.add(jMIProduto);
 
         jMenuItem4.setText("Nota de Entrada");
         jMenu2.add(jMenuItem4);
@@ -110,15 +134,15 @@ public class TelaPrincipalView extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jdFundo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jdFundo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jdFundo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jdFundo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -128,6 +152,13 @@ public class TelaPrincipalView extends javax.swing.JFrame {
         // TODO add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_jMenu4MouseClicked
+
+    private void jMIProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIProdutoActionPerformed
+        // TODO add your handling code here:
+        ProdutoView form = new ProdutoView(); //CRIA UMA NOVA INSTÂNCIA
+        jdFundo.add(form); // Adiciona a janela ao JDesktopPane da aplicação
+        form.setVisible(true);// Torna a janela visível para o usuário
+    }//GEN-LAST:event_jMIProdutoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -155,6 +186,7 @@ public class TelaPrincipalView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem jMIProduto;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -162,7 +194,6 @@ public class TelaPrincipalView extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
@@ -171,4 +202,11 @@ public class TelaPrincipalView extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JDesktopPane jdFundo;
     // End of variables declaration//GEN-END:variables
+    
+    //Inserir produtos
+    public void inserirProdutos(Integer id, String nome, Double valorUnitario, Integer tipoId, Integer quantidade){
+        Produto temp = new Produto(id, nome, valorUnitario, tipoId, quantidade);
+        produtos[index]=temp;
+        index++;
+    }
 }
