@@ -15,7 +15,7 @@ public class Produto {
     //PRODUTO[id, descrição, valorUnitario, TipoID, dataEntrada];
     //ATRIBUTOS
     private Integer id;
-    private String descricao;
+    private String nome;
     private Double valorUnitario;
     private Integer tipoId;
     private LocalDate dataEntrada;
@@ -23,14 +23,14 @@ public class Produto {
     //CONSTRUTORES
     public Produto(){
         id = 0;
-        descricao = "";
+        nome = "";
         valorUnitario = 0.0;
         tipoId = 0;
         dataEntrada = null;//
     }
-    public Produto(Integer id, String descricao, Double valorUnitario, Integer tipoId, LocalDate dataEntrada) {
+    public Produto(Integer id, String nome, Double valorUnitario, Integer tipoId, LocalDate dataEntrada) {
         this.id = id;
-        this.descricao = descricao;
+        this.nome = nome;
         this.valorUnitario = valorUnitario;
         this.tipoId = tipoId;
         this.dataEntrada = dataEntrada;
@@ -42,11 +42,11 @@ public class Produto {
     public void setId(Integer id) {
         this.id = id;
     }
-    public String getDescricao() {
-        return descricao;
+    public String getnome() {
+        return nome;
     }
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setnome(String nome) {
+        this.nome = nome;
     }
     public Double getValorUnitario() {
         return valorUnitario;
