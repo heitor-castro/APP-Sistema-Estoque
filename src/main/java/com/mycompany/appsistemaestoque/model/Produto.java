@@ -4,21 +4,18 @@
  */
 package com.mycompany.appsistemaestoque.model;
 
-import java.time.LocalDate;
 
 /**
  *
  * @author Heitor
  */
 public class Produto {
-
+    //Tirei a data de entrada e troquei descrição por nome
     //PRODUTO[id, descrição, valorUnitario, TipoID, dataEntrada];
     //ATRIBUTOS
-    private Integer id;
+    private Integer id, tipoId, quantidade;
     private String nome;
     private Double valorUnitario;
-    private Integer tipoId;
-    private LocalDate dataEntrada;
     
     //CONSTRUTORES
     public Produto(){
@@ -26,14 +23,14 @@ public class Produto {
         nome = "";
         valorUnitario = 0.0;
         tipoId = 0;
-        dataEntrada = null;//
+        quantidade = 0;
     }
-    public Produto(Integer id, String nome, Double valorUnitario, Integer tipoId, LocalDate dataEntrada) {
+    public Produto(Integer id, String nome, Double valorUnitario, Integer tipoId, Integer quantidade) {
         this.id = id;
         this.nome = nome;
         this.valorUnitario = valorUnitario;
         this.tipoId = tipoId;
-        this.dataEntrada = dataEntrada;
+        this.quantidade = quantidade;
     }
     //GETTERS AND SETTERS
     public Integer getId() {
@@ -60,12 +57,11 @@ public class Produto {
     public void setTipoId(Integer tipoId) {
         this.tipoId = tipoId;
     }
-    public LocalDate getDataEntrada() {
-        return dataEntrada;
+    public Integer getQuantidade() {
+        return tipoId;
     }
-    public void setDataEntrada(LocalDate dataEntrada) {
-        this.dataEntrada = dataEntrada;
+    public void setQuantidade(Integer quantidade) {
+        this.quantidade = quantidade;
     }
-    
     
 }
