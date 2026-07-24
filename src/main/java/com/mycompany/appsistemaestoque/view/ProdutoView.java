@@ -4,15 +4,18 @@
  */
 package com.mycompany.appsistemaestoque.view;
 
+import javax.swing.JOptionPane;
+
 /**
  *
- * @author Henrique
+ * @author heitor
  */
 public class ProdutoView extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form ProdutoView
+     * Creates new form NewJInternalFrame
      */
+    
     public ProdutoView() {
         initComponents();
     }
@@ -26,21 +29,158 @@ public class ProdutoView extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLNome = new javax.swing.JLabel();
+        jTFNome = new javax.swing.JTextField();
+        jBCadastrar = new javax.swing.JButton();
+        jLValorUnitario = new javax.swing.JLabel();
+        jLId = new javax.swing.JLabel();
+        jTFId = new javax.swing.JTextField();
+        jTFValorUnitario = new javax.swing.JTextField();
+        jLQuantidade = new javax.swing.JLabel();
+        jLTipo = new javax.swing.JLabel();
+        jTFQuantidade = new javax.swing.JTextField();
+        jTFTipo = new javax.swing.JTextField();
+
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
+        setTitle("Cadastro de Produto");
+
+        jLNome.setText("Nome");
+
+        jBCadastrar.setText("Cadastrar");
+        jBCadastrar.addActionListener(this::jBCadastrarActionPerformed);
+
+        jLValorUnitario.setText("Valor Unitário");
+
+        jLId.setText("Código");
+
+        jLQuantidade.setText("Quantidade");
+
+        jLTipo.setText("Tipo");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(241, 241, 241)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTFTipo, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jBCadastrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addComponent(jLQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(0, 0, Short.MAX_VALUE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jTFNome, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
+                                    .addComponent(jTFQuantidade, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLId, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTFId, javax.swing.GroupLayout.Alignment.LEADING))
+                                .addComponent(jLNome, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jTFValorUnitario, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLValorUnitario, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(0, 0, Short.MAX_VALUE)))
+                    .addContainerGap()))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(jLTipo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTFTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(196, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(30, 30, 30)
+                    .addComponent(jLId)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jTFId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(12, 12, 12)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLNome)
+                        .addComponent(jLValorUnitario))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jTFNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTFValorUnitario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jLQuantidade)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jTFQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(18, 18, 18)
+                    .addComponent(jBCadastrar)
+                    .addContainerGap(31, Short.MAX_VALUE)))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jBCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCadastrarActionPerformed
+        // TODO add your handling code here:
+        // ATRIBUTOS
+        TelaPrincipalView acoes = new TelaPrincipalView();
+        Integer id, tipoId, quantidade;
+        String nome;
+        double valorUnitario;
+        
+        //coleta do campo de texto para a variável
+        nome = jTFNome.getText();
+
+        // valida campos vazios antes de converter
+        if (nome.isEmpty() || jTFId.getText().isEmpty() || jTFTipo.getText().isEmpty()
+            || jTFQuantidade.getText().isEmpty() || jTFValorUnitario.getText().isEmpty()) {
+            
+            JOptionPane.showMessageDialog(this, "Todos os campos devem ser preenchidos!", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+            //converte os valores de string para seus repectivos formatos
+            valorUnitario = Double.parseDouble(jTFValorUnitario.getText());
+            id = Integer.parseInt(jTFId.getText());
+            tipoId = Integer.parseInt(jTFTipo.getText());
+            quantidade = Integer.parseInt(jTFQuantidade.getText());
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(rootPane, "Digite valores numéricos válidos!", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        acoes.inserirProdutos(id, nome, valorUnitario, tipoId, quantidade);
+        JOptionPane.showMessageDialog(rootPane, "Registro Inserido!");
+        //Limpar os campos
+        jTFNome.setText("");
+        jTFId.setText("");
+        jTFTipo.setText("");
+        jTFValorUnitario.setText("");
+        jTFQuantidade.setText("");
+        System.out.println("Index: "+acoes.index);
+    }//GEN-LAST:event_jBCadastrarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jBCadastrar;
+    private javax.swing.JLabel jLId;
+    private javax.swing.JLabel jLNome;
+    private javax.swing.JLabel jLQuantidade;
+    private javax.swing.JLabel jLTipo;
+    private javax.swing.JLabel jLValorUnitario;
+    private javax.swing.JTextField jTFId;
+    private javax.swing.JTextField jTFNome;
+    private javax.swing.JTextField jTFQuantidade;
+    private javax.swing.JTextField jTFTipo;
+    private javax.swing.JTextField jTFValorUnitario;
     // End of variables declaration//GEN-END:variables
 }
