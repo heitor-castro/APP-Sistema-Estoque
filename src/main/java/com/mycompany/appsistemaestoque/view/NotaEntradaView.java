@@ -4,9 +4,14 @@
  */
 package com.mycompany.appsistemaestoque.view;
 
+import com.mycompany.appsistemaestoque.model.NotaEntrada;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import javax.swing.JOptionPane;
+
 /**
  *
- * @author Henrique
+ * @author Caio
  */
 public class NotaEntradaView extends javax.swing.JInternalFrame {
 
@@ -26,21 +31,119 @@ public class NotaEntradaView extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLID = new javax.swing.JLabel();
+        jTID = new javax.swing.JTextField();
+        jLDataDeEntrada = new javax.swing.JLabel();
+        jTDataDeEntrada = new javax.swing.JTextField();
+        jLIDFornecedor = new javax.swing.JLabel();
+        jTIDFornecedor = new javax.swing.JTextField();
+        jLValorTotal = new javax.swing.JLabel();
+        jTValorTotal = new javax.swing.JTextField();
+        jBCadastrar = new javax.swing.JButton();
+
+        jLID.setText("ID:");
+
+        jLDataDeEntrada.setText("Data de Entrada:");
+
+        jLIDFornecedor.setText("ID do Fornecedor:");
+
+        jLValorTotal.setText("Valor Total:");
+
+        jBCadastrar.setText("Cadastrar");
+        jBCadastrar.addActionListener(this::jBCadastrarActionPerformed);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLID)
+                    .addComponent(jLDataDeEntrada)
+                    .addComponent(jLIDFornecedor)
+                    .addComponent(jLValorTotal))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jTIDFornecedor)
+                    .addComponent(jTDataDeEntrada)
+                    .addComponent(jTID)
+                    .addComponent(jTValorTotal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE))
+                .addGap(25, 25, 25))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(60, 60, 60)
+                .addComponent(jBCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(67, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLID)
+                    .addComponent(jTID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLDataDeEntrada)
+                    .addComponent(jTDataDeEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLIDFornecedor)
+                    .addComponent(jTIDFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLValorTotal)
+                    .addComponent(jTValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addComponent(jBCadastrar)
+                .addGap(30, 30, 30))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jBCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCadastrarActionPerformed
+        // TODO add your handling code here:
+        try {
+            //Instanciar o modelo NotaEntrada
+            NotaEntrada nota = new NotaEntrada();
+            
+            //Capturar e converter os dados da tela
+            nota.setId(Integer.parseInt(jTID.getText()));
+            
+            //Tratamento da Data: convertendo String para LocalDate
+            //Formato esperado: "2026-07-24"
+            nota.setDataEntrada(LocalDate.parse(jTDataDeEntrada.getText()));
+            
+            nota.setIdFornecedor(Integer.parseInt(jTIDFornecedor.getText()));
+            nota.setValorTotal(Double.parseDouble(jTValorTotal.getText()));
+            
+            //Inserir códigos referentes à atualização e conexão com banco
+            
+            //Mensagem de sucesso para o usuário
+            JOptionPane.showMessageDialog(this, "Nota de Entrada registrada com sucesso!");
+            
+            //Limpar campos
+            jTID.setText("");
+            jTDataDeEntrada.setText("");
+            jTIDFornecedor.setText("");
+            jTValorTotal.setText("");
+            
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Erro ao salvar: " + ex.getMessage());
+        }
+    }//GEN-LAST:event_jBCadastrarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jBCadastrar;
+    private javax.swing.JLabel jLDataDeEntrada;
+    private javax.swing.JLabel jLID;
+    private javax.swing.JLabel jLIDFornecedor;
+    private javax.swing.JLabel jLValorTotal;
+    private javax.swing.JTextField jTDataDeEntrada;
+    private javax.swing.JTextField jTID;
+    private javax.swing.JTextField jTIDFornecedor;
+    private javax.swing.JTextField jTValorTotal;
     // End of variables declaration//GEN-END:variables
 }
