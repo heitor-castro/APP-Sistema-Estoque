@@ -73,11 +73,11 @@ public class TelaPrincipalView extends javax.swing.JFrame {
         jdFundo.setLayout(jdFundoLayout);
         jdFundoLayout.setHorizontalGroup(
             jdFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 466, Short.MAX_VALUE)
+            .addGap(0, 659, Short.MAX_VALUE)
         );
         jdFundoLayout.setVerticalGroup(
             jdFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 347, Short.MAX_VALUE)
+            .addGap(0, 370, Short.MAX_VALUE)
         );
 
         jMenu1.setText("Arq");

@@ -1,7 +1,8 @@
+com\mycompany\appsistemaestoque\view\TelaPrincipalView$1.class
 com\mycompany\appsistemaestoque\view\TipoProdutoView.class
 com\mycompany\appsistemaestoque\model\NotaEntrada.class
 com\mycompany\appsistemaestoque\view\ProdutoView.class
-com\mycompany\appsistemaestoque\view\TelaPrincipal.class
+com\mycompany\appsistemaestoque\view\TelaPrincipalView.class
 com\mycompany\appsistemaestoque\dao\FornecedorDAO.class
 com\mycompany\appsistemaestoque\AppSistemaEstoque.class
 com\mycompany\appsistemaestoque\view\NotaEntradaView.class
