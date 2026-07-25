@@ -95,6 +95,7 @@ public class TelaPrincipalView extends javax.swing.JFrame {
         jMenu2.setText("Cadastro");
 
         jMenuItem1.setText("Fornecedor");
+        jMenuItem1.addActionListener(this::jMenuItem1ActionPerformed);
         jMenu2.add(jMenuItem1);
 
         jMenuItem2.setText("Tipo de Produto");
@@ -159,6 +160,13 @@ public class TelaPrincipalView extends javax.swing.JFrame {
         jdFundo.add(form); // Adiciona a janela ao JDesktopPane da aplicação
         form.setVisible(true);// Torna a janela visível para o usuário
     }//GEN-LAST:event_jMIProdutoActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        FornecedorView form = new FornecedorView(); //CRIA UMA NOVA INSTÂNCIA
+        jdFundo.add(form); // Adiciona a janela ao JDesktopPane da aplicação
+        form.setVisible(true);// Torna a janela visível para o usuário
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * @param args the command line arguments

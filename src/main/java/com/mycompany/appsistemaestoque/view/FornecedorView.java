@@ -4,6 +4,7 @@
  */
 package com.mycompany.appsistemaestoque.view;
 
+import com.mycompany.appsistemaestoque.dao.FornecedorDAO;
 import com.mycompany.appsistemaestoque.model.Fornecedor;
 import java.text.ParseException;
 import javax.swing.JOptionPane;
@@ -21,7 +22,7 @@ public class FornecedorView extends javax.swing.JInternalFrame {
     public FornecedorView() {
         initComponents();
          try {
-            MaskFormatter maskTelefone = new MaskFormatter("(##) ####-####");
+            MaskFormatter maskTelefone = new MaskFormatter("(##) #####-####");
             maskTelefone.setPlaceholderCharacter('_');
             jTTelefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(maskTelefone));
             
@@ -53,7 +54,11 @@ public class FornecedorView extends javax.swing.JInternalFrame {
         jTTelefone = new javax.swing.JFormattedTextField();
         jTCNPJ = new javax.swing.JFormattedTextField();
 
-        setTitle("Fornecedor");
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
+        setTitle("Cadastro de Fornecedor");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jLID.setText("ID:");
@@ -66,6 +71,19 @@ public class FornecedorView extends javax.swing.JInternalFrame {
 
         jBCadastrar.setText("Cadastrar");
         jBCadastrar.addActionListener(this::jBCadastrarActionPerformed);
+
+        try {
+            jTTelefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) #####-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        jTTelefone.setToolTipText("");
+
+        try {
+            jTCNPJ.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##.###.###/####-##  ")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -138,8 +156,16 @@ public class FornecedorView extends javax.swing.JInternalFrame {
         fornecedor.setCNPJ(jTCNPJ.getText().trim());
         fornecedor.setTelefone(jTTelefone.getText().trim());
         
-        // Aqui você chamaria o DAO para salvar no banco
-        // FornecedorDAO.salvar(fornecedor);
+        // Valida campos vazios antes de converter
+        if (jTCNPJ.getText().isEmpty() || jTID.getText().isEmpty() || jTRazaoSocial.getText().isEmpty()
+            || jTTelefone.getText().isEmpty()) {
+            
+            JOptionPane.showMessageDialog(this, "Todos os campos devem ser preenchidos!", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        // Salvar no banco
+        new FornecedorDAO().cadastrar(fornecedor);
         
         // Mostrar mensagem de sucesso
         JOptionPane.showMessageDialog(this, 
