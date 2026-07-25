@@ -98,6 +98,7 @@ public class TelaPrincipalView extends javax.swing.JFrame {
         jMenu2.add(jMenuItem1);
 
         jMenuItem2.setText("Tipo de Produto");
+        jMenuItem2.addActionListener(this::jMenuItem2ActionPerformed);
         jMenu2.add(jMenuItem2);
 
         jMIProduto.setText("Produto");
@@ -115,6 +116,7 @@ public class TelaPrincipalView extends javax.swing.JFrame {
         jMenu3.add(jMenuItem5);
 
         jMenuItem6.setText("Tipos de Produto");
+        jMenuItem6.addActionListener(this::jMenuItem6ActionPerformed);
         jMenu3.add(jMenuItem6);
 
         jMenuItem7.setText("Produtos");
@@ -159,6 +161,27 @@ public class TelaPrincipalView extends javax.swing.JFrame {
         jdFundo.add(form); // Adiciona a janela ao JDesktopPane da aplicação
         form.setVisible(true);// Torna a janela visível para o usuário
     }//GEN-LAST:event_jMIProdutoActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+        //Cria a instância da sua tela de Tipo de Produto
+        TipoProdutoView telaTipo = new TipoProdutoView();
+
+        // 2. Adiciona essa tela dentro do painel principal da área de trabalho
+        // ATENÇÃO: Confirme se o nome do seu painel de fundo é jDesktopPane1
+        jdFundo.add(telaTipo);
+
+        //Torna a tela visível para o usuário
+        telaTipo.setVisible(true);
+        
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        // TODO add your handling code here:
+        ConsultaTipoProdutoView telaConsulta = new ConsultaTipoProdutoView();
+        jdFundo.add(telaConsulta);
+        telaConsulta.setVisible(true);
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     /**
      * @param args the command line arguments

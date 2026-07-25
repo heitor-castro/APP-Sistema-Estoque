@@ -9,7 +9,9 @@ com\mycompany\appsistemaestoque\view\NotaEntradaView.class
 com\mycompany\appsistemaestoque\dao\NotaEntradaDAO.class
 com\mycompany\appsistemaestoque\conexao\Conexao.class
 com\mycompany\appsistemaestoque\model\ItemNotaEntrada.class
+com\mycompany\appsistemaestoque\view\ConsultaTipoProdutoView$1.class
 com\mycompany\appsistemaestoque\dao\ProdutoDAO.class
+com\mycompany\appsistemaestoque\view\ConsultaTipoProdutoView.class
 com\mycompany\appsistemaestoque\model\TipoProduto.class
 com\mycompany\appsistemaestoque\view\FornecedorView.class
 com\mycompany\appsistemaestoque\model\Fornecedor.class

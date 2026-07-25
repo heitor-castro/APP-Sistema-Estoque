@@ -1,53 +1,63 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.appsistemaestoque.dao;
+
 import com.mycompany.appsistemaestoque.model.TipoProduto;
+import com.mycompany.appsistemaestoque.conexao.Conexao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet; // Import novo para ler os dados do banco
 import java.sql.SQLException;
+import java.util.ArrayList;  // Import novo para criar a lista
+import java.util.List;       // Import novo para usar a lista
 import javax.swing.JOptionPane;
-
-/**
- *
- * @author Henrique
- */
 
 public class TipoProdutoDAO {
 
-    // Variável que vai segurar a conexão com o banco
     private Connection conexao;
 
-    // Construtor: Assim que o DAO é chamado, ele abre a conexão
+    // Construtor
     public TipoProdutoDAO() {
-        // this.conexao = new ConnectionFactory().getConnection();
+        this.conexao = Conexao.getConexao(); 
     }
 
-    // Método para salvar no banco
+    // 1. MÉTODO DE CADASTRAR
     public void cadastrar(TipoProduto obj) {
-        
-        // 1. O comando SQL para inserir dados (troque o nome da tabela se precisar)
-        String sql = "INSERT INTO tipo_produto (descricao) VALUES (?)";
+        String sql = "INSERT INTO tipo_prod (descricao) VALUES (?)";
 
         try {
-            // 2. Prepara o comando SQL para ser executado
             PreparedStatement stmt = conexao.prepareStatement(sql);
-
-            // 3. Troca o "?" do SQL pela descrição do objeto
             stmt.setString(1, obj.getDescricao());
-
-            // 4. Executa o comando no banco de dados
             stmt.execute();
-            
-            // 5. Fecha o comando e avisa que deu certo
             stmt.close();
+            
             JOptionPane.showMessageDialog(null, "Tipo de Produto cadastrado com sucesso!");
 
         } catch (SQLException erro) {
-            // Se der erro, mostra na tela
             JOptionPane.showMessageDialog(null, "Erro ao cadastrar: " + erro);
         }
     }
+
+    // 2. MÉTODO DE CONSULTAR
+    public List<TipoProduto> listarTipos() {
+        List<TipoProduto> lista = new ArrayList<>();
+        String sql = "SELECT * FROM tipo_prod";
+        
+        try {
+            PreparedStatement stmt = conexao.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+            
+            while (rs.next()) {
+                TipoProduto obj = new TipoProduto();
+                
+                obj.setId(rs.getInt("id"));
+                obj.setDescricao(rs.getString("descricao"));
+                
+                lista.add(obj);
+            }
+            return lista;
+            
+        } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(null, "Erro ao consultar: " + erro);
+            return null;
+        }
+    }
 }
-    

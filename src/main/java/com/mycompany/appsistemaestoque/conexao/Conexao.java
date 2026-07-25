@@ -29,14 +29,14 @@ public class Conexao {
         }
     }
     
-  
-    public static void main(String[] args) {
-        Connection con = getConexao();
+    //teste para ver se o banco de dados esta conectando
+    //public static void main(String[] args) {
+       // Connection con = getConexao();
         
-        if (con != null) {
-            JOptionPane.showMessageDialog(null, "Deu tudo certo! Banco conectado no AMPPS.");
-        } else {
-            JOptionPane.showMessageDialog(null, "Erro: Não foi possível conectar ao banco.");
-        }
-    }
+     //   if (con != null) {
+       //     JOptionPane.showMessageDialog(null, "Deu tudo certo! Banco conectado no AMPPS.");
+     //   } else {
+      //      JOptionPane.showMessageDialog(null, "Erro: Não foi possível conectar ao banco.");
+      //  }
+   // }
 }

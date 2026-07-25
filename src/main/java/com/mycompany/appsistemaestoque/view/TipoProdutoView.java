@@ -47,8 +47,15 @@ public class TipoProdutoView extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
+        setTitle("Tipo de Produto");
+
         jLabel1.setText("Descrição: ");
 
+        txtDescricao.setColumns(5);
         txtDescricao.addActionListener(this::txtDescricaoActionPerformed);
 
         btnCadastrar.setText("Cadastrar");
@@ -57,6 +64,7 @@ public class TipoProdutoView extends javax.swing.JInternalFrame {
         jLabel2.setText("ID:");
 
         txtId.setEditable(false);
+        txtId.setColumns(5);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -103,6 +111,12 @@ public class TipoProdutoView extends javax.swing.JInternalFrame {
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
         // TODO add your handling code here:
+        // Verifica se o campo está vazio (o .trim() tira os espaços em branco)
+    if (txtDescricao.getText().trim().isEmpty()) {
+    javax.swing.JOptionPane.showMessageDialog(this, "O campo de descrição não pode ficar em branco!", "Aviso", javax.swing.JOptionPane.WARNING_MESSAGE);
+    txtDescricao.requestFocus(); // Faz o cursor voltar a piscar no campo
+    return; // Para a execução do código aqui, impedindo que salve vazio
+}
     try {
     // 1. Cria o objeto
     com.mycompany.appsistemaestoque.model.TipoProduto obj = new com.mycompany.appsistemaestoque.model.TipoProduto();
