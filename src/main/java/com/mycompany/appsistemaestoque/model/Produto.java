@@ -10,11 +10,9 @@ package com.mycompany.appsistemaestoque.model;
  * @author Heitor
  */
 public class Produto {
-    //Tirei a data de entrada e troquei descrição por nome
-    //PRODUTO[id, descrição, valorUnitario, TipoID, dataEntrada];
     //ATRIBUTOS
     private Integer id, tipoId, quantidade;
-    private String nome;
+    private String nome;//DESCRIÇÃO
     private Double valorUnitario;
     
     //CONSTRUTORES
@@ -58,7 +56,7 @@ public class Produto {
         this.tipoId = tipoId;
     }
     public Integer getQuantidade() {
-        return tipoId;
+        return quantidade;
     }
     public void setQuantidade(Integer quantidade) {
         this.quantidade = quantidade;
