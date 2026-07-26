@@ -3,9 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.mycompany.appsistemaestoque.dao;
+import com.mycompany.appsistemaestoque.conexao.Conexao;
 import com.mycompany.appsistemaestoque.model.Produto;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -26,11 +26,7 @@ public class ProdutoDAO {
     //CONSTRUTORES
     //Assim que o DAO é chamado, ele abre a conexão
     public ProdutoDAO(){
-        try{
-            conexao = DriverManager.getConnection("jdbc:mysql://localhost:3306/sistema_estoque", "root", "");
-        }catch (SQLException erro){
-            JOptionPane.showMessageDialog(null, "Erro ao conectar ao banco: " + erro);
-        }
+        conexao = Conexao.getConexao();
     }
     //Método para salvar no banco
     public void cadastrarProduto(Produto obj){
