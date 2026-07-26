@@ -25,6 +25,8 @@ public class ConsultaProdutos extends javax.swing.JInternalFrame {
     public ConsultaProdutos() {
         initComponents();
         carregarTabela();
+        configurarMenuContexto();
+
     }
     //monta o cabeçalho e preenche a tabela com os dados do banco
     public void carregarTabela() {
