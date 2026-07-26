@@ -4,8 +4,10 @@
  */
 package com.mycompany.appsistemaestoque.view;
 
+import com.mycompany.appsistemaestoque.model.Produto;
+import com.mycompany.appsistemaestoque.dao.ProdutoDAO;
 import javax.swing.JOptionPane;
-
+//Commit: A classe foi modificade para se adequar à conexão com o banco de dados e não com o vetor de testes antes criado
 /**
  *
  * @author heitor
@@ -40,6 +42,8 @@ public class ProdutoView extends javax.swing.JInternalFrame {
         jLTipo = new javax.swing.JLabel();
         jTFQuantidade = new javax.swing.JTextField();
         jTFTipo = new javax.swing.JTextField();
+        jBAtualizarCadastro = new javax.swing.JButton();
+        jBExcluirCadastro = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -60,26 +64,40 @@ public class ProdutoView extends javax.swing.JInternalFrame {
 
         jLTipo.setText("Tipo");
 
+        jBAtualizarCadastro.setText("Atualizar Cadastro");
+        jBAtualizarCadastro.addActionListener(this::jBAtualizarCadastroActionPerformed);
+
+        jBExcluirCadastro.setText("Excluir Cadastro");
+        jBExcluirCadastro.addActionListener(this::jBExcluirCadastroActionPerformed);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(241, 241, 241)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTFTipo, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(241, 241, 241)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTFTipo, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jBCadastrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jBExcluirCadastro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jBAtualizarCadastro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jBCadastrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addComponent(jLQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(jLQuantidade, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -91,9 +109,8 @@ public class ProdutoView extends javax.swing.JInternalFrame {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jTFValorUnitario, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLValorUnitario, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(0, 0, Short.MAX_VALUE)))
-                    .addContainerGap()))
+                                .addComponent(jLValorUnitario, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -102,7 +119,13 @@ public class ProdutoView extends javax.swing.JInternalFrame {
                 .addComponent(jLTipo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTFTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(196, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 155, Short.MAX_VALUE)
+                .addComponent(jBExcluirCadastro)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jBAtualizarCadastro)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jBCadastrar)
+                .addGap(9, 9, 9))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(30, 30, 30)
@@ -121,9 +144,7 @@ public class ProdutoView extends javax.swing.JInternalFrame {
                     .addComponent(jLQuantidade)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(jTFQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(18, 18, 18)
-                    .addComponent(jBCadastrar)
-                    .addContainerGap(31, Short.MAX_VALUE)))
+                    .addContainerGap(137, Short.MAX_VALUE)))
         );
 
         pack();
@@ -131,8 +152,10 @@ public class ProdutoView extends javax.swing.JInternalFrame {
 
     private void jBCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCadastrarActionPerformed
         // TODO add your handling code here:
-        // ATRIBUTOS
-        TelaPrincipalView acoes = new TelaPrincipalView();
+        
+        //CADASTRAR
+        
+        // ATRIBUTOS        
         Integer id, tipoId, quantidade;
         String nome;
         double valorUnitario;
@@ -157,8 +180,13 @@ public class ProdutoView extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(rootPane, "Digite valores numéricos válidos!", "Erro", JOptionPane.ERROR_MESSAGE);
             return;
         }
+        //criar nova instância para produto
+        Produto produtoCadastrado = new Produto(id, nome, valorUnitario, tipoId, quantidade);
+        
+        //Salvar no banco
+        new ProdutoDAO().cadastrarProduto(produtoCadastrado);
 
-        acoes.inserirProdutos(id, nome, valorUnitario, tipoId, quantidade);
+        //Mostrar mensagem de sucesso
         JOptionPane.showMessageDialog(rootPane, "Registro Inserido!");
         //Limpar os campos
         jTFNome.setText("");
@@ -166,12 +194,80 @@ public class ProdutoView extends javax.swing.JInternalFrame {
         jTFTipo.setText("");
         jTFValorUnitario.setText("");
         jTFQuantidade.setText("");
-        System.out.println("Index: "+acoes.index);
     }//GEN-LAST:event_jBCadastrarActionPerformed
+
+    private void jBExcluirCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBExcluirCadastroActionPerformed
+    // TODO add your handling code here:
+        //1. exclusão só precisa do ID, então valida apenas esse campo
+        if (jTFId.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Informe o ID do produto a excluir!", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        Integer id;
+        try {
+            //2. converte o ID digitado
+            id = Integer.parseInt(jTFId.getText());
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(rootPane, "ID inválido!", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        //3. cria um Produto "vazio" só para carregar o ID (demais campos não importam para o DELETE)
+        Produto produtoExcluido = new Produto();
+        produtoExcluido.setId(id);
+
+        //4. envia a exclusão para o banco
+        new ProdutoDAO().excluirProduto(produtoExcluido);
+
+        //5. confirma para o usuário e limpa o campo
+        JOptionPane.showMessageDialog(rootPane, "Registro Excluído!");
+        jTFId.setText("");
+    }//GEN-LAST:event_jBExcluirCadastroActionPerformed
+
+    private void jBAtualizarCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAtualizarCadastroActionPerformed
+        // TODO add your handling code here:
+        // ATRIBUTOS
+        Integer id, tipoId, quantidade;
+        String nome;
+        double valorUnitario;
+
+        //1. coleta do campo de texto para a variável
+        nome = jTFNome.getText();
+
+        //2. valida campos vazios antes de converter
+        if (nome.isEmpty() || jTFId.getText().isEmpty() || jTFTipo.getText().isEmpty()
+            || jTFQuantidade.getText().isEmpty() || jTFValorUnitario.getText().isEmpty()) {
+
+            JOptionPane.showMessageDialog(this, "Todos os campos devem ser preenchidos!", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+            //3. converte os valores de string para seus respectivos formatos
+            valorUnitario = Double.parseDouble(jTFValorUnitario.getText());
+            id = Integer.parseInt(jTFId.getText());
+            tipoId = Integer.parseInt(jTFTipo.getText());
+            quantidade = Integer.parseInt(jTFQuantidade.getText());
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(rootPane, "Digite valores numéricos válidos!", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+    }
+
+    //4. cria a instância com os dados atualizados, usando o mesmo ID já existente
+    Produto produtoAlterado = new Produto(id, nome, valorUnitario, tipoId, quantidade);
+
+    //5. envia a atualização para o banco
+    new ProdutoDAO().alterarProduto(produtoAlterado);
+
+    //6. confirma para o usuário
+    JOptionPane.showMessageDialog(rootPane, "Registro Alterado!");
+    }//GEN-LAST:event_jBAtualizarCadastroActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jBAtualizarCadastro;
     private javax.swing.JButton jBCadastrar;
+    private javax.swing.JButton jBExcluirCadastro;
     private javax.swing.JLabel jLId;
     private javax.swing.JLabel jLNome;
     private javax.swing.JLabel jLQuantidade;
