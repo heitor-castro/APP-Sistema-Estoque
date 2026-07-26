@@ -112,40 +112,30 @@ public class ConsultaTipoProdutoView extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-    // TODO add your handling code here:                             
-    // 1. Verifica se alguma linha foi selecionada
-    int linhaSelecionada = jTable1.getSelectedRow();
-
-    if (linhaSelecionada == -1) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Selecione um item na tabela!");
-        return;
-    }
-
-    // 2. Pega o ID da coluna 0
-    int id = (int) jTable1.getValueAt(linhaSelecionada, 0);
-
-    // 3. Pede confirmação antes de apagar
-    int opcao = javax.swing.JOptionPane.showConfirmDialog(this, "Deseja realmente excluir?", "Aviso", javax.swing.JOptionPane.YES_NO_OPTION);
-
-    // 4. Se confirmar, exclui no banco
-    if (opcao == javax.swing.JOptionPane.YES_OPTION) {
+    // TODO add your handling code here:                                                                  
+        // 1. Descobre qual linha o usuário selecionou na tabela
+        int linhaSelecionada = jTable1.getSelectedRow();
+        
+        if (linhaSelecionada == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Selecione um tipo para excluir!", "Aviso", javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        // 2. Pega o ID da tabela (supondo que o ID esteja na coluna 0)
+        int idTipo = Integer.parseInt(jTable1.getValueAt(linhaSelecionada, 0).toString());
+        
+        // 3. Chama o DAO
         com.mycompany.appsistemaestoque.dao.TipoProdutoDAO dao = new com.mycompany.appsistemaestoque.dao.TipoProdutoDAO();
         
-        // AQUI ESTÁ A CORREÇÃO: Criamos o objeto TipoProduto para passar para o DAO
-        com.mycompany.appsistemaestoque.model.TipoProduto obj = new com.mycompany.appsistemaestoque.model.TipoProduto();
-        obj.setId(id);
-        
-        try {
-            dao.excluir(obj); // Agora passamos o objeto 'obj' ao invés do 'id'
+        // O "if" abaixo garante que a mensagem de sucesso SÓ APARECE se o excluir retornar TRUE
+        if (dao.excluir(idTipo)) {
             javax.swing.JOptionPane.showMessageDialog(this, "Excluído com sucesso!");
-            
-            // Atualiza a tabela na tela logo após excluir
+            // Se você tiver um método para recarregar a tabela, chame ele aqui:
             // preencherTabela(); 
-        } catch (Exception e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Erro ao excluir: " + e.getMessage());
         }
-    }
-
+        // Se retornar false (porque tem produtos vinculados), o DAO já deu o aviso amarelo 
+        // e este bloco abaixo é ignorado, logo, a mensagem azul de sucesso NUNCA vai aparecer!
+    
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

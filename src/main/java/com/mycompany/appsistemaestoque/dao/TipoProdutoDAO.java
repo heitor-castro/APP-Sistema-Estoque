@@ -61,38 +61,36 @@ public class TipoProdutoDAO {
         }
     }
     // 3. MÉTODO DE EXCLUIR
-    public void excluir(TipoProduto obj) {
-        String sql = "DELETE FROM tipo_prod WHERE id = ?";
-
+    public boolean excluir(int idTipo) {
         try {
-            PreparedStatement stmt = conexao.prepareStatement(sql);
-            stmt.setInt(1, obj.getId());
-            
-            stmt.execute();
-            stmt.close();
-            
-        } catch (SQLException erro) {
-            JOptionPane.showMessageDialog(null, "Erro no banco ao excluir: " + erro);
+            // 1. Verifica se existem produtos vinculados
+            String sqlVerifica = "SELECT COUNT(*) FROM produto WHERE tipo_id = ?";
+            PreparedStatement stmtVerifica = conexao.prepareStatement(sqlVerifica);
+            stmtVerifica.setInt(1, idTipo);
+            ResultSet rs = stmtVerifica.executeQuery();
+
+            if (rs.next() && rs.getInt(1) > 0) {
+                javax.swing.JOptionPane.showMessageDialog(null, 
+                    "Não é possível excluir este tipo, pois existem produtos cadastrados nele!", 
+                    "Aviso", javax.swing.JOptionPane.WARNING_MESSAGE);
+                return false; 
+            }
+
+            // 2. Se não houver produtos, executa o DELETE
+            String sqlDelete = "DELETE FROM tipo_prod WHERE id = ?";
+            PreparedStatement stmtDelete = conexao.prepareStatement(sqlDelete);
+            stmtDelete.setInt(1, idTipo);
+            stmtDelete.execute();
+            stmtDelete.close();
+
+            return true; 
+
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(null, "Erro ao excluir o tipo de produto: " + e.getMessage());
+            return false;
         }
     }
-
-    // 4. MÉTODO DE ALTERAR
-    public void alterar(TipoProduto obj) {
-        String sql = "UPDATE tipo_prod SET descricao = ? WHERE id = ?";
-
-        try {
-            PreparedStatement stmt = conexao.prepareStatement(sql);
-            stmt.setString(1, obj.getDescricao());
-            stmt.setInt(2, obj.getId());
-            
-            stmt.execute();
-            stmt.close();
-            
-            JOptionPane.showMessageDialog(null, "Tipo de Produto alterado com sucesso!");
-        } catch (SQLException erro) {
-            JOptionPane.showMessageDialog(null, "Erro no banco ao alterar: " + erro);
-        }
-    }
+    
     // 5. MÉTODO DE BUSCAR POR ID (Necessário para preencher a tela ao alterar)
     public TipoProduto buscarPorId(int id) {
         TipoProduto obj = new TipoProduto();
@@ -114,5 +112,20 @@ public class TipoProdutoDAO {
         }
         
         return obj;
+    }
+    public void alterar(TipoProduto tp) {
+        String sql = "UPDATE tipo_prod SET descricao = ? WHERE id = ?";
+        
+        try {
+            PreparedStatement stmt = conexao.prepareStatement(sql);
+            stmt.setString(1, tp.getDescricao());
+            stmt.setInt(2, tp.getId());
+            
+            stmt.execute();
+            stmt.close();
+            
+        } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(null, "Erro ao alterar: " + erro);
+        }
     }
 }
