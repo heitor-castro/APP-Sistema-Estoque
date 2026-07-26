@@ -4,6 +4,7 @@
  */
 package com.mycompany.appsistemaestoque.view;
 
+
 import com.mycompany.appsistemaestoque.dao.TipoProdutoDAO;
 import com.mycompany.appsistemaestoque.model.TipoProduto;
 
@@ -48,6 +49,8 @@ public class ConsultaTipoProdutoView extends javax.swing.JInternalFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -76,22 +79,95 @@ public class ConsultaTipoProdutoView extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
+        jButton1.setText("Alterar");
+        jButton1.addActionListener(this::jButton1ActionPerformed);
+
+        jButton2.setText("Excluir");
+        jButton2.addActionListener(this::jButton2ActionPerformed);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 459, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(100, 100, 100)
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton2)
+                .addGap(95, 95, 95))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
+                .addGap(22, 22, 22))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    // TODO add your handling code here:                                                                  
+        // 1. Descobre qual linha o usuário selecionou na tabela
+        int linhaSelecionada = jTable1.getSelectedRow();
+        
+        if (linhaSelecionada == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Selecione um tipo para excluir!", "Aviso", javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        // 2. Pega o ID da tabela (supondo que o ID esteja na coluna 0)
+        int idTipo = Integer.parseInt(jTable1.getValueAt(linhaSelecionada, 0).toString());
+        
+        // 3. Chama o DAO
+        com.mycompany.appsistemaestoque.dao.TipoProdutoDAO dao = new com.mycompany.appsistemaestoque.dao.TipoProdutoDAO();
+        
+        // O "if" abaixo garante que a mensagem de sucesso SÓ APARECE se o excluir retornar TRUE
+        if (dao.excluir(idTipo)) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Excluído com sucesso!");
+            // Se você tiver um método para recarregar a tabela, chame ele aqui:
+            // preencherTabela(); 
+        }
+        // Se retornar false (porque tem produtos vinculados), o DAO já deu o aviso amarelo 
+        // e este bloco abaixo é ignorado, logo, a mensagem azul de sucesso NUNCA vai aparecer!
+    
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:                                                                       
+        int linhaSelecionada = jTable1.getSelectedRow();
+
+        if (linhaSelecionada == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Selecione um item na tabela para alterar!");
+            return;
+        }
+
+        // Isso garante que o número saia da tabela do jeito certo
+        String idString = jTable1.getValueAt(linhaSelecionada, 0).toString();
+        int idSelecionado = Integer.parseInt(idString);
+        
+        try {
+            // Chama a tela de edição e envia o número certinho
+            TipoProdutoView telaAlterar = new TipoProdutoView(idSelecionado); 
+            
+            this.getParent().add(telaAlterar);
+            telaAlterar.setVisible(true);
+            this.dispose(); // Fecha a tela da tabela
+            
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Erro: " + e.getMessage());
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables

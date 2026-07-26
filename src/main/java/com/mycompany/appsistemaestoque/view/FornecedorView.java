@@ -103,6 +103,8 @@ public class FornecedorView extends javax.swing.JInternalFrame {
         }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        
+    }
     private void jBCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCadastrarActionPerformed
         // TODO add your handling code here:
         try {

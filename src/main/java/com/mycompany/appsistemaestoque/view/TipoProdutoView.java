@@ -16,6 +16,26 @@ public class TipoProdutoView extends javax.swing.JInternalFrame {
     public TipoProdutoView() {
         initComponents();
     }
+    // Variável para guardar o ID que está sendo alterado
+    public int idAlteracao = 0; 
+
+    // NOVO Construtor que recebe o ID
+    public TipoProdutoView(int id) {
+        initComponents();
+        this.idAlteracao = id; // Guarda o ID para quando clicar em "Salvar"
+        
+        try {
+            com.mycompany.appsistemaestoque.dao.TipoProdutoDAO dao = new com.mycompany.appsistemaestoque.dao.TipoProdutoDAO();
+            com.mycompany.appsistemaestoque.model.TipoProduto tp = dao.buscarPorId(id);
+            
+            
+            txtDescricao.setText(tp.getDescricao()); 
+            
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Erro ao carregar dados: " + e.getMessage());
+        }
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -106,34 +126,73 @@ public class TipoProdutoView extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtDescricaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDescricaoActionPerformed
-        // TODO add your handling code here:
+        // TODO add your handling code here:                                             
+        try {
+            com.mycompany.appsistemaestoque.model.TipoProduto tp = new com.mycompany.appsistemaestoque.model.TipoProduto();
+            
+            //jTextField1 se a sua caixinha de texto tiver outro nome
+            tp.setDescricao(txtDescricao.getText()); 
+            
+            com.mycompany.appsistemaestoque.dao.TipoProdutoDAO dao = new com.mycompany.appsistemaestoque.dao.TipoProdutoDAO();
+            
+            // AQUI É O SEGREDO: Verifica a variável idAlteracao
+            if (this.idAlteracao == 0) {
+                // Se a variável for 0, é porque não veio de uma tabela. É cadastro novo!
+                dao.cadastrar(tp);
+            } else {
+                // Se a variável tiver um número (ex: 12), o sistema entra aqui e ALTERA!
+                tp.setId(this.idAlteracao); 
+                dao.alterar(tp);
+                
+                // Limpa o ID para não causar problemas no futuro
+                this.idAlteracao = 0; 
+            }
+            
+            txtDescricao.setText(""); // Limpa o campo
+            
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Erro ao salvar os dados: " + e.getMessage());
+        }
+    
     }//GEN-LAST:event_txtDescricaoActionPerformed
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
-        // TODO add your handling code here:
+        // TODO add your handling code here:                                
         // Verifica se o campo está vazio (o .trim() tira os espaços em branco)
-    if (txtDescricao.getText().trim().isEmpty()) {
-    javax.swing.JOptionPane.showMessageDialog(this, "O campo de descrição não pode ficar em branco!", "Aviso", javax.swing.JOptionPane.WARNING_MESSAGE);
-    txtDescricao.requestFocus(); // Faz o cursor voltar a piscar no campo
-    return; // Para a execução do código aqui, impedindo que salve vazio
-}
-    try {
-    // 1. Cria o objeto
-    com.mycompany.appsistemaestoque.model.TipoProduto obj = new com.mycompany.appsistemaestoque.model.TipoProduto();
+        if (txtDescricao.getText().trim().isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "O campo de descrição não pode ficar em branco!", "Aviso", javax.swing.JOptionPane.WARNING_MESSAGE);
+            txtDescricao.requestFocus(); // Faz o cursor voltar a piscar no campo
+            return; // Para a execução do código aqui, impedindo que salve vazio
+        }
+        
+        try {
+            com.mycompany.appsistemaestoque.model.TipoProduto tp = new com.mycompany.appsistemaestoque.model.TipoProduto();
             
-    // 2. Pega o que foi digitado na tela
-    obj.setDescricao(txtDescricao.getText());
+            // Pega o que foi digitado na tela
+            tp.setDescricao(txtDescricao.getText()); 
             
-    // 3. Salva no banco usando o DAO
-    com.mycompany.appsistemaestoque.dao.TipoProdutoDAO dao = new com.mycompany.appsistemaestoque.dao.TipoProdutoDAO();
-    dao.cadastrar(obj);
+            com.mycompany.appsistemaestoque.dao.TipoProdutoDAO dao = new com.mycompany.appsistemaestoque.dao.TipoProdutoDAO();
             
-    // 4. Limpa o campo da tela
-    txtDescricao.setText("");
+            // AQUI É O SEGREDO: Verifica a variável idAlteracao
+            if (this.idAlteracao == 0) {
+                // Se a variável for 0, é porque não veio de uma tabela. É cadastro novo!
+                dao.cadastrar(tp);
+                javax.swing.JOptionPane.showMessageDialog(this, "Cadastrado com sucesso!");
+            } else {
+                // Se a variável tiver um número, o sistema entra aqui e ALTERA!
+                tp.setId(this.idAlteracao); 
+                dao.alterar(tp);
+                javax.swing.JOptionPane.showMessageDialog(this, "Alterado com sucesso!");
+                
+                // Limpa o ID para não causar problemas no futuro
+                this.idAlteracao = 0; 
+            }
             
-} catch (Exception erro) {
-    javax.swing.JOptionPane.showMessageDialog(null, "Aconteceu um erro: " + erro);
-}
+            txtDescricao.setText(""); // Limpa o campo
+            
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Erro ao salvar os dados: " + e.getMessage());
+        }
     
     }//GEN-LAST:event_btnCadastrarActionPerformed
 

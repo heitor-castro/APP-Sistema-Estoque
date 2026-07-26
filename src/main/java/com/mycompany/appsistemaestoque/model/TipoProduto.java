@@ -35,6 +35,7 @@ public class TipoProduto {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
+    //End
     
     // Esse método ajuda a mostrar apenas o nome do tipo de produto nas telas (ex: ComboBox)
     @Override
