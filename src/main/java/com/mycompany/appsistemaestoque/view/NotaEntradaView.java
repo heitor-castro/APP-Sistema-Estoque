@@ -41,6 +41,12 @@ public class NotaEntradaView extends javax.swing.JInternalFrame {
         jTValorTotal = new javax.swing.JTextField();
         jBCadastrar = new javax.swing.JButton();
 
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
+        setTitle("Cadastro de Nota de Entrada");
+
         jLID.setText("ID:");
 
         jLDataDeEntrada.setText("Data de Entrada:");
