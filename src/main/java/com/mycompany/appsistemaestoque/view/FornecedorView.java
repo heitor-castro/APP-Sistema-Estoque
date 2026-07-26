@@ -16,6 +16,7 @@ import javax.swing.text.MaskFormatter;
  */
 public class FornecedorView extends javax.swing.JInternalFrame {
 
+    private boolean modoEdicao = false;
     /**
      * Creates new form FornecedorView
      */
@@ -33,6 +34,22 @@ public class FornecedorView extends javax.swing.JInternalFrame {
         } catch (ParseException ex) {
             ex.printStackTrace();
         }
+    }
+     public FornecedorView(Fornecedor fornecedorParaEditar) {
+        this(); // reaproveita o construtor de cima (initComponents + máscaras)
+ 
+        modoEdicao = true;
+        setTitle("Alterar Fornecedor");
+        jBCadastrar.setText("Alterar");
+ 
+        // preenche os campos com os dados do fornecedor selecionado na consulta
+        jTID.setText(String.valueOf(fornecedorParaEditar.getID()));
+        jTRazaoSocial.setText(fornecedorParaEditar.getRazaoSocial());
+        jTCNPJ.setText(fornecedorParaEditar.getCNPJ());
+        jTTelefone.setText(fornecedorParaEditar.getTelefone());
+ 
+        // não deixa mudar o ID, senão a alteração vai bater num fornecedor errado
+        jTID.setEditable(false);
     }
 
     /**
@@ -143,31 +160,35 @@ public class FornecedorView extends javax.swing.JInternalFrame {
     private void jBCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCadastrarActionPerformed
         // TODO add your handling code here:
         try {
-        // Criar um novo fornecedor
-        Fornecedor fornecedor = new Fornecedor();
-        
-        // Preencher com dados dos campos
-        String idText = jTID.getText().trim();
-        if (!idText.isEmpty()) {
-            fornecedor.setID(Integer.parseInt(idText));
-        }
-        
-        fornecedor.setRazaoSocial(jTRazaoSocial.getText().trim());
-        fornecedor.setCNPJ(jTCNPJ.getText().trim());
-        fornecedor.setTelefone(jTTelefone.getText().trim());
-        
-        // Valida campos vazios antes de converter
-        if (jTCNPJ.getText().isEmpty() || jTID.getText().isEmpty() || jTRazaoSocial.getText().isEmpty()
-            || jTTelefone.getText().isEmpty()) {
-            
+        // Valida campos vazios ANTES de montar o objeto
+        if (jTID.getText().trim().isEmpty()
+            || jTRazaoSocial.getText().trim().isEmpty()
+            || jTCNPJ.getText().contains("_")
+            || jTTelefone.getText().contains("_")) {
+ 
             JOptionPane.showMessageDialog(this, "Todos os campos devem ser preenchidos!", "Erro", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
-        // Salvar no banco
+        // Criar o fornecedor com os dados da tela
+        Fornecedor fornecedor = new Fornecedor();
+        fornecedor.setID(Integer.parseInt(jTID.getText().trim()));
+        fornecedor.setRazaoSocial(jTRazaoSocial.getText().trim());
+        fornecedor.setCNPJ(jTCNPJ.getText().trim());
+        fornecedor.setTelefone(jTTelefone.getText().trim());
+ 
+        // Se veio da tela de Consulta (modoEdicao), atualiza; senão, cadastra novo
+        if (modoEdicao) {
+            new FornecedorDAO().alterar(fornecedor);
+            JOptionPane.showMessageDialog(this,
+                "Fornecedor alterado com sucesso!",
+                "Sucesso",
+                JOptionPane.INFORMATION_MESSAGE);
+            dispose(); // fecha a tela de edição e volta pra consulta
+            return;
+        }
+ 
         new FornecedorDAO().cadastrar(fornecedor);
         
-        // Mostrar mensagem de sucesso
         JOptionPane.showMessageDialog(this, 
             "Fornecedor cadastrado com sucesso!", 
             "Sucesso", 
