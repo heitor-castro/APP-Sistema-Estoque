@@ -6,6 +6,7 @@ package com.mycompany.appsistemaestoque.view;
 
 import com.mycompany.appsistemaestoque.model.Produto;
 
+
 /**
  *
  * @author Henrique
@@ -19,20 +20,7 @@ public class TelaPrincipalView extends javax.swing.JFrame {
     ██║╚██╗██║ ██║   ██║    ██║    ██╔══██║ ╚════██║
     ██║ ╚████║ ╚██████╔╝    ██║    ██║  ██║ ███████║
     ╚═╝  ╚═══╝  ╚═════╝     ╚═╝    ╚═╝  ╚═╝ ╚══════╝
-    Coloquei atributos auxiliares, usei de referência um projeto que eu msm tinha feito,
-    que por sua vez, usei um projeto do Dantutu de base, mas nao lembro qual é
-    */
-    //===============================LIMITADO SOMENTE A 20 PRODUTOS, PRECISA ATUALIZAR============================
-    static Produto produtos[] = new Produto[20];
-    static Integer index = 0;
-    
-    public Produto[] getProdutos(){
-        return produtos;
-    }
-    //atributos auxiliares ao projeto
-    public Integer getIndex(){
-        return index;
-    }
+   */
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaPrincipalView.class.getName());
     
     /**
@@ -63,7 +51,7 @@ public class TelaPrincipalView extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
-        jMenuItem7 = new javax.swing.JMenuItem();
+        jMIConsultaProdutos = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
 
@@ -120,8 +108,9 @@ public class TelaPrincipalView extends javax.swing.JFrame {
         jMenuItem6.addActionListener(this::jMenuItem6ActionPerformed);
         jMenu3.add(jMenuItem6);
 
-        jMenuItem7.setText("Produtos");
-        jMenu3.add(jMenuItem7);
+        jMIConsultaProdutos.setText("Produtos");
+        jMIConsultaProdutos.addActionListener(this::jMIConsultaProdutosActionPerformed);
+        jMenu3.add(jMIConsultaProdutos);
 
         jMenuItem8.setText("Notas de Entrada");
         jMenu3.add(jMenuItem8);
@@ -192,6 +181,13 @@ public class TelaPrincipalView extends javax.swing.JFrame {
         form.setVisible(true);// Torna a janela visível para o usuário
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
+    private void jMIConsultaProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIConsultaProdutosActionPerformed
+        // TODO add your handling code here:
+        ConsultaProdutos consultaView = new ConsultaProdutos();
+        jdFundo.add(consultaView);
+        consultaView.setVisible(true);
+    }//GEN-LAST:event_jMIConsultaProdutosActionPerformed
+
 
     /**
      * @param args the command line arguments
@@ -219,6 +215,7 @@ public class TelaPrincipalView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem jMIConsultaProdutos;
     private javax.swing.JMenuItem jMIProduto;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
@@ -230,16 +227,10 @@ public class TelaPrincipalView extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JDesktopPane jdFundo;
     // End of variables declaration//GEN-END:variables
     
-    //Inserir produtos
-    public void inserirProdutos(Integer id, String nome, Double valorUnitario, Integer tipoId, Integer quantidade){
-        Produto temp = new Produto(id, nome, valorUnitario, tipoId, quantidade);
-        produtos[index]=temp;
-        index++;
-    }
+   
 }
