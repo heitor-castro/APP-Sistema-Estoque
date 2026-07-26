@@ -42,11 +42,11 @@
                           <Component id="jTFQuantidade" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLTipo" alignment="0" min="-2" pref="142" max="-2" attributes="0"/>
                           <Component id="jLValorUnitario" alignment="0" min="-2" pref="142" max="-2" attributes="0"/>
-                          <Component id="jTFTipo" max="32767" attributes="0"/>
-                          <Component id="jTFValorUnitario" alignment="0" pref="218" max="32767" attributes="0"/>
+                          <Component id="jTFValorUnitario" alignment="0" min="-2" pref="218" max="-2" attributes="0"/>
+                          <Component id="jCBTipo" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -62,13 +62,12 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLCodigo" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jTFCodigo" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jTFCodigo" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jCBTipo" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="jLTipo" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jTFTipo" min="-2" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="jLTipo" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
@@ -118,8 +117,6 @@
         <Property name="text" type="java.lang.String" value="Tipo"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTFTipo">
-    </Component>
     <Component class="javax.swing.JLabel" name="jLValorUnitario">
       <Properties>
         <Property name="text" type="java.lang.String" value="Valor Unit&#xe1;rio"/>
@@ -134,6 +131,16 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBAtualizarCadastroActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="jCBTipo">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="0"/>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;TipoProduto&gt;"/>
+      </AuxValues>
     </Component>
   </SubComponents>
 </Form>

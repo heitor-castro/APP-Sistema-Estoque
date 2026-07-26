@@ -5,7 +5,10 @@
 package com.mycompany.appsistemaestoque.view;
 
 import com.mycompany.appsistemaestoque.dao.ProdutoDAO;
+import com.mycompany.appsistemaestoque.dao.TipoProdutoDAO;
 import com.mycompany.appsistemaestoque.model.Produto;
+import com.mycompany.appsistemaestoque.model.TipoProduto;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -20,13 +23,20 @@ public class EditarProduto extends javax.swing.JDialog {
     /**
      * Creates new form EditarProduto
      */
-    public EditarProduto(java.awt.Frame parent, boolean modal, Produto produto, ConsultaProdutos telaConsulta) {
+        public EditarProduto(java.awt.Frame parent, boolean modal, Produto produto, ConsultaProdutos telaConsulta) {
         super(parent, modal);
         initComponents();
         this.produto = produto;
         this.telaConsulta = telaConsulta;
+        carregarComboTipos();
         preencherCampos();
-}
+    }
+    private void carregarComboTipos() {
+    List<TipoProduto> tipos = new TipoProdutoDAO().listarTipos();
+    for (TipoProduto t : tipos) {
+        jCBTipo.addItem(t);
+    }
+    }
     //1. preenche os campos com os dados do produto selecionado na tabela
     private void preencherCampos() {
         jTFCodigo.setText(String.valueOf(produto.getId()));
@@ -34,9 +44,16 @@ public class EditarProduto extends javax.swing.JDialog {
         jTFNome.setText(produto.getnome());
         jTFValorUnitario.setText(String.valueOf(produto.getValorUnitario()));
         jTFQuantidade.setText(String.valueOf(produto.getQuantidade()));
-        jTFTipo.setText(String.valueOf(produto.getTipoId()));
-    }
-    
+
+    //2. seleciona no combo o tipo que já é o do produto
+        for (int i = 0; i < jCBTipo.getItemCount(); i++) {
+            TipoProduto t = jCBTipo.getItemAt(i);
+            if (t.getId() == produto.getTipoId()) {
+                jCBTipo.setSelectedItem(t);
+                break;
+            }
+        }
+    }    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -54,10 +71,10 @@ public class EditarProduto extends javax.swing.JDialog {
         jLQuantidade = new javax.swing.JLabel();
         jTFQuantidade = new javax.swing.JTextField();
         jLTipo = new javax.swing.JLabel();
-        jTFTipo = new javax.swing.JTextField();
         jLValorUnitario = new javax.swing.JLabel();
         jTFValorUnitario = new javax.swing.JTextField();
         jBAtualizarCadastro = new javax.swing.JButton();
+        jCBTipo = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -94,11 +111,11 @@ public class EditarProduto extends javax.swing.JDialog {
                                 .addGap(0, 86, Short.MAX_VALUE))
                             .addComponent(jTFQuantidade))
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLValorUnitario, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTFTipo)
-                            .addComponent(jTFValorUnitario, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE))))
+                            .addComponent(jTFValorUnitario, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jCBTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(22, 22, 22))
         );
         layout.setVerticalGroup(
@@ -109,11 +126,10 @@ public class EditarProduto extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLCodigo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTFCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLTipo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTFTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTFCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jCBTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLTipo))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLNome)
@@ -136,32 +152,31 @@ public class EditarProduto extends javax.swing.JDialog {
 
     private void jBAtualizarCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAtualizarCadastroActionPerformed
         // TODO add your handling code here:
-        //2. valida campos vazios
+        //2. valida campos vazios (tipo agora vem do combo, não precisa checar texto)
         if (jTFNome.getText().isEmpty() || jTFValorUnitario.getText().isEmpty()
-            || jTFQuantidade.getText().isEmpty() || jTFTipo.getText().isEmpty()) {
+            || jTFQuantidade.getText().isEmpty() || jCBTipo.getSelectedItem() == null) {
             JOptionPane.showMessageDialog(this, "Todos os campos devem ser preenchidos!", "Erro", JOptionPane.ERROR_MESSAGE);
             return;
         }
-
         try {
             //3. converte e atualiza o objeto produto
             produto.setnome(jTFNome.getText());
             produto.setValorUnitario(Double.parseDouble(jTFValorUnitario.getText()));
             produto.setQuantidade(Integer.parseInt(jTFQuantidade.getText()));
-            produto.setTipoId(Integer.parseInt(jTFTipo.getText()));
+
+            //3b. pega o tipo selecionado no combo e extrai o ID real
+            TipoProduto tipoSelecionado = (TipoProduto) jCBTipo.getSelectedItem();
+            produto.setTipoId(tipoSelecionado.getId());
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Digite valores numéricos válidos!", "Erro", JOptionPane.ERROR_MESSAGE);
             return;
         }
-
         //4. salva no banco
         new ProdutoDAO().alterarProduto(produto);
         JOptionPane.showMessageDialog(this, "Produto alterado com sucesso!");
-
         //5. atualiza a tabela da tela de consulta e fecha o diálogo
         telaConsulta.carregarTabela();
         dispose();
-     
     }//GEN-LAST:event_jBAtualizarCadastroActionPerformed
 
     /**
@@ -170,6 +185,7 @@ public class EditarProduto extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBAtualizarCadastro;
+    private javax.swing.JComboBox<TipoProduto> jCBTipo;
     private javax.swing.JLabel jLCodigo;
     private javax.swing.JLabel jLNome;
     private javax.swing.JLabel jLQuantidade;
@@ -178,7 +194,6 @@ public class EditarProduto extends javax.swing.JDialog {
     private javax.swing.JTextField jTFCodigo;
     private javax.swing.JTextField jTFNome;
     private javax.swing.JTextField jTFQuantidade;
-    private javax.swing.JTextField jTFTipo;
     private javax.swing.JTextField jTFValorUnitario;
     // End of variables declaration//GEN-END:variables
 }

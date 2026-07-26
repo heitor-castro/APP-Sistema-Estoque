@@ -4,7 +4,9 @@
  */
 package com.mycompany.appsistemaestoque.view;
 import com.mycompany.appsistemaestoque.dao.ProdutoDAO;
+import com.mycompany.appsistemaestoque.dao.TipoProdutoDAO;
 import com.mycompany.appsistemaestoque.model.Produto;
+import com.mycompany.appsistemaestoque.model.TipoProduto;
 import java.util.List;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -36,20 +38,27 @@ public class ConsultaProdutos extends javax.swing.JInternalFrame {
 
         //2. busca os produtos no banco via DAO
         List<Produto> lista = new ProdutoDAO().listar();
-
+        List<TipoProduto> tipos = new TipoProdutoDAO().listarTipos();
+        
         //3. adiciona cada produto como uma linha da tabela
         for (Produto p : lista) {
-            model.addRow(new Object[]{
-                p.getId(),
-                p.getnome(),
-                p.getValorUnitario(),  
-                p.getTipoId(),
-                p.getQuantidade()
-            });
+        String nomeTipo = buscarNomeTipo(p.getTipoId(), tipos);
+        model.addRow(new Object[]{
+            p.getId(),
+            p.getnome(),
+            p.getValorUnitario(), // sem formatação de string, lembra do bug anterior
+            nomeTipo,
+            p.getQuantidade()
+        });
         }
 
-        //4. aplica o modelo montado na JTable gerada pelo Form Editor
         jTable1.setModel(model);
+}
+    private String buscarNomeTipo(int tipoId, List<TipoProduto> tipos) {
+        for (TipoProduto t : tipos) {
+            if (t.getId() == tipoId) return t.getDescricao();
+        }
+        return "Desconhecido";
     }
     //metodo para abrir menu ao clicar com o botão direito do mouse
     private void configurarMenuContexto() {
@@ -103,9 +112,17 @@ public class ConsultaProdutos extends javax.swing.JInternalFrame {
         p.setId((int) jTable1.getValueAt(linha, 0));
         p.setnome((String) jTable1.getValueAt(linha, 1));
         p.setValorUnitario((Double) jTable1.getValueAt(linha, 2));
-        p.setTipoId((int) jTable1.getValueAt(linha, 3));
         p.setQuantidade((int) jTable1.getValueAt(linha, 4));
 
+        // busca o tipoId real a partir do nome mostrado na tabela
+        String nomeTipo = (String) jTable1.getValueAt(linha, 3);
+        List<TipoProduto> tipos = new TipoProdutoDAO().listarTipos();
+        for (TipoProduto t : tipos) {
+            if (t.getDescricao().equals(nomeTipo)) {
+                p.setTipoId(t.getId());
+                break;
+            }
+        }
         EditarProduto dialog = new EditarProduto(null, true, p, this);
         dialog.setVisible(true);
     }
