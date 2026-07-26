@@ -7,7 +7,6 @@ package com.mycompany.appsistemaestoque.view;
 import com.mycompany.appsistemaestoque.model.Produto;
 import com.mycompany.appsistemaestoque.dao.ProdutoDAO;
 import javax.swing.JOptionPane;
-//Commit: A classe foi modificade para se adequar à conexão com o banco de dados e não com o vetor de testes antes criado
 /**
  *
  * @author heitor
