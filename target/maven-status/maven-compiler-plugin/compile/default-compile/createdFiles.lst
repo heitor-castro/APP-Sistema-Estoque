@@ -6,6 +6,7 @@ com\mycompany\appsistemaestoque\view\ConsultaFornecedor.class
 com\mycompany\appsistemaestoque\view\ProdutoView.class
 com\mycompany\appsistemaestoque\view\TelaPrincipalView.class
 com\mycompany\appsistemaestoque\dao\FornecedorDAO.class
+com\mycompany\appsistemaestoque\AppSistemaEstoque.class
 com\mycompany\appsistemaestoque\view\NotaEntradaView.class
 com\mycompany\appsistemaestoque\dao\NotaEntradaDAO.class
 com\mycompany\appsistemaestoque\conexao\Conexao.class
