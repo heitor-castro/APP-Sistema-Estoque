@@ -41,8 +41,8 @@ public class ProdutoView extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLNome = new javax.swing.JLabel();
-        jTFNome = new javax.swing.JTextField();
+        jLDescricao = new javax.swing.JLabel();
+        jTFDescricao = new javax.swing.JTextField();
         jBCadastrar = new javax.swing.JButton();
         jLValorUnitario = new javax.swing.JLabel();
         jLId = new javax.swing.JLabel();
@@ -59,7 +59,7 @@ public class ProdutoView extends javax.swing.JInternalFrame {
         setResizable(true);
         setTitle("Cadastro de Produto");
 
-        jLNome.setText("Nome");
+        jLDescricao.setText("Descrição");
 
         jBCadastrar.setText("Cadastrar");
         jBCadastrar.addActionListener(this::jBCadastrarActionPerformed);
@@ -69,6 +69,7 @@ public class ProdutoView extends javax.swing.JInternalFrame {
         jLId.setText("ID");
 
         jTFId.setEditable(false);
+        jTFId.setText("Não Editável");
 
         jLQuantidade.setText("Quantidade");
 
@@ -98,11 +99,11 @@ public class ProdutoView extends javax.swing.JInternalFrame {
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jTFNome, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
+                                    .addComponent(jTFDescricao, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
                                     .addComponent(jTFQuantidade, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLId, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jTFId, javax.swing.GroupLayout.Alignment.LEADING))
-                                .addComponent(jLNome, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jLDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jTFValorUnitario, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -127,11 +128,11 @@ public class ProdutoView extends javax.swing.JInternalFrame {
                     .addComponent(jTFId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(12, 12, 12)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLNome)
+                        .addComponent(jLDescricao)
                         .addComponent(jLValorUnitario))
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTFNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTFDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jTFValorUnitario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                     .addComponent(jLQuantidade)
@@ -150,14 +151,14 @@ public class ProdutoView extends javax.swing.JInternalFrame {
         
         // ATRIBUTOS        
         Integer id, tipoId, quantidade;
-        String nome;
+        String descricao;
         double valorUnitario;
         
         //coleta do campo de texto para a variável
-        nome = jTFNome.getText();
+        descricao = jTFDescricao.getText();
 
         // valida campos vazios antes de converter (tipo agora vem do combo, não precisa checar texto)
-        if (nome.isEmpty() || jTFId.getText().isEmpty() || jCBTipo.getSelectedItem() == null
+        if (descricao.isEmpty() || jTFId.getText().isEmpty() || jCBTipo.getSelectedItem() == null
             || jTFQuantidade.getText().isEmpty() || jTFValorUnitario.getText().isEmpty()) {
             
             JOptionPane.showMessageDialog(this, "Todos os campos devem ser preenchidos!", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -177,7 +178,7 @@ public class ProdutoView extends javax.swing.JInternalFrame {
             return;
         }
         //criar nova instância para produto
-        Produto produtoCadastrado = new Produto(id, nome, valorUnitario, tipoId, quantidade);
+        Produto produtoCadastrado = new Produto(id, descricao, valorUnitario, tipoId, quantidade);
         
         //Salvar no banco
         new ProdutoDAO().cadastrarProduto(produtoCadastrado);
@@ -185,7 +186,7 @@ public class ProdutoView extends javax.swing.JInternalFrame {
         //Mostrar mensagem de sucesso
         JOptionPane.showMessageDialog(rootPane, "Registro Inserido!");
         //Limpar os campos
-        jTFNome.setText("");
+        jTFDescricao.setText("");
         jTFId.setText("");
         jCBTipo.setSelectedIndex(0); //volta o combo pro primeiro tipo da lista
         jTFValorUnitario.setText("");
@@ -196,13 +197,13 @@ public class ProdutoView extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBCadastrar;
     private javax.swing.JComboBox<TipoProduto> jCBTipo;
+    private javax.swing.JLabel jLDescricao;
     private javax.swing.JLabel jLId;
-    private javax.swing.JLabel jLNome;
     private javax.swing.JLabel jLQuantidade;
     private javax.swing.JLabel jLTipo;
     private javax.swing.JLabel jLValorUnitario;
+    private javax.swing.JTextField jTFDescricao;
     private javax.swing.JTextField jTFId;
-    private javax.swing.JTextField jTFNome;
     private javax.swing.JTextField jTFQuantidade;
     private javax.swing.JTextField jTFValorUnitario;
     // End of variables declaration//GEN-END:variables

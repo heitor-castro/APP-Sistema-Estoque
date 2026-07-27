@@ -12,20 +12,20 @@ package com.mycompany.appsistemaestoque.model;
 public class Produto {
     //ATRIBUTOS
     private Integer id, tipoId, quantidade;
-    private String nome;//DESCRIÇÃO
+    private String descricao;
     private Double valorUnitario;
     
     //CONSTRUTORES
     public Produto(){
         id = 0;
-        nome = "";
+        descricao = "";
         valorUnitario = 0.0;
         tipoId = 0;
         quantidade = 0;
     }
-    public Produto(Integer id, String nome, Double valorUnitario, Integer tipoId, Integer quantidade) {
+    public Produto(Integer id, String descricao, Double valorUnitario, Integer tipoId, Integer quantidade) {
         this.id = id;
-        this.nome = nome;
+        this.descricao = descricao;
         this.valorUnitario = valorUnitario;
         this.tipoId = tipoId;
         this.quantidade = quantidade;
@@ -37,11 +37,11 @@ public class Produto {
     public void setId(Integer id) {
         this.id = id;
     }
-    public String getnome() {
-        return nome;
+    public String getDescricao() {
+        return descricao;
     }
-    public void setnome(String nome) {
-        this.nome = nome;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
     public Double getValorUnitario() {
         return valorUnitario;
