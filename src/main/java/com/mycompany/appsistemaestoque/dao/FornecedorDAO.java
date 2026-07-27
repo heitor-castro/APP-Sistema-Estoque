@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.mycompany.appsistemaestoque.dao;
+
 import com.mycompany.appsistemaestoque.conexao.Conexao;
 import com.mycompany.appsistemaestoque.model.Fornecedor;
 import java.sql.Connection;
@@ -12,20 +13,23 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
+
 /**
  *
  * @author Henrique
  */
 public class FornecedorDAO {
+
     // Variável que vai segurar a conexão com o banco
     private Connection conexao;
+
     // Construtor: Assim que o DAO é chamado, ele abre a conexão
     public FornecedorDAO() {
         conexao = Conexao.getConexao();
     }
+
     // Método para salvar no banco
     public void cadastrar(Fornecedor obj) {
-
         // 1. O comando SQL para inserir dados (troque o nome da tabela se precisar)
         String sql = "INSERT INTO fornecedor (razao_social, cnpj, telefone) VALUES (?, ?, ?)";
         try {
@@ -46,9 +50,9 @@ public class FornecedorDAO {
             JOptionPane.showMessageDialog(null, "Erro ao cadastrar: " + erro);
         }
     }
+
     // Método para alterar um fornecedor já cadastrado
     public void alterar(Fornecedor obj) {
-
         String sql = "UPDATE fornecedor SET razao_social = ?, cnpj = ?, telefone = ? WHERE id = ?";
         try {
             PreparedStatement stmt = conexao.prepareStatement(sql);
@@ -64,9 +68,9 @@ public class FornecedorDAO {
             JOptionPane.showMessageDialog(null, "Erro ao alterar: " + erro);
         }
     }
+
     // Método para excluir um fornecedor pelo ID
     public void excluir(Fornecedor obj) {
-
         String sql = "DELETE FROM fornecedor WHERE id = ?";
         try {
             PreparedStatement stmt = conexao.prepareStatement(sql);
@@ -79,29 +83,53 @@ public class FornecedorDAO {
             JOptionPane.showMessageDialog(null, "Erro ao excluir: " + erro);
         }
     }
-    // Método para listar todos os fornecedores (ex: preencher uma tabela na tela)
-    public List<Fornecedor> listar() {
 
+    // Método para verificar se o fornecedor tem notas de entrada antes de excluir
+    public boolean temNotaVinculada(int idFornecedor) {
+        String sql = "SELECT COUNT(*) FROM nota_entrada WHERE fornecedor_id = ?";
+        try {
+            PreparedStatement stmt = conexao.prepareStatement(sql);
+            stmt.setInt(1, idFornecedor);
+            ResultSet rs = stmt.executeQuery();
+            
+            if (rs.next()) {
+                int totalNotas = rs.getInt(1);
+                return totalNotas > 0; // Retorna verdadeiro se existir alguma nota
+            }
+            
+            rs.close();
+            stmt.close();
+        } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(null, "Erro ao verificar vínculos: " + erro);
+        }
+        return false;
+    }
+
+    // Método para listar todos os Fornecedores e preencher a tabela
+    public List<Fornecedor> listar() {
         List<Fornecedor> lista = new ArrayList<>();
         String sql = "SELECT * FROM fornecedor";
+        
         try {
             PreparedStatement stmt = conexao.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
-
+            
             while (rs.next()) {
                 Fornecedor obj = new Fornecedor();
                 obj.setID(rs.getInt("id"));
                 obj.setRazaoSocial(rs.getString("razao_social"));
                 obj.setCNPJ(rs.getString("cnpj"));
                 obj.setTelefone(rs.getString("telefone"));
+                
                 lista.add(obj);
             }
-
+            
             rs.close();
             stmt.close();
         } catch (SQLException erro) {
             JOptionPane.showMessageDialog(null, "Erro ao listar: " + erro);
         }
+        
         return lista;
     }
 }

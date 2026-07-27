@@ -68,6 +68,8 @@ public class ProdutoView extends javax.swing.JInternalFrame {
 
         jLId.setText("Código");
 
+        jTFId.setEditable(false);
+
         jLQuantidade.setText("Quantidade");
 
         jLTipo.setText("Tipo");

@@ -10,17 +10,30 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
 
+
 /**
  *
  * @author Caio
  */
 public class NotaEntradaView extends javax.swing.JInternalFrame {
-
+    java.util.List<com.mycompany.appsistemaestoque.model.Fornecedor> listaFornecedores;
     /**
      * Creates new form NotaEntradaView
      */
     public NotaEntradaView() {
         initComponents();
+        preencherFornecedores();
+    }
+    
+    private void preencherFornecedores() {
+        com.mycompany.appsistemaestoque.dao.FornecedorDAO dao = new com.mycompany.appsistemaestoque.dao.FornecedorDAO();
+        listaFornecedores = dao.listar(); // Busca no banco
+        
+        cbFornecedor.removeAllItems(); // Limpa aquele "Item 1, Item 2..."
+        
+        for (com.mycompany.appsistemaestoque.model.Fornecedor f : listaFornecedores) {
+            cbFornecedor.addItem(f.getRazaoSocial()); // Mostra os nomes
+        }
     }
 
     /**
@@ -37,10 +50,10 @@ public class NotaEntradaView extends javax.swing.JInternalFrame {
         jLDataDeEntrada = new javax.swing.JLabel();
         jTDataDeEntrada = new javax.swing.JTextField();
         jLIDFornecedor = new javax.swing.JLabel();
-        jTIDFornecedor = new javax.swing.JTextField();
         jLValorTotal = new javax.swing.JLabel();
         jTValorTotal = new javax.swing.JTextField();
         jBCadastrar = new javax.swing.JButton();
+        cbFornecedor = new javax.swing.JComboBox<>();
 
         setClosable(true);
         setIconifiable(true);
@@ -50,6 +63,8 @@ public class NotaEntradaView extends javax.swing.JInternalFrame {
 
         jLID.setText("ID:");
 
+        jTID.setEditable(false);
+
         jLDataDeEntrada.setText("Data de Entrada:");
 
         jLIDFornecedor.setText("ID do Fornecedor:");
@@ -58,6 +73,9 @@ public class NotaEntradaView extends javax.swing.JInternalFrame {
 
         jBCadastrar.setText("Cadastrar");
         jBCadastrar.addActionListener(this::jBCadastrarActionPerformed);
+
+        cbFornecedor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbFornecedor.addActionListener(this::cbFornecedorActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -70,17 +88,20 @@ public class NotaEntradaView extends javax.swing.JInternalFrame {
                     .addComponent(jLDataDeEntrada)
                     .addComponent(jLIDFornecedor)
                     .addComponent(jLValorTotal))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTIDFornecedor)
-                    .addComponent(jTDataDeEntrada)
-                    .addComponent(jTID)
-                    .addComponent(jTValorTotal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTDataDeEntrada)
+                            .addComponent(jTID)
+                            .addComponent(jTValorTotal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE)))
+                    .addComponent(cbFornecedor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(25, 25, 25))
             .addGroup(layout.createSequentialGroup()
                 .addGap(60, 60, 60)
                 .addComponent(jBCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(67, Short.MAX_VALUE))
+                .addContainerGap(75, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -96,7 +117,7 @@ public class NotaEntradaView extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLIDFornecedor)
-                    .addComponent(jTIDFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLValorTotal)
@@ -110,51 +131,60 @@ public class NotaEntradaView extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCadastrarActionPerformed
-        // TODO add your handling code here:
-        
-        //Verifica ocorrência de campos vazios
-        if (jTID.getText().isEmpty() || jTDataDeEntrada.getText().isEmpty() || 
-            jTIDFornecedor.getText().isEmpty() || jTValorTotal.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Todos os campos devem ser preenchidos!", "Erro", JOptionPane.ERROR_MESSAGE);
+        // TODO add your handling code here:                             
+        // Verifica se a Data ou o Valor estão vazios (Tiramos o ID da verificação!)
+        if (jTDataDeEntrada.getText().isEmpty() || jTValorTotal.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Preencha a Data e o Valor Total!", "Erro", JOptionPane.ERROR_MESSAGE);
             return;
         }
+        
+        // Verifica se selecionou um fornecedor na caixinha
+        if (cbFornecedor.getSelectedIndex() == -1) {
+            JOptionPane.showMessageDialog(this, "Selecione um fornecedor!");
+            return;
+        }
+
         try {
-            //Instanciar o modelo NotaEntrada
             NotaEntrada nota = new NotaEntrada();
             
-            //Capturar e converter os dados da tela
-            nota.setId(Integer.parseInt(jTID.getText()));
-            
-            //Tratamento da Data: convertendo String para LocalDate
-            //Formato esperado: "2026-07-24"
+            // Tratamento da Data: convertendo String para LocalDate
             nota.setDataEntrada(LocalDate.parse(jTDataDeEntrada.getText()));
             
-            nota.setIdFornecedor(Integer.parseInt(jTIDFornecedor.getText()));
+            // Captura o Valor Total
             nota.setValorTotal(Double.parseDouble(jTValorTotal.getText()));
             
-            //Salvar no banco
+            // CAPTURA DO COMBOBOX: Pega a posição na tela e acha o ID correspondente na lista
+            int indexSelecionado = cbFornecedor.getSelectedIndex();
+            int idFornecedor = listaFornecedores.get(indexSelecionado).getID(); 
+            nota.setIdFornecedor(idFornecedor);
+            
+            // Salvar no banco (Sem passar o ID da nota, o banco gera 1, 2, 3...)
             new NotaEntradaDAO().cadastrarNotaEntrada(nota);
             
-            //Mensagem de sucesso para o usuário
             JOptionPane.showMessageDialog(rootPane, "Nota de Entrada cadastrada com sucesso!");
             
-            //Limpar campos
-            jTID.setText("");
+            // Limpar campos
             jTDataDeEntrada.setText("");
-            jTIDFornecedor.setText("");
             jTValorTotal.setText("");
+            cbFornecedor.setSelectedIndex(-1);
             
         } catch (java.time.format.DateTimeParseException e) {
             JOptionPane.showMessageDialog(this, "Formato de data inválido! Use AAAA-MM-DD.");
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "ID e Valor devem ser numéricos!");
+            JOptionPane.showMessageDialog(this, "O Valor Total deve ser numérico!");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Erro: " + e.getMessage());
         }
+    
     }//GEN-LAST:event_jBCadastrarActionPerformed
+
+    private void cbFornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFornecedorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbFornecedorActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> cbFornecedor;
     private javax.swing.JButton jBCadastrar;
     private javax.swing.JLabel jLDataDeEntrada;
     private javax.swing.JLabel jLID;
@@ -162,7 +192,6 @@ public class NotaEntradaView extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLValorTotal;
     private javax.swing.JTextField jTDataDeEntrada;
     private javax.swing.JTextField jTID;
-    private javax.swing.JTextField jTIDFornecedor;
     private javax.swing.JTextField jTValorTotal;
     // End of variables declaration//GEN-END:variables
 }

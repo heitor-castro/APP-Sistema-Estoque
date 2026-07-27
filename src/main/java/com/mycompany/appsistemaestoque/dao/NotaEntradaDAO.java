@@ -18,90 +18,67 @@ import javax.swing.JOptionPane;
  *
  * @author Caio
  */
-
 public class NotaEntradaDAO {
-    //Variável que vai segurar a conexão com o banco
+    // Variável que vai segurar a conexão com o banco
     private Connection conexao;
     
-    //Construtor: Assim que o DAO é chamado, ele abre a conexão
+    // Construtor: Assim que o DAO é chamado, ele abre a conexão
     public NotaEntradaDAO() {
         try {
+            // Mantendo a sua string de conexão
             conexao = DriverManager.getConnection("jdbc:mysql://localhost:3306/sistema_estoque", "root", "mysql");
         } catch (SQLException erro) {
             JOptionPane.showMessageDialog(null, "Erro ao conectar ao banco: " + erro);
         }
     }
     
-    //Método para salvar no banco
+    // Método para salvar no banco
     public void cadastrarNotaEntrada(NotaEntrada obj) {
-        
-        //1. Comando SQL para inserir dados
-        String sql = "INSERT INTO nota_entrada (id, data_ent, valor_total_nota, fornecedor_id) VALUES (?, ?, ?, ?)";
+        // 1. Comando SQL SEM O ID (Auto_Increment resolve)
+        String sql = "INSERT INTO nota_entrada (data_ent, valor_total_nota, fornecedor_id) VALUES (?, ?, ?)";
         try {
-            //2. Prepara o comando SQL para ser executado
             PreparedStatement stmt = conexao.prepareStatement(sql);
             
-            //3. Troca os "?" do SQL pelos dados do objeto
-            stmt.setInt(1, obj.getId());
-            stmt.setObject(2, obj.getDataEntrada());
-            stmt.setDouble(3, obj.getValorTotal());
-            stmt.setInt(4, obj.getIdFornecedor());
+            // 2. Troca os "?" pelos dados do objeto (note que os números mudaram de 1 a 3)
+            stmt.setObject(1, obj.getDataEntrada());
+            stmt.setDouble(2, obj.getValorTotal());
+            stmt.setInt(3, obj.getIdFornecedor());
             
-            //4. Executa o comando no banco de dados
             stmt.execute();
-            
-            //5. Fecha o comando e confirma cadastro
             stmt.close();
             JOptionPane.showMessageDialog(null, "Nota de Entrada cadastrada com sucesso!");
         } catch (SQLException erro) {
-            // Se der erro, mostra na tela
             JOptionPane.showMessageDialog(null, "Erro ao cadastrar: " + erro);
         }
     }
     
-    //Método para alterar uma Nota de Entrada já cadastrada
+    // Método para alterar uma Nota de Entrada já cadastrada
     public void alterarNotaEntrada(NotaEntrada obj) {
-        
-        //1. Comando SQL para sobrescrever dados
-        String sql = "UPDATE nota_entrada SET id = ?, data_ent = ?, valor_total_nota = ?, fornecedor_id = ? WHERE id = ?";
+        // 1. Removido o "id = ?" do SET
+        String sql = "UPDATE nota_entrada SET data_ent = ?, valor_total_nota = ?, fornecedor_id = ? WHERE id = ?";
         try {
-            //2. Prepara o comando SQL para ser executado
             PreparedStatement stmt = conexao.prepareStatement(sql);
             
-            //3. Troca os "?" do SQL pelos dados do objeto
-            stmt.setInt(1, obj.getId());
-            stmt.setObject(2, obj.getDataEntrada());
-            stmt.setDouble(3, obj.getValorTotal());
-            stmt.setInt(4, obj.getIdFornecedor());
-            stmt.setInt(5, obj.getId());
+            stmt.setObject(1, obj.getDataEntrada());
+            stmt.setDouble(2, obj.getValorTotal());
+            stmt.setInt(3, obj.getIdFornecedor());
+            stmt.setInt(4, obj.getId()); // O ID entra apenas na condição do WHERE
             
-            //4. Executa o comando no banco de dados
             stmt.execute();
-            
-            //5. Fecha o comando e confirma alterações
             stmt.close();
             JOptionPane.showMessageDialog(null, "Informações alteradas com sucesso!");
         } catch (SQLException erro) {
-            // Se der erro, mostra na tela
             JOptionPane.showMessageDialog(null, "Erro ao alterar informações: " + erro);
         }
     }
     
-    //Método para excluir uma Nota de Entrada pelo ID
+    // Método para excluir e Listar permanecem iguais aos seus originais
     public void excluirNotaEntrada(NotaEntrada obj) {
-        //1. Comando SQL para excluir dados
         String sql = "DELETE FROM nota_entrada WHERE id = ?";
         try {
-            //2. Prepara o comando SQL para ser executado
             PreparedStatement stmt = conexao.prepareStatement(sql);
-            
-            //3. Define o ID da Nota de Entrada a ser excluída
             stmt.setInt(1, obj.getId());
-            
-            //4. Executa o comando no banco de dados
             stmt.execute();
-            
-            //5. Fecha o comando e confirma remoção
             stmt.close();
             JOptionPane.showMessageDialog(null, "Nota de Entrada excluída com sucesso!");
         } catch (SQLException erro) {
@@ -109,32 +86,21 @@ public class NotaEntradaDAO {
         }
     }
     
-    //Método para listar todas as Notas de Entrada (ex: preencher uma tabela na tela)
     public List<NotaEntrada> listar() {
-        //1. Lista que vai guardar as Notas de Entrada retornadas
         List<NotaEntrada> lista = new ArrayList<>();
-        
-        //2. Comando SQL para buscar todas as Notas
         String sql = "SELECT * FROM nota_entrada";
         try {
-            //3. Prepara e executa a consulta
             PreparedStatement stmt = conexao.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
             
-            //4. Percorre cada linha do resultado e monta um objeto NotaEntrada
             while (rs.next()) {
                 NotaEntrada obj = new NotaEntrada();
                 obj.setId(rs.getInt("id"));
-                
-                //Conversão de SQL Date para LocalDate
                 obj.setDataEntrada(rs.getDate("data_ent").toLocalDate());
-                
                 obj.setValorTotal(rs.getDouble("valor_total_nota"));
                 obj.setIdFornecedor(rs.getInt("fornecedor_id"));
                 lista.add(obj);
             }
-            
-            //5. Fecha recursos e retorna a lista
             rs.close();
             stmt.close();
         } catch (SQLException erro) {

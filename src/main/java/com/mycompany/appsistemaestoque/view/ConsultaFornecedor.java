@@ -46,7 +46,6 @@ public class ConsultaFornecedor extends javax.swing.JInternalFrame {
     }
  
     // Pega os dados da linha selecionada na tabela e monta um Fornecedor
-    // Retorna null (e avisa o usuário) se nenhuma linha estiver selecionada
     private Fornecedor pegarFornecedorSelecionado() {
         int linha = jTable1.getSelectedRow();
  
@@ -164,22 +163,38 @@ public class ConsultaFornecedor extends javax.swing.JInternalFrame {
     // Exclui o fornecedor selecionado, com confirmação antes
     private void jBExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBExcluirActionPerformed
         // TODO add your handling code here:
+        // Exclui o fornecedor selecionado, com confirmação antes
+                                 
         Fornecedor selecionado = pegarFornecedorSelecionado();
         if (selecionado == null) {
             return;
         }
- 
+
+       
+        FornecedorDAO dao = new FornecedorDAO();
+        if (dao.temNotaVinculada(selecionado.getID())) {
+            JOptionPane.showMessageDialog(this,
+                "Não é possível excluir! Este fornecedor possui Notas de Entrada registradas.",
+                "Bloqueio de Exclusão",
+                JOptionPane.WARNING_MESSAGE);
+            return; // Interrompe o código e impede a exclusão
+        }
+        // --------------------------------
+
+        // 2. Se passou da verificação, pede a confirmação
         int confirmacao = JOptionPane.showConfirmDialog(this,
             "Tem certeza que deseja excluir \"" + selecionado.getRazaoSocial() + "\"?",
             "Confirmar exclusão",
             JOptionPane.YES_NO_OPTION);
- 
+
         if (confirmacao != JOptionPane.YES_OPTION) {
             return;
         }
- 
-        new FornecedorDAO().excluir(selecionado);
+
+        // 3. Exclui e atualiza a tabela
+        dao.excluir(selecionado); 
         carregarTabela(); // atualiza a lista depois de excluir
+    
     }//GEN-LAST:event_jBExcluirActionPerformed
 
 
