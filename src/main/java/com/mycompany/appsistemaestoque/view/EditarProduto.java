@@ -39,8 +39,8 @@ public class EditarProduto extends javax.swing.JDialog {
     }
     //1. preenche os campos com os dados do produto selecionado na tabela
     private void preencherCampos() {
-        jTFCodigo.setText(String.valueOf(produto.getId()));
-        jTFCodigo.setEditable(false); //ID não deve ser alterado
+        jTFId.setText(String.valueOf(produto.getId()));
+        jTFId.setEditable(false); //ID não deve ser alterado
         jTFNome.setText(produto.getnome());
         jTFValorUnitario.setText(String.valueOf(produto.getValorUnitario()));
         jTFQuantidade.setText(String.valueOf(produto.getQuantidade()));
@@ -64,8 +64,8 @@ public class EditarProduto extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLCodigo = new javax.swing.JLabel();
-        jTFCodigo = new javax.swing.JTextField();
+        jLId = new javax.swing.JLabel();
+        jTFId = new javax.swing.JTextField();
         jLNome = new javax.swing.JLabel();
         jTFNome = new javax.swing.JTextField();
         jLQuantidade = new javax.swing.JLabel();
@@ -78,7 +78,10 @@ public class EditarProduto extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jLCodigo.setText("Código");
+        jLId.setText("ID");
+
+        jTFId.setEditable(false);
+        jTFId.setText("Não Editável");
 
         jLNome.setText("Nome");
 
@@ -101,11 +104,11 @@ public class EditarProduto extends javax.swing.JDialog {
                     .addComponent(jBAtualizarCadastro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTFCodigo)
+                            .addComponent(jTFId)
                             .addComponent(jTFNome)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLId, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLNome, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 86, Short.MAX_VALUE))
@@ -124,10 +127,10 @@ public class EditarProduto extends javax.swing.JDialog {
                 .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLCodigo)
+                        .addComponent(jLId)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTFCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTFId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jCBTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jLTipo))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -186,12 +189,12 @@ public class EditarProduto extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBAtualizarCadastro;
     private javax.swing.JComboBox<TipoProduto> jCBTipo;
-    private javax.swing.JLabel jLCodigo;
+    private javax.swing.JLabel jLId;
     private javax.swing.JLabel jLNome;
     private javax.swing.JLabel jLQuantidade;
     private javax.swing.JLabel jLTipo;
     private javax.swing.JLabel jLValorUnitario;
-    private javax.swing.JTextField jTFCodigo;
+    private javax.swing.JTextField jTFId;
     private javax.swing.JTextField jTFNome;
     private javax.swing.JTextField jTFQuantidade;
     private javax.swing.JTextField jTFValorUnitario;

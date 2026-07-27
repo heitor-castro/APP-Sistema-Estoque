@@ -136,6 +136,7 @@
     <Component class="javax.swing.JTextField" name="jTFId">
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
+        <Property name="text" type="java.lang.String" value="N&#xe3;o Edit&#xe1;vel"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jTFValorUnitario">
