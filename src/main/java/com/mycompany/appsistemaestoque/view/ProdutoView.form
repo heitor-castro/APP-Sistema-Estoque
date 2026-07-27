@@ -130,7 +130,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLId">
       <Properties>
-        <Property name="text" type="java.lang.String" value="C&#xf3;digo"/>
+        <Property name="text" type="java.lang.String" value="ID"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jTFId">
