@@ -34,9 +34,9 @@ public class Conexao {
        // Connection con = getConexao();
         
      //   if (con != null) {
-       //     JOptionPane.showMessageDialog(null, "Deu tudo certo! Banco conectado no AMPPS.");
+     //     JOptionPane.showMessageDialog(null, "Deu tudo certo! Banco conectado no AMPPS.");
      //   } else {
-      //      JOptionPane.showMessageDialog(null, "Erro: Não foi possível conectar ao banco.");
+     //      JOptionPane.showMessageDialog(null, "Erro: Não foi possível conectar ao banco.");
       //  }
    // }
 }

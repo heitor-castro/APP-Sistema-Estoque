@@ -22,10 +22,13 @@ public class FornecedorView extends javax.swing.JInternalFrame {
      */
     public FornecedorView() {
         initComponents();
+        initComponents();
+        jTID.setEditable(false); // Adicione esta linha para bloquear o campo ID
+        
          try {
             MaskFormatter maskTelefone = new MaskFormatter("(##) #####-####");
             maskTelefone.setPlaceholderCharacter('_');
-            jTTelefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(maskTelefone));
+
             
             MaskFormatter maskCNPJ = new MaskFormatter("##.###.###/####-##");
             maskCNPJ.setPlaceholderCharacter('_');
@@ -158,48 +161,52 @@ public class FornecedorView extends javax.swing.JInternalFrame {
         pack();    
     }// </editor-fold>    
     private void jBCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCadastrarActionPerformed
-        // TODO add your handling code here:
+        // TODO add your handling code here:                               
         try {
-        // Valida campos vazios ANTES de montar o objeto
-        if (jTID.getText().trim().isEmpty()
-            || jTRazaoSocial.getText().trim().isEmpty()
-            || jTCNPJ.getText().contains("_")
-            || jTTelefone.getText().contains("_")) {
- 
-            JOptionPane.showMessageDialog(this, "Todos os campos devem ser preenchidos!", "Erro", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        // Criar o fornecedor com os dados da tela
-        Fornecedor fornecedor = new Fornecedor();
-        fornecedor.setID(Integer.parseInt(jTID.getText().trim()));
-        fornecedor.setRazaoSocial(jTRazaoSocial.getText().trim());
-        fornecedor.setCNPJ(jTCNPJ.getText().trim());
-        fornecedor.setTelefone(jTTelefone.getText().trim());
- 
-        // Se veio da tela de Consulta (modoEdicao), atualiza; senão, cadastra novo
-        if (modoEdicao) {
-            new FornecedorDAO().alterar(fornecedor);
-            JOptionPane.showMessageDialog(this,
-                "Fornecedor alterado com sucesso!",
-                "Sucesso",
+            // 1. VALIDAÇÃO: Só exige ID se estiver no modo de edição
+            boolean idVazioNaEdicao = modoEdicao && jTID.getText().trim().isEmpty();
+            
+            if (idVazioNaEdicao
+                || jTRazaoSocial.getText().trim().isEmpty()
+                || jTCNPJ.getText().contains("_")
+                || jTTelefone.getText().contains("_")) {
+
+                JOptionPane.showMessageDialog(this, "Todos os campos devem ser preenchidos!", "Erro", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // 2. MONTA O OBJETO: Apenas com os dados que o usuário digitou
+            Fornecedor fornecedor = new Fornecedor();
+            fornecedor.setRazaoSocial(jTRazaoSocial.getText().trim());
+            fornecedor.setCNPJ(jTCNPJ.getText().trim());
+            fornecedor.setTelefone(jTTelefone.getText().trim());
+
+            // 3. MODO EDIÇÃO: Aqui sim, ele lê o ID e manda alterar
+            if (modoEdicao) {
+                fornecedor.setID(Integer.parseInt(jTID.getText().trim()));
+                new FornecedorDAO().alterar(fornecedor);
+                JOptionPane.showMessageDialog(this,
+                    "Fornecedor alterado com sucesso!",
+                    "Sucesso",
+                    JOptionPane.INFORMATION_MESSAGE);
+                dispose(); // fecha a tela de edição e volta pra consulta
+                return;
+            }
+
+            // 4. MODO CADASTRO: Manda cadastrar direto (o banco gera o ID)
+            new FornecedorDAO().cadastrar(fornecedor);
+            
+            JOptionPane.showMessageDialog(this, 
+                "Fornecedor cadastrado com sucesso!", 
+                "Sucesso", 
                 JOptionPane.INFORMATION_MESSAGE);
-            dispose(); // fecha a tela de edição e volta pra consulta
-            return;
-        }
- 
-        new FornecedorDAO().cadastrar(fornecedor);
-        
-        JOptionPane.showMessageDialog(this, 
-            "Fornecedor cadastrado com sucesso!", 
-            "Sucesso", 
-            JOptionPane.INFORMATION_MESSAGE);
-        
-        // Limpar campos
-        jTID.setText("");
-        jTCNPJ.setText("");
-        jTTelefone.setText("");
-        jTRazaoSocial.setText("");
-        
+            
+            // Limpar campos
+            jTID.setText("");
+            jTCNPJ.setText("");
+            jTTelefone.setText("");
+            jTRazaoSocial.setText("");
+            
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, 
                 "ID deve ser um número válido", 
@@ -212,10 +219,11 @@ public class FornecedorView extends javax.swing.JInternalFrame {
                 JOptionPane.ERROR_MESSAGE);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, 
-                "Erro ao cadastrar fornecedor: " + e.getMessage(), 
+                "Erro ao processar fornecedor: " + e.getMessage(), 
                 "Erro", 
                 JOptionPane.ERROR_MESSAGE);
         }
+    
     }//GEN-LAST:event_jBCadastrarActionPerformed
 
 
