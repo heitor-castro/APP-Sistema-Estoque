@@ -33,7 +33,7 @@ public class ConsultaProdutos extends javax.swing.JInternalFrame {
         //1. define as colunas da tabela
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("ID");
-        model.addColumn("Nome");
+        model.addColumn("Descrição");
         model.addColumn("Valor Unitário");
         model.addColumn("Tipo");
         model.addColumn("Quantidade");
@@ -47,7 +47,7 @@ public class ConsultaProdutos extends javax.swing.JInternalFrame {
         String nomeTipo = buscarNomeTipo(p.getTipoId(), tipos);
         model.addRow(new Object[]{
             p.getId(),
-            p.getnome(),
+            p.getDescricao(),
             p.getValorUnitario(), // sem formatação de string, lembra do bug anterior
             nomeTipo,
             p.getQuantidade()
@@ -112,7 +112,7 @@ public class ConsultaProdutos extends javax.swing.JInternalFrame {
         //monta um Produto com os dados da linha selecionada
         Produto p = new Produto();
         p.setId((int) jTable1.getValueAt(linha, 0));
-        p.setnome((String) jTable1.getValueAt(linha, 1));
+        p.setDescricao((String) jTable1.getValueAt(linha, 1));
         p.setValorUnitario((Double) jTable1.getValueAt(linha, 2));
         p.setQuantidade((int) jTable1.getValueAt(linha, 4));
 
@@ -150,7 +150,7 @@ public class ConsultaProdutos extends javax.swing.JInternalFrame {
                 {null, null, null, null, null}
             },
             new String [] {
-                "Id", "Nome", "Valor Unitário", "Tipo", "Quantidade"
+                "Id", "Descrição", "Valor Unitário", "Tipo", "Quantidade"
             }
         ));
         jScrollPane1.setViewportView(jTable1);

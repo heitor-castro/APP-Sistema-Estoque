@@ -41,7 +41,7 @@ public class EditarProduto extends javax.swing.JDialog {
     private void preencherCampos() {
         jTFId.setText(String.valueOf(produto.getId()));
         jTFId.setEditable(false); //ID não deve ser alterado
-        jTFNome.setText(produto.getnome());
+        jTFDescricao.setText(produto.getDescricao());
         jTFValorUnitario.setText(String.valueOf(produto.getValorUnitario()));
         jTFQuantidade.setText(String.valueOf(produto.getQuantidade()));
 
@@ -66,8 +66,8 @@ public class EditarProduto extends javax.swing.JDialog {
 
         jLId = new javax.swing.JLabel();
         jTFId = new javax.swing.JTextField();
-        jLNome = new javax.swing.JLabel();
-        jTFNome = new javax.swing.JTextField();
+        jLDescricao = new javax.swing.JLabel();
+        jTFDescricao = new javax.swing.JTextField();
         jLQuantidade = new javax.swing.JLabel();
         jTFQuantidade = new javax.swing.JTextField();
         jLTipo = new javax.swing.JLabel();
@@ -83,7 +83,7 @@ public class EditarProduto extends javax.swing.JDialog {
         jTFId.setEditable(false);
         jTFId.setText("Não Editável");
 
-        jLNome.setText("Nome");
+        jLDescricao.setText("Nome");
 
         jLQuantidade.setText("Quantidade");
 
@@ -105,12 +105,12 @@ public class EditarProduto extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTFId)
-                            .addComponent(jTFNome)
+                            .addComponent(jTFDescricao)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLId, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLNome, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 86, Short.MAX_VALUE))
                             .addComponent(jTFQuantidade))
                         .addGap(18, 18, 18)
@@ -135,11 +135,11 @@ public class EditarProduto extends javax.swing.JDialog {
                     .addComponent(jLTipo))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLNome)
+                    .addComponent(jLDescricao)
                     .addComponent(jLValorUnitario))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTFNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTFDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTFValorUnitario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLQuantidade)
@@ -156,14 +156,14 @@ public class EditarProduto extends javax.swing.JDialog {
     private void jBAtualizarCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAtualizarCadastroActionPerformed
         // TODO add your handling code here:
         //2. valida campos vazios (tipo agora vem do combo, não precisa checar texto)
-        if (jTFNome.getText().isEmpty() || jTFValorUnitario.getText().isEmpty()
+        if (jTFDescricao.getText().isEmpty() || jTFValorUnitario.getText().isEmpty()
             || jTFQuantidade.getText().isEmpty() || jCBTipo.getSelectedItem() == null) {
             JOptionPane.showMessageDialog(this, "Todos os campos devem ser preenchidos!", "Erro", JOptionPane.ERROR_MESSAGE);
             return;
         }
         try {
             //3. converte e atualiza o objeto produto
-            produto.setnome(jTFNome.getText());
+            produto.setDescricao(jTFDescricao.getText());
             produto.setValorUnitario(Double.parseDouble(jTFValorUnitario.getText()));
             produto.setQuantidade(Integer.parseInt(jTFQuantidade.getText()));
 
@@ -189,13 +189,13 @@ public class EditarProduto extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBAtualizarCadastro;
     private javax.swing.JComboBox<TipoProduto> jCBTipo;
+    private javax.swing.JLabel jLDescricao;
     private javax.swing.JLabel jLId;
-    private javax.swing.JLabel jLNome;
     private javax.swing.JLabel jLQuantidade;
     private javax.swing.JLabel jLTipo;
     private javax.swing.JLabel jLValorUnitario;
+    private javax.swing.JTextField jTFDescricao;
     private javax.swing.JTextField jTFId;
-    private javax.swing.JTextField jTFNome;
     private javax.swing.JTextField jTFQuantidade;
     private javax.swing.JTextField jTFValorUnitario;
     // End of variables declaration//GEN-END:variables

@@ -38,7 +38,7 @@ public class ProdutoDAO {
             PreparedStatement stmt = conexao.prepareStatement(sql);
             // 3. Troca os "?" do SQL pelos dados do objeto
             stmt.setInt(1, obj.getId());
-            stmt.setString(2, obj.getnome());
+            stmt.setString(2, obj.getDescricao());
             stmt.setDouble(3, obj.getValorUnitario());
             stmt.setInt(4, obj.getQuantidade());
             stmt.setInt(5, obj.getTipoId());
@@ -62,7 +62,7 @@ public class ProdutoDAO {
             PreparedStatement stmt = conexao.prepareStatement(sql);
             // 3. Troca os "?" do SQL pelos dados do objeto
             stmt.setInt(1, obj.getId());
-            stmt.setString(2, obj.getnome());
+            stmt.setString(2, obj.getDescricao());
             stmt.setDouble(3, obj.getValorUnitario());
             stmt.setInt(4, obj.getQuantidade());
             stmt.setInt(5, obj.getTipoId());
@@ -109,7 +109,7 @@ public class ProdutoDAO {
             while (rs.next()) {
                 Produto obj = new Produto();
                 obj.setId(rs.getInt("id"));
-                obj.setnome(rs.getString("descricao"));
+                obj.setDescricao(rs.getString("descricao"));
                 obj.setValorUnitario(rs.getDouble("valor_unit"));
                 obj.setQuantidade(rs.getInt("quantidade"));
                 obj.setTipoId(rs.getInt("tipo_id"));

@@ -51,12 +51,12 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="jTFNome" alignment="0" pref="223" max="32767" attributes="0"/>
+                                  <Component id="jTFDescricao" alignment="0" pref="223" max="32767" attributes="0"/>
                                   <Component id="jTFQuantidade" alignment="0" max="32767" attributes="0"/>
                                   <Component id="jLId" alignment="0" min="-2" pref="132" max="-2" attributes="0"/>
                                   <Component id="jTFId" alignment="0" max="32767" attributes="0"/>
                               </Group>
-                              <Component id="jLNome" alignment="0" min="-2" pref="132" max="-2" attributes="0"/>
+                              <Component id="jLDescricao" alignment="0" min="-2" pref="132" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -89,12 +89,12 @@
                   <Component id="jTFId" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jLNome" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLDescricao" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLValorUnitario" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jTFNome" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jTFDescricao" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jTFValorUnitario" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -108,12 +108,12 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JLabel" name="jLNome">
+    <Component class="javax.swing.JLabel" name="jLDescricao">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Nome"/>
+        <Property name="text" type="java.lang.String" value="Descri&#xe7;&#xe3;o"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTFNome">
+    <Component class="javax.swing.JTextField" name="jTFDescricao">
     </Component>
     <Component class="javax.swing.JButton" name="jBCadastrar">
       <Properties>
