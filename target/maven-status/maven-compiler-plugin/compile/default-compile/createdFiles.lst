@@ -3,6 +3,7 @@ com\mycompany\appsistemaestoque\view\ProdutoView.class
 com\mycompany\appsistemaestoque\view\TelaPrincipalView.class
 com\mycompany\appsistemaestoque\conexao\Conexao.class
 com\mycompany\appsistemaestoque\view\ConsultaTipoProdutoView$1.class
+com\mycompany\appsistemaestoque\view\ConsultaProdutos$1.class
 com\mycompany\appsistemaestoque\dao\ProdutoDAO.class
 com\mycompany\appsistemaestoque\view\ConsultaTipoProdutoView.class
 com\mycompany\appsistemaestoque\view\ConsultaProdutos.class
@@ -20,4 +21,5 @@ com\mycompany\appsistemaestoque\view\NotaEntradaView.class
 com\mycompany\appsistemaestoque\dao\NotaEntradaDAO.class
 com\mycompany\appsistemaestoque\model\ItemNotaEntrada.class
 com\mycompany\appsistemaestoque\view\ConsultaFornecedor$2.class
+com\mycompany\appsistemaestoque\view\EditarProduto.class
 com\mycompany\appsistemaestoque\dao\TipoProdutoDAO.class

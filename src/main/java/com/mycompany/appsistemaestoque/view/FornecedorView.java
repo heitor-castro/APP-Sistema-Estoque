@@ -35,7 +35,8 @@ public class FornecedorView extends javax.swing.JInternalFrame {
             ex.printStackTrace();
         }
     }
-     public FornecedorView(Fornecedor fornecedorParaEditar) {
+    
+    public FornecedorView(Fornecedor fornecedorParaEditar) {
         this(); // reaproveita o construtor de cima (initComponents + máscaras)
  
         modoEdicao = true;
@@ -70,41 +71,92 @@ public class FornecedorView extends javax.swing.JInternalFrame {
         jTRazaoSocial = new javax.swing.JTextField();
         jTTelefone = new javax.swing.JFormattedTextField();
         jTCNPJ = new javax.swing.JFormattedTextField();
-
+ 
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
         setTitle("Cadastro de Fornecedor");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-
+ 
         jLID.setText("ID:");
-
+ 
         jLRazaoSocial.setText("Razão Social:");
-
+ 
         jLCNPJ.setText("CNPJ:");
-
+ 
         jLTelefone.setText("Telefone:");
-
+ 
         jBCadastrar.setText("Cadastrar");
         jBCadastrar.addActionListener(this::jBCadastrarActionPerformed);
-
+ 
         try {
             jTTelefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) #####-####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
         jTTelefone.setToolTipText("");
-
+ 
         try {
             jTCNPJ.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##.###.###/####-##  ")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-
+ 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        
-    }
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(24, 24, 24)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLTelefone)
+                                    .addComponent(jLID)
+                                    .addComponent(jLCNPJ))
+                                .addGap(35, 35, 35))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLRazaoSocial)
+                                .addGap(18, 18, 18)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTRazaoSocial)
+                            .addComponent(jTID)
+                            .addComponent(jTTelefone)
+                            .addComponent(jTCNPJ, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(55, 55, 55)
+                        .addComponent(jBCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(50, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLID)
+                    .addComponent(jTID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLRazaoSocial)
+                    .addComponent(jTRazaoSocial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(21, 21, 21)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLCNPJ)
+                    .addComponent(jTCNPJ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLTelefone)
+                    .addComponent(jTTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(36, 36, 36)
+                .addComponent(jBCadastrar)
+                .addContainerGap(42, Short.MAX_VALUE))
+        );
+ 
+        pack();    
+    }// </editor-fold>    
     private void jBCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCadastrarActionPerformed
         // TODO add your handling code here:
         try {

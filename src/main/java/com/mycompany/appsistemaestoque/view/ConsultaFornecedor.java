@@ -65,48 +65,6 @@ public class ConsultaFornecedor extends javax.swing.JInternalFrame {
         fornecedor.setTelefone((String) jTable1.getValueAt(linha, 3));
         return fornecedor;
     }
- 
-    // Abre a tela de Cadastro já preenchida, em modo de edição
-    private void jBAlterarActionPerformed(java.awt.event.ActionEvent evt) {
-        Fornecedor selecionado = pegarFornecedorSelecionado();
-        if (selecionado == null) {
-            return; // nada selecionado, aviso já foi mostrado
-        }
- 
-        FornecedorView telaEdicao = new FornecedorView(selecionado);
- 
-        // ao fechar a tela de edição (depois de salvar), atualiza a tabela
-        telaEdicao.addInternalFrameListener(new javax.swing.event.InternalFrameAdapter() {
-            @Override
-            public void internalFrameClosed(javax.swing.event.InternalFrameEvent e) {
-                carregarTabela();
-            }
-        });
- 
-        getDesktopPane().add(telaEdicao);
-        telaEdicao.setVisible(true);
-    }
- 
-    // Exclui o fornecedor selecionado, com confirmação antes
-    private void jBExcluirActionPerformed(java.awt.event.ActionEvent evt) {
-        Fornecedor selecionado = pegarFornecedorSelecionado();
-        if (selecionado == null) {
-            return;
-        }
- 
-        int confirmacao = JOptionPane.showConfirmDialog(this,
-            "Tem certeza que deseja excluir \"" + selecionado.getRazaoSocial() + "\"?",
-            "Confirmar exclusão",
-            JOptionPane.YES_NO_OPTION);
- 
-        if (confirmacao != JOptionPane.YES_OPTION) {
-            return;
-        }
- 
-        new FornecedorDAO().excluir(selecionado);
-        carregarTabela(); // atualiza a lista depois de excluir
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -118,6 +76,8 @@ public class ConsultaFornecedor extends javax.swing.JInternalFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jBAlterar = new javax.swing.JButton();
+        jBExcluir = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -147,22 +107,85 @@ public class ConsultaFornecedor extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
+        jBAlterar.setText("Alterar");
+        jBAlterar.addActionListener(this::jBAlterarActionPerformed);
+
+        jBExcluir.setText("Excluir");
+        jBExcluir.addActionListener(this::jBExcluirActionPerformed);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE)
+            .addComponent(jScrollPane1)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(jBAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(48, 48, 48)
+                .addComponent(jBExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jBAlterar)
+                    .addComponent(jBExcluir))
+                .addGap(0, 22, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    // Abre a tela de Cadastro já preenchida, em modo de edição
+    private void jBAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAlterarActionPerformed
+        // TODO add your handling code here:
+        Fornecedor selecionado = pegarFornecedorSelecionado();
+        if (selecionado == null) {
+            return; // nada selecionado, aviso já foi mostrado
+        }
+ 
+        FornecedorView telaEdicao = new FornecedorView(selecionado);
+ 
+        // ao fechar a tela de edição (depois de salvar), atualiza a tabela
+        telaEdicao.addInternalFrameListener(new javax.swing.event.InternalFrameAdapter() {
+            @Override
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent e) {
+                carregarTabela();
+            }
+        });
+ 
+        getDesktopPane().add(telaEdicao);
+        telaEdicao.setVisible(true);
+    }//GEN-LAST:event_jBAlterarActionPerformed
+
+    // Exclui o fornecedor selecionado, com confirmação antes
+    private void jBExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBExcluirActionPerformed
+        // TODO add your handling code here:
+        Fornecedor selecionado = pegarFornecedorSelecionado();
+        if (selecionado == null) {
+            return;
+        }
+ 
+        int confirmacao = JOptionPane.showConfirmDialog(this,
+            "Tem certeza que deseja excluir \"" + selecionado.getRazaoSocial() + "\"?",
+            "Confirmar exclusão",
+            JOptionPane.YES_NO_OPTION);
+ 
+        if (confirmacao != JOptionPane.YES_OPTION) {
+            return;
+        }
+ 
+        new FornecedorDAO().excluir(selecionado);
+        carregarTabela(); // atualiza a lista depois de excluir
+    }//GEN-LAST:event_jBExcluirActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jBAlterar;
+    private javax.swing.JButton jBExcluir;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables

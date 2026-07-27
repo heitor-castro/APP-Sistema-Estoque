@@ -41,14 +41,14 @@ public class TelaPrincipalView extends javax.swing.JFrame {
 
         jdFundo = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenu4 = new javax.swing.JMenu();
-        jMFornecedor = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        jMArquivo = new javax.swing.JMenu();
+        jMSair = new javax.swing.JMenu();
+        jMCadastro = new javax.swing.JMenu();
+        jMFornecedor = new javax.swing.JMenuItem();
         jMTipoProduto = new javax.swing.JMenuItem();
         jMProduto = new javax.swing.JMenuItem();
         jMNotaEntrada = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
+        jMConsulta = new javax.swing.JMenu();
         jMConsultaFornecedor = new javax.swing.JMenuItem();
         jMConsultaTipoProduto = new javax.swing.JMenuItem();
         jMConsultaProdutos = new javax.swing.JMenuItem();
@@ -68,58 +68,58 @@ public class TelaPrincipalView extends javax.swing.JFrame {
             .addGap(0, 370, Short.MAX_VALUE)
         );
 
-        jMenu1.setText("Arquivo");
+        jMArquivo.setText("Arquivo");
 
-        jMenu4.setText("Sair");
-        jMenu4.addMouseListener(new java.awt.event.MouseAdapter() {
+        jMSair.setText("Sair");
+        jMSair.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jMenu4MouseClicked(evt);
+                jMSairMouseClicked(evt);
             }
         });
-        jMenu1.add(jMenu4);
+        jMArquivo.add(jMSair);
 
-        jMenuBar1.add(jMenu1);
+        jMenuBar1.add(jMArquivo);
 
-        jMFornecedor.setText("Cadastro");
+        jMCadastro.setText("Cadastro");
 
-        jMenuItem1.setText("Fornecedor");
-        jMenuItem1.addActionListener(this::jMenuItem1ActionPerformed);
-        jMFornecedor.add(jMenuItem1);
+        jMFornecedor.setText("Fornecedor");
+        jMFornecedor.addActionListener(this::jMFornecedorActionPerformed);
+        jMCadastro.add(jMFornecedor);
 
         jMTipoProduto.setText("Tipo de Produto");
         jMTipoProduto.addActionListener(this::jMTipoProdutoActionPerformed);
-        jMFornecedor.add(jMTipoProduto);
+        jMCadastro.add(jMTipoProduto);
 
         jMProduto.setText("Produto");
         jMProduto.addActionListener(this::jMProdutoActionPerformed);
-        jMFornecedor.add(jMProduto);
+        jMCadastro.add(jMProduto);
 
         jMNotaEntrada.setText("Nota de Entrada");
-        jMFornecedor.add(jMNotaEntrada);
+        jMCadastro.add(jMNotaEntrada);
 
-        jMenuBar1.add(jMFornecedor);
+        jMenuBar1.add(jMCadastro);
 
-        jMenu3.setText("Consulta");
+        jMConsulta.setText("Consulta");
 
         jMConsultaFornecedor.setText("Fornecedores");
         jMConsultaFornecedor.addActionListener(this::jMConsultaFornecedorActionPerformed);
-        jMenu3.add(jMConsultaFornecedor);
+        jMConsulta.add(jMConsultaFornecedor);
 
         jMConsultaTipoProduto.setText("Tipos de Produto");
         jMConsultaTipoProduto.addActionListener(this::jMConsultaTipoProdutoActionPerformed);
-        jMenu3.add(jMConsultaTipoProduto);
+        jMConsulta.add(jMConsultaTipoProduto);
 
         jMConsultaProdutos.setText("Produtos");
         jMConsultaProdutos.addActionListener(this::jMConsultaProdutosActionPerformed);
-        jMenu3.add(jMConsultaProdutos);
+        jMConsulta.add(jMConsultaProdutos);
 
         jMConsultaNotaEntrada.setText("Notas de Entrada");
-        jMenu3.add(jMConsultaNotaEntrada);
+        jMConsulta.add(jMConsultaNotaEntrada);
 
         jMConsultaItensNotaEntrada.setText("Itens Nota de Entrada");
-        jMenu3.add(jMConsultaItensNotaEntrada);
+        jMConsulta.add(jMConsultaItensNotaEntrada);
 
-        jMenuBar1.add(jMenu3);
+        jMenuBar1.add(jMConsulta);
 
         setJMenuBar(jMenuBar1);
 
@@ -141,10 +141,10 @@ public class TelaPrincipalView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenu4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu4MouseClicked
+    private void jMSairMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMSairMouseClicked
         // TODO add your handling code here:
         System.exit(0);
-    }//GEN-LAST:event_jMenu4MouseClicked
+    }//GEN-LAST:event_jMSairMouseClicked
 
     private void jMProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMProdutoActionPerformed
         // TODO add your handling code here:
@@ -156,14 +156,8 @@ public class TelaPrincipalView extends javax.swing.JFrame {
 
     private void jMTipoProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMTipoProdutoActionPerformed
         // TODO add your handling code here:
-        //Cria a instância da sua tela de Tipo de Produto
         TipoProdutoView telaTipo = new TipoProdutoView();
-
-        // 2. Adiciona essa tela dentro do painel principal da área de trabalho
-        // ATENÇÃO: Confirme se o nome do seu painel de fundo é jDesktopPane1
         jdFundo.add(telaTipo);
-
-        //Torna a tela visível para o usuário
         telaTipo.setVisible(true);
         
     }//GEN-LAST:event_jMTipoProdutoActionPerformed
@@ -175,12 +169,12 @@ public class TelaPrincipalView extends javax.swing.JFrame {
         telaConsulta.setVisible(true);
     }//GEN-LAST:event_jMConsultaTipoProdutoActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void jMFornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMFornecedorActionPerformed
         // TODO add your handling code here:
         FornecedorView form = new FornecedorView(); //CRIA UMA NOVA INSTÂNCIA
         jdFundo.add(form); // Adiciona a janela ao JDesktopPane da aplicação
         form.setVisible(true);// Torna a janela visível para o usuário
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_jMFornecedorActionPerformed
 
     private void jMConsultaProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMConsultaProdutosActionPerformed
         // TODO add your handling code here:
@@ -223,20 +217,20 @@ public class TelaPrincipalView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu jMArquivo;
+    private javax.swing.JMenu jMCadastro;
+    private javax.swing.JMenu jMConsulta;
     private javax.swing.JMenuItem jMConsultaFornecedor;
     private javax.swing.JMenuItem jMConsultaItensNotaEntrada;
     private javax.swing.JMenuItem jMConsultaNotaEntrada;
     private javax.swing.JMenuItem jMConsultaProdutos;
     private javax.swing.JMenuItem jMConsultaTipoProduto;
-    private javax.swing.JMenu jMFornecedor;
+    private javax.swing.JMenuItem jMFornecedor;
     private javax.swing.JMenuItem jMNotaEntrada;
     private javax.swing.JMenuItem jMProduto;
+    private javax.swing.JMenu jMSair;
     private javax.swing.JMenuItem jMTipoProduto;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JDesktopPane jdFundo;
     // End of variables declaration//GEN-END:variables
     
