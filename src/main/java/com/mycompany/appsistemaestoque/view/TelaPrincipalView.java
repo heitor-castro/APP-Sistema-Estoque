@@ -95,6 +95,7 @@ public class TelaPrincipalView extends javax.swing.JFrame {
         jMCadastro.add(jMProduto);
 
         jMNotaEntrada.setText("Nota de Entrada");
+        jMNotaEntrada.addActionListener(this::jMNotaEntradaActionPerformed);
         jMCadastro.add(jMNotaEntrada);
 
         jMenuBar1.add(jMCadastro);
@@ -189,6 +190,13 @@ public class TelaPrincipalView extends javax.swing.JFrame {
         jdFundo.add(consultaView);
         consultaView.setVisible(true);
     }//GEN-LAST:event_jMConsultaFornecedorActionPerformed
+
+    private void jMNotaEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMNotaEntradaActionPerformed
+        // TODO add your handling code here:
+        NotaEntradaView form = new NotaEntradaView();
+        jdFundo.add(form);
+        form.setVisible(true);
+    }//GEN-LAST:event_jMNotaEntradaActionPerformed
 
 
     /**

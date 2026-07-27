@@ -36,17 +36,16 @@ public class NotaEntradaDAO {
     public void cadastrarNotaEntrada(NotaEntrada obj) {
         
         //1. Comando SQL para inserir dados
-        //<<<<<<ATENCAO>>>>>> O ID é omitido pois é AUTO_INCREMENT no banco
-        String sql = "INSERT INTO nota_entrada (data_ent, valor_total_nota, fornecedor_id) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO nota_entrada (id, data_ent, valor_total_nota, fornecedor_id) VALUES (?, ?, ?, ?)";
         try {
             //2. Prepara o comando SQL para ser executado
             PreparedStatement stmt = conexao.prepareStatement(sql);
             
             //3. Troca os "?" do SQL pelos dados do objeto
-            //stmt.setInt(1, obj.getId()); OBS: Linha omitida, não é necessário Setar o ID.
-            stmt.setObject(1, obj.getDataEntrada());
-            stmt.setDouble(2, obj.getValorTotal());
-            stmt.setInt(3, obj.getIdFornecedor());
+            stmt.setInt(1, obj.getId());
+            stmt.setObject(2, obj.getDataEntrada());
+            stmt.setDouble(3, obj.getValorTotal());
+            stmt.setInt(4, obj.getIdFornecedor());
             
             //4. Executa o comando no banco de dados
             stmt.execute();
@@ -64,18 +63,17 @@ public class NotaEntradaDAO {
     public void alterarNotaEntrada(NotaEntrada obj) {
         
         //1. Comando SQL para sobrescrever dados
-        //<<<<<<ATENCAO>>>>>> O ID não deve ser modificado no 'SET' mas mantido no 'WHERE'.
-        String sql = "UPDATE nota_entrada SET data_ent = ?, valor_total_nota = ?, fornecedor_id = ? WHERE id = ?";
+        String sql = "UPDATE nota_entrada SET id = ?, data_ent = ?, valor_total_nota = ?, fornecedor_id = ? WHERE id = ?";
         try {
             //2. Prepara o comando SQL para ser executado
             PreparedStatement stmt = conexao.prepareStatement(sql);
             
             //3. Troca os "?" do SQL pelos dados do objeto
-            //stmt.setInt(1, obj.getId()); OBS: Linha omitida, não é necessário alterar o ID.
-            stmt.setObject(1, obj.getDataEntrada());
-            stmt.setDouble(2, obj.getValorTotal());
-            stmt.setInt(3, obj.getIdFornecedor());
-            stmt.setInt(4, obj.getId());
+            stmt.setInt(1, obj.getId());
+            stmt.setObject(2, obj.getDataEntrada());
+            stmt.setDouble(3, obj.getValorTotal());
+            stmt.setInt(4, obj.getIdFornecedor());
+            stmt.setInt(5, obj.getId());
             
             //4. Executa o comando no banco de dados
             stmt.execute();
