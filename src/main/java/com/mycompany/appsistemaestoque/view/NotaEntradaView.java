@@ -5,6 +5,7 @@
 package com.mycompany.appsistemaestoque.view;
 
 import com.mycompany.appsistemaestoque.model.NotaEntrada;
+import com.mycompany.appsistemaestoque.dao.NotaEntradaDAO;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
@@ -110,6 +111,13 @@ public class NotaEntradaView extends javax.swing.JInternalFrame {
 
     private void jBCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCadastrarActionPerformed
         // TODO add your handling code here:
+        
+        //Verifica ocorrência de campos vazios
+        if (jTID.getText().isEmpty() || jTDataDeEntrada.getText().isEmpty() || 
+            jTIDFornecedor.getText().isEmpty() || jTValorTotal.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Todos os campos devem ser preenchidos!", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         try {
             //Instanciar o modelo NotaEntrada
             NotaEntrada nota = new NotaEntrada();
@@ -124,10 +132,11 @@ public class NotaEntradaView extends javax.swing.JInternalFrame {
             nota.setIdFornecedor(Integer.parseInt(jTIDFornecedor.getText()));
             nota.setValorTotal(Double.parseDouble(jTValorTotal.getText()));
             
-            //Inserir códigos referentes à atualização e conexão com banco
+            //Salvar no banco
+            new NotaEntradaDAO().cadastrarNotaEntrada(nota);
             
             //Mensagem de sucesso para o usuário
-            JOptionPane.showMessageDialog(this, "Nota de Entrada registrada com sucesso!");
+            JOptionPane.showMessageDialog(rootPane, "Nota de Entrada cadastrada com sucesso!");
             
             //Limpar campos
             jTID.setText("");
@@ -135,8 +144,12 @@ public class NotaEntradaView extends javax.swing.JInternalFrame {
             jTIDFornecedor.setText("");
             jTValorTotal.setText("");
             
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Erro ao salvar: " + ex.getMessage());
+        } catch (java.time.format.DateTimeParseException e) {
+            JOptionPane.showMessageDialog(this, "Formato de data inválido! Use AAAA-MM-DD.");
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "ID e Valor devem ser numéricos!");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Erro: " + e.getMessage());
         }
     }//GEN-LAST:event_jBCadastrarActionPerformed
 
