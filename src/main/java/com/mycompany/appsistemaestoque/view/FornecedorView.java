@@ -22,7 +22,6 @@ public class FornecedorView extends javax.swing.JInternalFrame {
      */
     public FornecedorView() {
         initComponents();
-        initComponents();
         jTID.setEditable(false); // Adicione esta linha para bloquear o campo ID
         
          try {
