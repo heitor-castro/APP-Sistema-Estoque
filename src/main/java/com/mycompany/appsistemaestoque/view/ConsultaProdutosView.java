@@ -17,12 +17,12 @@ import javax.swing.table.DefaultTableModel;
  * @author Heitor
  */
 //Commit: Criada a interface ConsultaProdutos
-public class ConsultaProdutos extends javax.swing.JInternalFrame {
+public class ConsultaProdutosView extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form ConsultaProdutos
      */
-    public ConsultaProdutos() {
+    public ConsultaProdutosView() {
         initComponents();
         carregarTabela();
         configurarMenuContexto();
@@ -125,7 +125,7 @@ public class ConsultaProdutos extends javax.swing.JInternalFrame {
                 break;
             }
         }
-        EditarProduto dialog = new EditarProduto(null, true, p, this);
+        EditarProdutoView dialog = new EditarProdutoView(null, true, p, this);
         dialog.setVisible(true);
     }
     

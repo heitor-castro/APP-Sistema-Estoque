@@ -15,15 +15,15 @@ import javax.swing.JOptionPane;
  *
  * @author heito
  */
-public class EditarProduto extends javax.swing.JDialog {
+public class EditarProdutoView extends javax.swing.JDialog {
     
     private Produto produto;
-    private ConsultaProdutos telaConsulta; //referência pra atualizar a tabela depois de salvar
+    private ConsultaProdutosView telaConsulta; //referência pra atualizar a tabela depois de salvar
     
     /**
      * Creates new form EditarProduto
      */
-        public EditarProduto(java.awt.Frame parent, boolean modal, Produto produto, ConsultaProdutos telaConsulta) {
+        public EditarProdutoView(java.awt.Frame parent, boolean modal, Produto produto, ConsultaProdutosView telaConsulta) {
         super(parent, modal);
         initComponents();
         this.produto = produto;

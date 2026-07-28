@@ -16,12 +16,12 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author caioh
  */
-public class ConsultaNotaEntrada extends javax.swing.JInternalFrame {
+public class ConsultaNotaEntradaView extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form ConsultaNotaEntrada
      */
-    public ConsultaNotaEntrada() {
+    public ConsultaNotaEntradaView() {
         initComponents();
         carregarTabela();
         configurarMenuContexto();
@@ -108,7 +108,7 @@ public class ConsultaNotaEntrada extends javax.swing.JInternalFrame {
         n.setIdFornecedor((int) jTable1.getValueAt(linha, 2));
         n.setValorTotal((double) jTable1.getValueAt(linha, 3));
         
-        EditarNotaEntrada dialog = new EditarNotaEntrada(null, true, n, this);
+        EditarNotaEntradaView dialog = new EditarNotaEntradaView(null, true, n, this);
         dialog.setVisible(true);
     }
 

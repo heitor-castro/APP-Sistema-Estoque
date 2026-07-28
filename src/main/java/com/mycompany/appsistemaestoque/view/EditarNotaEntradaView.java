@@ -14,16 +14,16 @@ import javax.swing.JOptionPane;
  *
  * @author caioh
  */
-public class EditarNotaEntrada extends javax.swing.JDialog {
+public class EditarNotaEntradaView extends javax.swing.JDialog {
 
     private NotaEntrada nota;
-    private ConsultaNotaEntrada telaConsulta; //referência pra atualizar a tabela depois de salvar
+    private ConsultaNotaEntradaView telaConsulta; //referência pra atualizar a tabela depois de salvar
     
     /**
      * Creates new form EditarNotaEntrada
      */
     
-    public EditarNotaEntrada(java.awt.Frame parent, boolean modal, NotaEntrada nota, ConsultaNotaEntrada telaConsulta) {
+    public EditarNotaEntradaView(java.awt.Frame parent, boolean modal, NotaEntrada nota, ConsultaNotaEntradaView telaConsulta) {
         super(parent, modal);
         initComponents();
         this.nota = nota;
@@ -94,23 +94,27 @@ public class EditarNotaEntrada extends javax.swing.JDialog {
     private void jBAtualizarCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAtualizarCadastroActionPerformed
         // TODO add your handling code here:
         try {
-            //Converte e atualiza o objeto Nota de Entrada
-            
-            //Converte a String para LocalDate (formato esperado: AAAA-MM-DD)
-            nota.setDataEntrada(java.time.LocalDate.parse(jTDataDeEntrada.getText().trim()));
-            nota.setValorTotal(Double.parseDouble(jTValorTotal.getText()));
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Digite valores numéricos válidos!", "Erro", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+        // TODO add your handling code here:
+        // Converte a String para LocalDate (formato esperado: AAAA-MM-DD)
+        nota.setDataEntrada(java.time.LocalDate.parse(jTDataDeEntrada.getText().trim()));
+        nota.setValorTotal(Double.parseDouble(jTValorTotal.getText().replace(",", "."))); // Replace previne erro se digitar vírgula
         
-        //4. salva no banco
-        new NotaEntradaDAO().alterarNotaEntrada(nota);
-        JOptionPane.showMessageDialog(this, "Nota de Entrada alterada com sucesso!");
+    } catch (NumberFormatException ex) {
+        JOptionPane.showMessageDialog(this, "Digite valores numéricos válidos no Valor Total!", "Erro", JOptionPane.ERROR_MESSAGE);
+        return; // Para a execução aqui
+    } catch (java.time.format.DateTimeParseException ex) {
+        // CATCH NOVO: Captura o erro da data incompleta ou formatada errada
+        JOptionPane.showMessageDialog(this, "Data inválida! Digite o formato completo: AAAA-MM-DD (Ex: 2025-07-28)", "Erro de Data", JOptionPane.ERROR_MESSAGE);
+        return; // Para a execução aqui
+    }
         
-        //5. atualiza a tabela da tela de consulta e fecha o diálogo
-        telaConsulta.carregarTabela();
-        dispose();
+    //4. salva no banco
+    new NotaEntradaDAO().alterarNotaEntrada(nota);
+    JOptionPane.showMessageDialog(this, "Nota de Entrada alterada com sucesso!");
+        
+    //5. atualiza a tabela da tela de consulta e fecha o diálogo
+    telaConsulta.carregarTabela();
+    dispose();
     }//GEN-LAST:event_jBAtualizarCadastroActionPerformed
 
     /**

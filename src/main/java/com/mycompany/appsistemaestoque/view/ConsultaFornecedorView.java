@@ -13,12 +13,12 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author cadu0
  */
-public class ConsultaFornecedor extends javax.swing.JInternalFrame {
+public class ConsultaFornecedorView extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form ConsultaFornecedor
      */
-    public ConsultaFornecedor() {
+    public ConsultaFornecedorView() {
         initComponents();
         carregarTabela();
     }
