@@ -7,7 +7,9 @@ package com.mycompany.appsistemaestoque.view;
 import com.mycompany.appsistemaestoque.dao.FornecedorDAO;
 import com.mycompany.appsistemaestoque.model.Fornecedor;
 import java.util.List;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
 import javax.swing.table.DefaultTableModel;
 /**
  *
@@ -15,16 +17,18 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ConsultaFornecedorView extends javax.swing.JInternalFrame {
 
+    private final JPopupMenu menuContexto = new JPopupMenu();
     /**
      * Creates new form ConsultaFornecedor
      */
     public ConsultaFornecedorView() {
         initComponents();
         carregarTabela();
+        configurarMenuContexto();
     }
  
     //monta o cabeçalho e preenche a tabela com os dados do banco
-    private void carregarTabela() {
+    void carregarTabela() {
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("ID");
         model.addColumn("Razão Social");
@@ -64,6 +68,84 @@ public class ConsultaFornecedorView extends javax.swing.JInternalFrame {
         fornecedor.setTelefone((String) jTable1.getValueAt(linha, 3));
         return fornecedor;
     }
+    
+    private void configurarMenuContexto() {
+        JMenuItem itemAlterar = new JMenuItem("Alterar");
+        itemAlterar.addActionListener(evt -> alterarFornecedorSelecionado());
+ 
+        JMenuItem itemExcluir = new JMenuItem("Excluir");
+        itemExcluir.addActionListener(evt -> excluirFornecedorSelecionado());
+ 
+        menuContexto.add(itemAlterar);
+        menuContexto.add(itemExcluir);
+ 
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                mostrarMenuSeForCliqueDireito(evt);
+            }
+ 
+            @Override
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                mostrarMenuSeForCliqueDireito(evt);
+            }
+        });
+    }
+    private void mostrarMenuSeForCliqueDireito(java.awt.event.MouseEvent evt) {
+        if (!evt.isPopupTrigger()) {
+            return;
+        }
+ 
+        int linha = jTable1.rowAtPoint(evt.getPoint());
+        if (linha < 0) {
+            return; // clicou fora de qualquer linha, não mostra o menu
+        }
+ 
+        jTable1.setRowSelectionInterval(linha, linha);
+        menuContexto.show(jTable1, evt.getX(), evt.getY());
+    }
+ 
+    // Abre a tela de edição (EditarFornecedor) já preenchida com os dados
+    // da linha selecionada. Como é um JDialog modal, quando ele fecha a
+    // tabela já foi atualizada por ele mesmo (chama telaConsulta.carregarTabela())
+    private void alterarFornecedorSelecionado() {
+        Fornecedor selecionado = pegarFornecedorSelecionado();
+        if (selecionado == null) {
+            return;
+        }
+ 
+        java.awt.Frame janelaPrincipal = (java.awt.Frame) javax.swing.SwingUtilities.getWindowAncestor(this);
+        EditarFornecedor dialogo = new EditarFornecedor(janelaPrincipal, true, selecionado, this);
+        dialogo.setVisible(true);
+    }
+    
+    private void excluirFornecedorSelecionado() {
+        Fornecedor selecionado = pegarFornecedorSelecionado();
+        if (selecionado == null) {
+            return;
+        }
+ 
+        FornecedorDAO dao = new FornecedorDAO();
+        if (dao.temNotaVinculada(selecionado.getID())) {
+            JOptionPane.showMessageDialog(this,
+                "Não é possível excluir! Este fornecedor possui Notas de Entrada registradas.",
+                "Bloqueio de Exclusão",
+                JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+ 
+        int confirmacao = JOptionPane.showConfirmDialog(this,
+            "Tem certeza que deseja excluir \"" + selecionado.getRazaoSocial() + "\"?",
+            "Confirmar exclusão",
+            JOptionPane.YES_NO_OPTION);
+ 
+        if (confirmacao != JOptionPane.YES_OPTION) {
+            return;
+        }
+ 
+        dao.excluir(selecionado);
+        carregarTabela();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -75,8 +157,6 @@ public class ConsultaFornecedorView extends javax.swing.JInternalFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jBAlterar = new javax.swing.JButton();
-        jBExcluir = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -106,101 +186,22 @@ public class ConsultaFornecedorView extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
-        jBAlterar.setText("Alterar");
-        jBAlterar.addActionListener(this::jBAlterarActionPerformed);
-
-        jBExcluir.setText("Excluir");
-        jBExcluir.addActionListener(this::jBExcluirActionPerformed);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(jBAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48)
-                .addComponent(jBExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jBAlterar)
-                    .addComponent(jBExcluir))
-                .addGap(0, 22, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    // Abre a tela de Cadastro já preenchida, em modo de edição
-    private void jBAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAlterarActionPerformed
-        // TODO add your handling code here:
-        Fornecedor selecionado = pegarFornecedorSelecionado();
-        if (selecionado == null) {
-            return; // nada selecionado, aviso já foi mostrado
-        }
- 
-        FornecedorView telaEdicao = new FornecedorView(selecionado);
- 
-        // ao fechar a tela de edição (depois de salvar), atualiza a tabela
-        telaEdicao.addInternalFrameListener(new javax.swing.event.InternalFrameAdapter() {
-            @Override
-            public void internalFrameClosed(javax.swing.event.InternalFrameEvent e) {
-                carregarTabela();
-            }
-        });
- 
-        getDesktopPane().add(telaEdicao);
-        telaEdicao.setVisible(true);
-    }//GEN-LAST:event_jBAlterarActionPerformed
-
-    // Exclui o fornecedor selecionado, com confirmação antes
-    private void jBExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBExcluirActionPerformed
-        // TODO add your handling code here:
-        // Exclui o fornecedor selecionado, com confirmação antes
-                                 
-        Fornecedor selecionado = pegarFornecedorSelecionado();
-        if (selecionado == null) {
-            return;
-        }
-
-       
-        FornecedorDAO dao = new FornecedorDAO();
-        if (dao.temNotaVinculada(selecionado.getID())) {
-            JOptionPane.showMessageDialog(this,
-                "Não é possível excluir! Este fornecedor possui Notas de Entrada registradas.",
-                "Bloqueio de Exclusão",
-                JOptionPane.WARNING_MESSAGE);
-            return; // Interrompe o código e impede a exclusão
-        }
-        // --------------------------------
-
-        // 2. Se passou da verificação, pede a confirmação
-        int confirmacao = JOptionPane.showConfirmDialog(this,
-            "Tem certeza que deseja excluir \"" + selecionado.getRazaoSocial() + "\"?",
-            "Confirmar exclusão",
-            JOptionPane.YES_NO_OPTION);
-
-        if (confirmacao != JOptionPane.YES_OPTION) {
-            return;
-        }
-
-        // 3. Exclui e atualiza a tabela
-        dao.excluir(selecionado); 
-        carregarTabela(); // atualiza a lista depois de excluir
-    
-    }//GEN-LAST:event_jBExcluirActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jBAlterar;
-    private javax.swing.JButton jBExcluir;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables

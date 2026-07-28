@@ -1,6 +1,6 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
 package com.mycompany.appsistemaestoque.view;
 
@@ -13,26 +13,39 @@ import javax.swing.text.MaskFormatter;
  *
  * @author cadu0
  */
-public class FornecedorView extends javax.swing.JInternalFrame {
-
-    public FornecedorView() {
-        initComponents();
-
-        jTID.setEditable(false); // Adicione esta linha para bloquear o campo ID
-        
-        try {
-
-            MaskFormatter maskTelefone = new MaskFormatter("(##) #####-####");
-            maskTelefone.setPlaceholderCharacter('_');
-            jTTelefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(maskTelefone));
+public class EditarFornecedor extends javax.swing.JDialog {
+    private Fornecedor fornecedor;
+    private ConsultaFornecedorView telaConsulta; // referência pra atualizar a tabela depois de salvar
  
+    /**
+     * Creates new form EditarFornecedor
+     */
+    public EditarFornecedor(java.awt.Frame parent, boolean modal, Fornecedor fornecedor, ConsultaFornecedor telaConsulta) {
+        super(parent, modal);
+        initComponents();
+ 
+        try {
             MaskFormatter maskCNPJ = new MaskFormatter("##.###.###/####-##");
             maskCNPJ.setPlaceholderCharacter('_');
             jTCNPJ.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(maskCNPJ));
  
+            MaskFormatter maskTelefone = new MaskFormatter("(##) #####-####");
+            maskTelefone.setPlaceholderCharacter('_');
+            jTTelefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(maskTelefone));
         } catch (ParseException ex) {
             ex.printStackTrace();
         }
+ 
+        this.fornecedor = fornecedor;
+        this.telaConsulta = telaConsulta;
+        preencherCampos();
+    }
+ 
+    // preenche os campos com os dados do fornecedor selecionado na tabela
+    private void preencherCampos() {
+        jTRazaoSocial.setText(fornecedor.getRazaoSocial());
+        jTCNPJ.setText(fornecedor.getCNPJ());
+        jTTelefone.setText(fornecedor.getTelefone());
     }
 
     /**
@@ -44,38 +57,19 @@ public class FornecedorView extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jBAtualizarCadastro = new javax.swing.JButton();
+        jTCNPJ = new javax.swing.JFormattedTextField();
+        jTTelefone = new javax.swing.JFormattedTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jTRazaoSocial = new javax.swing.JTextField();
-        jBCadastrar = new javax.swing.JButton();
-        jTCNPJ = new javax.swing.JFormattedTextField();
-        jTTelefone = new javax.swing.JFormattedTextField();
 
-        setClosable(true);
-        setIconifiable(true);
-        setMaximizable(true);
-        setResizable(true);
-        setTitle("Cadastro de Fornecedor");
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel1.setText("CNPJ:");
-
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel2.setText("Telefone:");
-
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel3.setText("Razão Social:");
-
-        jTRazaoSocial.addActionListener(this::jTRazaoSocialActionPerformed);
-
-        jBCadastrar.setText("Cadastrar");
-        jBCadastrar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jBCadastrarMouseClicked(evt);
-            }
-        });
-        jBCadastrar.addActionListener(this::jBCadastrarActionPerformed);
+        jBAtualizarCadastro.setText("Atualizar Cadastro");
+        jBAtualizarCadastro.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jBAtualizarCadastro.addActionListener(this::jBAtualizarCadastroActionPerformed);
 
         try {
             jTCNPJ.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##.###.###/####-##")));
@@ -89,12 +83,23 @@ public class FornecedorView extends javax.swing.JInternalFrame {
             ex.printStackTrace();
         }
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel1.setText("CNPJ:");
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel2.setText("Telefone:");
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel3.setText("Razão Social:");
+
+        jTRazaoSocial.addActionListener(this::jTRazaoSocialActionPerformed);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
+                .addGap(39, 39, 39)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -106,16 +111,16 @@ public class FornecedorView extends javax.swing.JInternalFrame {
                                 .addGap(15, 15, 15)))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTCNPJ, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
+                            .addComponent(jTCNPJ)
                             .addComponent(jTTelefone)
-                            .addComponent(jTRazaoSocial)))
-                    .addComponent(jBCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(48, Short.MAX_VALUE))
+                            .addComponent(jTRazaoSocial, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jBAtualizarCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(45, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(33, 33, 33)
+                .addGap(48, 48, 48)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jTRazaoSocial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -128,20 +133,16 @@ public class FornecedorView extends javax.swing.JInternalFrame {
                     .addComponent(jLabel2)
                     .addComponent(jTTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(38, 38, 38)
-                .addComponent(jBCadastrar)
-                .addContainerGap(57, Short.MAX_VALUE))
+                .addComponent(jBAtualizarCadastro)
+                .addContainerGap(68, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTRazaoSocialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTRazaoSocialActionPerformed
+    private void jBAtualizarCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAtualizarCadastroActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTRazaoSocialActionPerformed
-
-    private void jBCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCadastrarActionPerformed
-        // TODO add your handling code here:
-        try {
+         // valida os campos antes de salvar
         if (jTRazaoSocial.getText().trim().isEmpty()
             || jTCNPJ.getText().contains("_")
             || jTTelefone.getText().contains("_")) {
@@ -150,43 +151,26 @@ public class FornecedorView extends javax.swing.JInternalFrame {
             return;
         }
  
-        Fornecedor fornecedor = new Fornecedor();
+        // atualiza o objeto fornecedor com os dados da tela
         fornecedor.setRazaoSocial(jTRazaoSocial.getText().trim());
         fornecedor.setCNPJ(jTCNPJ.getText().trim());
         fornecedor.setTelefone(jTTelefone.getText().trim());
  
-        new FornecedorDAO().cadastrar(fornecedor);
+        // salva no banco
+        new FornecedorDAO().alterar(fornecedor);
+        JOptionPane.showMessageDialog(this, "Fornecedor alterado com sucesso!");
  
-        JOptionPane.showMessageDialog(this, 
-            "Fornecedor cadastrado com sucesso!", 
-            "Sucesso", 
-            JOptionPane.INFORMATION_MESSAGE);
-        
-        // Limpar campos
-        jTCNPJ.setText("");
-        jTTelefone.setText("");
-        jTRazaoSocial.setText("");
-        
-        } catch (IllegalArgumentException e) {
-            JOptionPane.showMessageDialog(this, 
-                e.getMessage(), 
-                "Erro de validação", 
-                JOptionPane.ERROR_MESSAGE);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, 
-                "Erro ao cadastrar fornecedor: " + e.getMessage(), 
-                "Erro", 
-                JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_jBCadastrarActionPerformed
+        // atualiza a tabela da tela de consulta e fecha o diálogo
+        telaConsulta.carregarTabela();
+        dispose();
+    }//GEN-LAST:event_jBAtualizarCadastroActionPerformed
 
-    private void jBCadastrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jBCadastrarMouseClicked
+    private void jTRazaoSocialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTRazaoSocialActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jBCadastrarMouseClicked
-
+    }//GEN-LAST:event_jTRazaoSocialActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jBCadastrar;
+    private javax.swing.JButton jBAtualizarCadastro;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

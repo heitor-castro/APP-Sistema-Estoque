@@ -94,11 +94,11 @@ public class FornecedorDAO {
             
             if (rs.next()) {
                 int totalNotas = rs.getInt(1);
-                return totalNotas > 0; // Retorna verdadeiro se existir alguma nota
+                rs.close();
+                stmt.close();
+                return totalNotas > 0; 
             }
             
-            rs.close();
-            stmt.close();
         } catch (SQLException erro) {
             JOptionPane.showMessageDialog(null, "Erro ao verificar vínculos: " + erro);
         }
