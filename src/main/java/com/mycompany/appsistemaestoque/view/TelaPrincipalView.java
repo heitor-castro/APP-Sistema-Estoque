@@ -115,6 +115,7 @@ public class TelaPrincipalView extends javax.swing.JFrame {
         jMConsulta.add(jMConsultaProdutos);
 
         jMConsultaNotaEntrada.setText("Notas de Entrada");
+        jMConsultaNotaEntrada.addActionListener(this::jMConsultaNotaEntradaActionPerformed);
         jMConsulta.add(jMConsultaNotaEntrada);
 
         jMConsultaItensNotaEntrada.setText("Itens Nota de Entrada");
@@ -179,14 +180,14 @@ public class TelaPrincipalView extends javax.swing.JFrame {
 
     private void jMConsultaProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMConsultaProdutosActionPerformed
         // TODO add your handling code here:
-        ConsultaProdutos consultaView = new ConsultaProdutos();
+        ConsultaProdutosView consultaView = new ConsultaProdutosView();
         jdFundo.add(consultaView);
         consultaView.setVisible(true);
     }//GEN-LAST:event_jMConsultaProdutosActionPerformed
 
     private void jMConsultaFornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMConsultaFornecedorActionPerformed
         // TODO add your handling code here:
-        ConsultaFornecedor consultaView = new ConsultaFornecedor();
+        ConsultaFornecedorView consultaView = new ConsultaFornecedorView();
         jdFundo.add(consultaView);
         consultaView.setVisible(true);
     }//GEN-LAST:event_jMConsultaFornecedorActionPerformed
@@ -197,6 +198,13 @@ public class TelaPrincipalView extends javax.swing.JFrame {
         jdFundo.add(form);
         form.setVisible(true);
     }//GEN-LAST:event_jMNotaEntradaActionPerformed
+
+    private void jMConsultaNotaEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMConsultaNotaEntradaActionPerformed
+        // TODO add your handling code here:
+        ConsultaNotaEntradaView form = new ConsultaNotaEntradaView ();
+         jdFundo.add(form);
+         form.setVisible(true);
+    }//GEN-LAST:event_jMConsultaNotaEntradaActionPerformed
 
 
     /**

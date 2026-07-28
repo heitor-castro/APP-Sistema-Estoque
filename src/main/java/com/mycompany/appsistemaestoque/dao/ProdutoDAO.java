@@ -31,7 +31,7 @@ public class ProdutoDAO {
     //Método para salvar no banco
     public void cadastrarProduto(Produto obj){
         //1. Comando SQL para inserir dados
-        String sql = "INSERT INTO produto (descricao,valor_unit,quantidade,tipo_id) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO produto (descricao,valor_unit,quantidade,tipo_id) VALUES (?, ?, ?, ?)";
         
         try{
             //2. Prepara o comando SQL para ser executado
