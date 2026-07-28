@@ -17,8 +17,9 @@ public class FornecedorView extends javax.swing.JInternalFrame {
 
     public FornecedorView() {
         initComponents();
- 
+        
         try {
+
             MaskFormatter maskTelefone = new MaskFormatter("(##) #####-####");
             maskTelefone.setPlaceholderCharacter('_');
             jTTelefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(maskTelefone));

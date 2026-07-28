@@ -13,14 +13,14 @@ import javax.swing.text.MaskFormatter;
  *
  * @author cadu0
  */
-public class EditarFornecedor extends javax.swing.JDialog {
+public class EditarFornecedorView extends javax.swing.JDialog {
     private Fornecedor fornecedor;
-    private ConsultaFornecedor telaConsulta; // referência pra atualizar a tabela depois de salvar
+    private ConsultaFornecedorView telaConsulta; // referência pra atualizar a tabela depois de salvar
  
     /**
      * Creates new form EditarFornecedor
      */
-    public EditarFornecedor(java.awt.Frame parent, boolean modal, Fornecedor fornecedor, ConsultaFornecedor telaConsulta) {
+    public EditarFornecedorView(java.awt.Frame parent, boolean modal, Fornecedor fornecedor, ConsultaFornecedorView telaConsulta) {
         super(parent, modal);
         initComponents();
  
@@ -68,6 +68,7 @@ public class EditarFornecedor extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jBAtualizarCadastro.setText("Atualizar Cadastro");
+        jBAtualizarCadastro.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jBAtualizarCadastro.addActionListener(this::jBAtualizarCadastroActionPerformed);
 
         try {

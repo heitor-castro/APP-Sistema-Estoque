@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
  *
  * @author Henrique
  */
+//CLASSE QUE FAZ A CONEXÃO COM O BANCO DE DADOS
 public class Conexao {
     
     // Método que cria a conexão com o banco
@@ -22,21 +23,11 @@ public class Conexao {
         String senha = "mysql"; 
         
         try {
-            return DriverManager.getConnection(url, usuario, senha);
+            return DriverManager.getConnection(url, usuario, senha);//retorna a conexão com sucesso
         } catch (SQLException erro) {
             JOptionPane.showMessageDialog(null, "Erro na Conexão: " + erro.getMessage());
             return null;
         }
     }
     
-    //teste para ver se o banco de dados esta conectando
-    //public static void main(String[] args) {
-       // Connection con = getConexao();
-        
-     //   if (con != null) {
-     //     JOptionPane.showMessageDialog(null, "Deu tudo certo! Banco conectado no AMPPS.");
-     //   } else {
-     //      JOptionPane.showMessageDialog(null, "Erro: Não foi possível conectar ao banco.");
-      //  }
-   // }
 }

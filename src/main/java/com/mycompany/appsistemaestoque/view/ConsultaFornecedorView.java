@@ -115,7 +115,7 @@ public class ConsultaFornecedorView extends javax.swing.JInternalFrame {
         }
  
         java.awt.Frame janelaPrincipal = (java.awt.Frame) javax.swing.SwingUtilities.getWindowAncestor(this);
-        EditarFornecedor dialogo = new EditarFornecedor(janelaPrincipal, true, selecionado, this);
+        EditarFornecedorView dialogo = new EditarFornecedorView(janelaPrincipal, true, selecionado, this);
         dialogo.setVisible(true);
     }
     
@@ -194,9 +194,7 @@ public class ConsultaFornecedorView extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 27, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
         );
 
         pack();
