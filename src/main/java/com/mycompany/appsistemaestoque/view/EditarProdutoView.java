@@ -23,31 +23,32 @@ public class EditarProdutoView extends javax.swing.JDialog {
     /**
      * Creates new form EditarProduto
      */
+        //construtor recebe o produto selecionado e a tela de consulta pra atualizar depois
         public EditarProdutoView(java.awt.Frame parent, boolean modal, Produto produto, ConsultaProdutosView telaConsulta) {
-        super(parent, modal);
-        initComponents();
+        super(parent, modal); //chama o construtor do JDialog
+        initComponents(); //inicia o layout
         this.produto = produto;
         this.telaConsulta = telaConsulta;
-        carregarComboTipos();
-        preencherCampos();
+        carregarComboTipos(); //preenche o combo antes de usar os dados do produto
+        preencherCampos(); //preenche os campos com os dados do produto recebido
     }
+    //preenche o combo de tipos com os dados do banco
     private void carregarComboTipos() {
     List<TipoProduto> tipos = new TipoProdutoDAO().listarTipos();
     for (TipoProduto t : tipos) {
         jCBTipo.addItem(t);
     }
     }
-    //1. preenche os campos com os dados do produto selecionado na tabela
+    //preenche os campos com os dados do produto selecionado na tabela
     private void preencherCampos() {
         jTFDescricao.setText(produto.getDescricao());
         jTFValorUnitario.setText(String.valueOf(produto.getValorUnitario()));
         jTFQuantidade.setText(String.valueOf(produto.getQuantidade()));
-
-    //2. seleciona no combo o tipo que já é o do produto
+    //seleciona no combo o tipo que já é o do produto
         for (int i = 0; i < jCBTipo.getItemCount(); i++) {
             TipoProduto t = jCBTipo.getItemAt(i);
             if (t.getId() == produto.getTipoId()) {
-                jCBTipo.setSelectedItem(t);
+                jCBTipo.setSelectedItem(t); //encontrou, marca no combo e para o loop
                 break;
             }
         }
@@ -143,31 +144,31 @@ public class EditarProdutoView extends javax.swing.JDialog {
 
     private void jBAtualizarCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAtualizarCadastroActionPerformed
         // TODO add your handling code here:
-        //2. valida campos vazios (tipo agora vem do combo, não precisa checar texto)
+        //valida campos vazios 
         if (jTFDescricao.getText().isEmpty() || jTFValorUnitario.getText().isEmpty()
             || jTFQuantidade.getText().isEmpty() || jCBTipo.getSelectedItem() == null) {
             JOptionPane.showMessageDialog(this, "Todos os campos devem ser preenchidos!", "Erro", JOptionPane.ERROR_MESSAGE);
-            return;
+            return; //interrompe, não deixa salvar com campo vazio
         }
         try {
-            //3. converte e atualiza o objeto produto
+            //converte e atualiza o objeto produto
             produto.setDescricao(jTFDescricao.getText());
-            produto.setValorUnitario(Double.parseDouble(jTFValorUnitario.getText()));
-            produto.setQuantidade(Integer.parseInt(jTFQuantidade.getText()));
-
-            //3b. pega o tipo selecionado no combo e extrai o ID real
+            produto.setValorUnitario(Double.parseDouble(jTFValorUnitario.getText())); //converte string pra double
+            produto.setQuantidade(Integer.parseInt(jTFQuantidade.getText())); //converte string pra int
+            //pega o tipo selecionado no combo e extrai o ID real
             TipoProduto tipoSelecionado = (TipoProduto) jCBTipo.getSelectedItem();
             produto.setTipoId(tipoSelecionado.getId());
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Digite valores numéricos válidos!", "Erro", JOptionPane.ERROR_MESSAGE);
-            return;
+            return; //interrompe, valor digitado não é número válido
         }
-        //4. salva no banco
+        //salva no banco
         new ProdutoDAO().alterarProduto(produto);
         JOptionPane.showMessageDialog(this, "Produto alterado com sucesso!");
-        //5. atualiza a tabela da tela de consulta e fecha o diálogo
+        //atualiza a tabela da tela de consulta e fecha o diálogo
         telaConsulta.carregarTabela();
-        dispose();
+        dispose(); //fecha o JDialog
+ 
     }//GEN-LAST:event_jBAtualizarCadastroActionPerformed
 
     /**

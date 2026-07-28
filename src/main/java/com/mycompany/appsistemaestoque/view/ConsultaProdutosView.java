@@ -16,39 +16,40 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Heitor
  */
-//Commit: Criada a interface ConsultaProdutos
 public class ConsultaProdutosView extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form ConsultaProdutos
      */
     public ConsultaProdutosView() {
-        initComponents();
-        carregarTabela();
-        configurarMenuContexto();
+        initComponents();//inicia o layout
+        carregarTabela();//chamada da função da tabela
+        configurarMenuContexto();//chamada da função do botão direito
 
     }
-    //monta o cabeçalho e preenche a tabela com os dados do banco
+    //função para montar o cabeçalho e preencher a tabela com os dados do banco
     public void carregarTabela() {
-        //1. define as colunas da tabela
-        DefaultTableModel model = new DefaultTableModel();
+        //define as colunas da tabela
+        DefaultTableModel model = new DefaultTableModel();//classe vazia para tabelas
+        //preenche o cabeçaçho e cria as colunas
         model.addColumn("ID");
         model.addColumn("Descrição");
         model.addColumn("Valor Unitário");
         model.addColumn("Tipo");
         model.addColumn("Quantidade");
 
-        //2. busca os produtos no banco via DAO
-        List<Produto> lista = new ProdutoDAO().listar();
+        //busca os produtos no banco via DAO
+        List<Produto> lista = new ProdutoDAO().listar();//
         List<TipoProduto> tipos = new TipoProdutoDAO().listarTipos();
         
-        //3. adiciona cada produto como uma linha da tabela
+        //adiciona cada produto como uma linha da tabela
         for (Produto p : lista) {
         String nomeTipo = buscarNomeTipo(p.getTipoId(), tipos);
+        //preenche cada linha com seus respectivos atributos
         model.addRow(new Object[]{
             p.getId(),
             p.getDescricao(),
-            p.getValorUnitario(), // sem formatação de string, lembra do bug anterior
+            p.getValorUnitario(), 
             nomeTipo,
             p.getQuantidade()
         });
@@ -69,37 +70,40 @@ public class ConsultaProdutosView extends javax.swing.JInternalFrame {
         JMenuItem itemExcluir = new JMenuItem("Excluir");
         popup.add(itemAlterar);
         popup.add(itemExcluir);
-
+        
+        //adiciona um listener de mouse na tabela pra detectar clique direito
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mousePressed(java.awt.event.MouseEvent evt) {
+                //verifica se foi o botão direito (isPopupTrigger cobre variações entre SO)
                 if (evt.isPopupTrigger() || javax.swing.SwingUtilities.isRightMouseButton(evt)) {
-                    int linha = jTable1.rowAtPoint(evt.getPoint());
+                    int linha = jTable1.rowAtPoint(evt.getPoint());//descobre em qual linha o clique caiu
                     if (linha >= 0) {
                         jTable1.setRowSelectionInterval(linha, linha); //seleciona a linha clicada
-                        popup.show(jTable1, evt.getX(), evt.getY());
+                        popup.show(jTable1, evt.getX(), evt.getY());//exibe o menu na posição do clique
                     }
                 }
             }
         });
-
+        //liga cada item do menu ao seu respectivo método
         itemExcluir.addActionListener(e -> excluirLinhaSelecionada());
         itemAlterar.addActionListener(e -> alterarLinhaSelecionada());
     }
     //método para excluir cadastro
     private void excluirLinhaSelecionada() {
         int linha = jTable1.getSelectedRow();
-        if (linha < 0) return;
+        if (linha < 0) return;//se nenhuma linha selecionada, ignora
 
         int id = (int) jTable1.getValueAt(linha, 0); //coluna 0 = ID
 
         int resposta = JOptionPane.showConfirmDialog(this,
             "Deseja realmente excluir o produto ID " + id + "?",
             "Confirmar exclusão", JOptionPane.YES_NO_OPTION);
-
+    
+        //pede confirmação antes de excluir
         if (resposta == JOptionPane.YES_OPTION) {
             Produto p = new Produto();
-            p.setId(id);
+            p.setId(id);//só o ID é necessário pra excluir
             new ProdutoDAO().excluirProduto(p);
             carregarTabela(); //atualiza a lista após excluir
         }
@@ -107,7 +111,8 @@ public class ConsultaProdutosView extends javax.swing.JInternalFrame {
     //metodo para alterar cadastro
     private void alterarLinhaSelecionada() {
         int linha = jTable1.getSelectedRow();
-        if (linha < 0) return;
+        if (linha < 0) return;//se //nenhuma linha selecionada, ignora
+
 
         //monta um Produto com os dados da linha selecionada
         Produto p = new Produto();
@@ -118,9 +123,9 @@ public class ConsultaProdutosView extends javax.swing.JInternalFrame {
 
         // busca o tipoId real a partir do nome mostrado na tabela
         String nomeTipo = (String) jTable1.getValueAt(linha, 3);
-        List<TipoProduto> tipos = new TipoProdutoDAO().listarTipos();
+        List<TipoProduto> tipos = new TipoProdutoDAO().listarTipos();//busca todos os tipos de novo
         for (TipoProduto t : tipos) {
-            if (t.getDescricao().equals(nomeTipo)) {
+            if (t.getDescricao().equals(nomeTipo)) {//se encontrou o tipo, pega o ID real
                 p.setTipoId(t.getId());
                 break;
             }
