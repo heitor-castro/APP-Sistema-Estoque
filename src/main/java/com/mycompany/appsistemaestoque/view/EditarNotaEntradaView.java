@@ -6,6 +6,8 @@ package com.mycompany.appsistemaestoque.view;
 
 import com.mycompany.appsistemaestoque.dao.NotaEntradaDAO;
 import com.mycompany.appsistemaestoque.model.NotaEntrada;
+import com.mycompany.appsistemaestoque.dao.FornecedorDAO;
+import com.mycompany.appsistemaestoque.model.Fornecedor;
 import java.time.LocalDate;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -28,6 +30,45 @@ public class EditarNotaEntradaView extends javax.swing.JDialog {
         initComponents();
         this.nota = nota;
         this.telaConsulta = telaConsulta;
+        carregarComboIds();
+        carregarComboFornecedores();
+        preencherCampos();
+    }
+    
+    private void carregarComboFornecedores() {
+        List<Fornecedor> fornecedores = new FornecedorDAO().listar();
+        for (Fornecedor f : fornecedores) {
+            jCBFornecedor.addItem(f);
+        }
+    }
+    
+    private void carregarComboIds() {
+        List<NotaEntrada> notas = new NotaEntradaDAO().listar();
+        for (NotaEntrada n : notas) {
+            jCBId.addItem(n.getId());
+        }
+    }
+    
+    private void preencherCampos() {
+        jTDataDeEntrada.setText(nota.getDataEntrada().toString());
+        jTValorTotal.setText(String.valueOf(nota.getValorTotal()));
+
+        // Lógica de seleção do fornecedor implementada seguindo EditarProduto
+        for (int i = 0; i < jCBFornecedor.getItemCount(); i++) {
+            Fornecedor f = (Fornecedor) jCBFornecedor.getItemAt(i);
+            if (f.getID() == nota.getIdFornecedor()) {
+                jCBFornecedor.setSelectedItem(f);
+                break;
+            }
+        }
+        
+        // Lógica de seleção do ID da nota no combo-box
+        for (int i = 0; i < jCBId.getItemCount(); i++) {
+            if (jCBId.getItemAt(i).equals(nota.getId())) {
+                jCBId.setSelectedItem(jCBId.getItemAt(i));
+                break;
+            }
+        }
     }
     
     /**
@@ -44,6 +85,11 @@ public class EditarNotaEntradaView extends javax.swing.JDialog {
         jLValorTotal = new javax.swing.JLabel();
         jTValorTotal = new javax.swing.JTextField();
         jBAtualizarCadastro = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLId = new javax.swing.JLabel();
+        jCBId = new javax.swing.JComboBox<>();
+        jLFornecedor = new javax.swing.JLabel();
+        jCBFornecedor = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -54,35 +100,60 @@ public class EditarNotaEntradaView extends javax.swing.JDialog {
         jBAtualizarCadastro.setText("Atualizar Cadastro");
         jBAtualizarCadastro.addActionListener(this::jBAtualizarCadastroActionPerformed);
 
+        jLId.setText("ID da nota:");
+
+        jCBId.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jLFornecedor.setText("Fornecedor:");
+
+        jCBFornecedor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(59, 59, 59)
+                .addComponent(jBAtualizarCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(69, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLDataDeEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTDataDeEntrada)
+                    .addComponent(jLValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(59, 59, 59)
-                        .addComponent(jBAtualizarCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLDataDeEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTDataDeEntrada)
-                            .addComponent(jLValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(69, Short.MAX_VALUE))
+                        .addComponent(jLId)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jCBId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLFornecedor)
+                    .addComponent(jCBFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(96, 96, 96))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(34, 34, 34)
-                .addComponent(jLDataDeEntrada)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLDataDeEntrada)
+                    .addComponent(jLabel1)
+                    .addComponent(jLId))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTDataDeEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTDataDeEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jCBId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(24, 24, 24)
-                .addComponent(jLValorTotal)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLValorTotal)
+                    .addComponent(jLFornecedor))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jCBFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
                 .addComponent(jBAtualizarCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(41, 41, 41))
@@ -123,8 +194,13 @@ public class EditarNotaEntradaView extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBAtualizarCadastro;
+    private javax.swing.JComboBox<Fornecedor> jCBFornecedor;
+    private javax.swing.JComboBox<Integer> jCBId;
     private javax.swing.JLabel jLDataDeEntrada;
+    private javax.swing.JLabel jLFornecedor;
+    private javax.swing.JLabel jLId;
     private javax.swing.JLabel jLValorTotal;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JTextField jTDataDeEntrada;
     private javax.swing.JTextField jTValorTotal;
     // End of variables declaration//GEN-END:variables
