@@ -15,7 +15,7 @@ import javax.swing.text.MaskFormatter;
  */
 public class EditarFornecedor extends javax.swing.JDialog {
     private Fornecedor fornecedor;
-    private ConsultaFornecedor telaConsulta; // referência pra atualizar a tabela depois de salvar
+    private ConsultaFornecedorView telaConsulta; // referência pra atualizar a tabela depois de salvar
  
     /**
      * Creates new form EditarFornecedor
@@ -68,6 +68,7 @@ public class EditarFornecedor extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jBAtualizarCadastro.setText("Atualizar Cadastro");
+        jBAtualizarCadastro.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jBAtualizarCadastro.addActionListener(this::jBAtualizarCadastroActionPerformed);
 
         try {
