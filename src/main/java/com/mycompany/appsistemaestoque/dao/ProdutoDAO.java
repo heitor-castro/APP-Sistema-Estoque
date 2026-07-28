@@ -122,6 +122,36 @@ public class ProdutoDAO {
         }
         return lista;//retorna a lista
     }
+    //método para listar produtos filtrando por tipo (usado no combo de filtro da tela de consulta)
+    public List<Produto> listarPorTipo(int tipoId) {
+        //lista que vai guardar os produtos retornados
+        List<Produto> lista = new ArrayList<>();
+        //comando SQL para buscar só os produtos do tipo informado
+        String sql = "SELECT * FROM Produto WHERE tipo_id = ?";
+        try {
+            //prepara a consulta e define o parâmetro
+            PreparedStatement stmt = conexao.prepareStatement(sql);
+            stmt.setInt(1, tipoId);
+            ResultSet rs = stmt.executeQuery();
+            //percorre cada linha do resultado e monta um objeto Produto
+            while (rs.next()) {
+                Produto obj = new Produto();
+                obj.setId(rs.getInt("id"));
+                obj.setDescricao(rs.getString("descricao"));
+                obj.setValorUnitario(rs.getDouble("valor_unit"));
+                obj.setQuantidade(rs.getInt("quantidade"));
+                obj.setTipoId(rs.getInt("tipo_id"));
+                lista.add(obj);
+            }
+            //fecha recursos e retorna a lista
+            rs.close();
+            stmt.close();
+        } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(null, "Erro ao listar por tipo: " + erro);
+        }
+        return lista;
+    }
+    
 }
 
 

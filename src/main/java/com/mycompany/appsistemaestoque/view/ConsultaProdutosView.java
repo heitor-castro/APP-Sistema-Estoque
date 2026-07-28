@@ -23,40 +23,48 @@ public class ConsultaProdutosView extends javax.swing.JInternalFrame {
      */
     public ConsultaProdutosView() {
         initComponents();//inicia o layout
+        carregarComboFiltro();//popula o combo de filtro antes da tabela
         carregarTabela();//chamada da função da tabela
         configurarMenuContexto();//chamada da função do botão direito
-
     }
-    //função para montar o cabeçalho e preencher a tabela com os dados do banco
+    //monta o cabeçalho e preenche a tabela com os dados do banco, respeitando o filtro de tipo
     public void carregarTabela() {
         //define as colunas da tabela
         DefaultTableModel model = new DefaultTableModel();//classe vazia para tabelas
-        //preenche o cabeçaçho e cria as colunas
+        //preenche o cabeçalho e cria as colunas
         model.addColumn("ID");
         model.addColumn("Descrição");
         model.addColumn("Valor Unitário");
         model.addColumn("Tipo");
         model.addColumn("Quantidade");
 
-        //busca os produtos no banco via DAO
-        List<Produto> lista = new ProdutoDAO().listar();//
+        //pega o tipo selecionado no combo de filtro (null = "Todos")
+        TipoProduto filtro = (TipoProduto) jCBTipoFiltro.getSelectedItem();
+
+        //busca no banco já filtrado, se houver tipo selecionado
+        List<Produto> lista;
+        if (filtro == null) {
+            lista = new ProdutoDAO().listar(); //sem filtro, traz tudo
+        } else {
+            lista = new ProdutoDAO().listarPorTipo(filtro.getId()); //filtro ativo, traz só do tipo
+        }
         List<TipoProduto> tipos = new TipoProdutoDAO().listarTipos();
-        
+
         //adiciona cada produto como uma linha da tabela
         for (Produto p : lista) {
-        String nomeTipo = buscarNomeTipo(p.getTipoId(), tipos);
-        //preenche cada linha com seus respectivos atributos
-        model.addRow(new Object[]{
-            p.getId(),
-            p.getDescricao(),
-            p.getValorUnitario(), 
-            nomeTipo,
-            p.getQuantidade()
-        });
+            String nomeTipo = buscarNomeTipo(p.getTipoId(), tipos);
+            //preenche cada linha com seus respectivos atributos
+            model.addRow(new Object[]{
+                p.getId(),
+                p.getDescricao(),
+                p.getValorUnitario(),
+                nomeTipo,
+                p.getQuantidade()
+            });
         }
 
         jTable1.setModel(model);
-}
+    }
     private String buscarNomeTipo(int tipoId, List<TipoProduto> tipos) {
         for (TipoProduto t : tipos) {
             if (t.getId() == tipoId) return t.getDescricao();
@@ -133,6 +141,16 @@ public class ConsultaProdutosView extends javax.swing.JInternalFrame {
         EditarProdutoView dialog = new EditarProdutoView(null, true, p, this);
         dialog.setVisible(true);
     }
+    //preenche o combo de filtro com os tipos existentes, mais a opção "Todos" (null)
+    private void carregarComboFiltro() {
+        jCBTipoFiltro.addItem(null); //null representa "mostrar todos os tipos"
+        List<TipoProduto> tipos = new TipoProdutoDAO().listarTipos();//filtro ativo para trazer só do tipo
+        for (TipoProduto t : tipos) {
+            jCBTipoFiltro.addItem(t);
+        }
+        //recarrega a tabela sempre que o usuário trocar o filtro
+        jCBTipoFiltro.addActionListener(e -> carregarTabela());
+    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -140,6 +158,8 @@ public class ConsultaProdutosView extends javax.swing.JInternalFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jCBTipoFiltro = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
@@ -160,15 +180,29 @@ public class ConsultaProdutosView extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
+        jLabel1.setText("Selecione o tipo de produto:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 625, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jCBTipoFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 486, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jCBTipoFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 461, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -176,6 +210,8 @@ public class ConsultaProdutosView extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<TipoProduto> jCBTipoFiltro;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
