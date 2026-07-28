@@ -201,9 +201,7 @@ public class TelaPrincipalView extends javax.swing.JFrame {
 
     private void jMConsultaNotaEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMConsultaNotaEntradaActionPerformed
         // TODO add your handling code here:
-        ConsultaNotaEntradaView form = new ConsultaNotaEntradaView ();
-         jdFundo.add(form);
-         form.setVisible(true);
+        // FORM NÃO EXISTE MAIS.
     }//GEN-LAST:event_jMConsultaNotaEntradaActionPerformed
 
 
