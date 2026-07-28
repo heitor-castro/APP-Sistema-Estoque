@@ -31,17 +31,16 @@ public class ProdutoDAO {
     //Método para salvar no banco
     public void cadastrarProduto(Produto obj){
         //1. Comando SQL para inserir dados
-        String sql = "INSERT INTO produto (id,descricao,valor_unit,quantidade,tipo_id) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO produto (descricao,valor_unit,quantidade,tipo_id) VALUES (?, ?, ?, ?, ?)";
         
         try{
             //2. Prepara o comando SQL para ser executado
             PreparedStatement stmt = conexao.prepareStatement(sql);
             // 3. Troca os "?" do SQL pelos dados do objeto
-            stmt.setInt(1, obj.getId());
-            stmt.setString(2, obj.getDescricao());
-            stmt.setDouble(3, obj.getValorUnitario());
-            stmt.setInt(4, obj.getQuantidade());
-            stmt.setInt(5, obj.getTipoId());
+            stmt.setString(1, obj.getDescricao());
+            stmt.setDouble(2, obj.getValorUnitario());
+            stmt.setInt(3, obj.getQuantidade());
+            stmt.setInt(4, obj.getTipoId());
             // 4. Executa o comando no banco de dados
             stmt.execute();
             //5. Fecha o comando e comunica sucesso
@@ -56,17 +55,16 @@ public class ProdutoDAO {
     public void alterarProduto(Produto obj){
         
         //1. Comando SQL para sobrescrever dados
-        String sql = "UPDATE produto SET id = ?, descricao = ?, valor_unit = ?, quantidade = ?, tipo_id = ? WHERE id = ?";
+        String sql = "UPDATE produto SET descricao = ?, valor_unit = ?, quantidade = ?, tipo_id = ? WHERE id = ?";
         try{
             //2. Prepara o comando SQL para ser executado
             PreparedStatement stmt = conexao.prepareStatement(sql);
             // 3. Troca os "?" do SQL pelos dados do objeto
-            stmt.setInt(1, obj.getId());
-            stmt.setString(2, obj.getDescricao());
-            stmt.setDouble(3, obj.getValorUnitario());
-            stmt.setInt(4, obj.getQuantidade());
-            stmt.setInt(5, obj.getTipoId());
-            stmt.setInt(6, obj.getId());
+            stmt.setString(1, obj.getDescricao());
+            stmt.setDouble(2, obj.getValorUnitario());
+            stmt.setInt(3, obj.getQuantidade());
+            stmt.setInt(4, obj.getTipoId());
+            stmt.setInt(5, obj.getId());
             // 4. Executa o comando no banco de dados
             stmt.execute();
             //5. Fecha o comando e comunica sucesso

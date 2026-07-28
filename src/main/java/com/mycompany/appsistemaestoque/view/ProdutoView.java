@@ -45,8 +45,6 @@ public class ProdutoView extends javax.swing.JInternalFrame {
         jTFDescricao = new javax.swing.JTextField();
         jBCadastrar = new javax.swing.JButton();
         jLValorUnitario = new javax.swing.JLabel();
-        jLId = new javax.swing.JLabel();
-        jTFId = new javax.swing.JTextField();
         jTFValorUnitario = new javax.swing.JTextField();
         jLQuantidade = new javax.swing.JLabel();
         jLTipo = new javax.swing.JLabel();
@@ -66,11 +64,6 @@ public class ProdutoView extends javax.swing.JInternalFrame {
 
         jLValorUnitario.setText("Valor Unitário");
 
-        jLId.setText("ID");
-
-        jTFId.setEditable(false);
-        jTFId.setText("Não Editável");
-
         jLQuantidade.setText("Quantidade");
 
         jLTipo.setText("Tipo");
@@ -85,7 +78,14 @@ public class ProdutoView extends javax.swing.JInternalFrame {
                         .addContainerGap()
                         .addComponent(jBCadastrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(241, 241, 241)
+                        .addGap(12, 12, 12)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLQuantidade, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jTFDescricao, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jTFQuantidade, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLDescricao, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jCBTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -93,52 +93,39 @@ public class ProdutoView extends javax.swing.JInternalFrame {
                 .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jLQuantidade, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jTFDescricao, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
-                                    .addComponent(jTFQuantidade, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLId, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTFId, javax.swing.GroupLayout.Alignment.LEADING))
-                                .addComponent(jLDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jTFValorUnitario, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLValorUnitario, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGap(241, 241, 241)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jTFValorUnitario, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLValorUnitario, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(30, 30, 30)
-                .addComponent(jLTipo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCBTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 144, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLTipo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jCBTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLDescricao)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTFDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLQuantidade)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTFQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
                 .addComponent(jBCadastrar)
-                .addGap(17, 17, 17))
+                .addContainerGap(31, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addGap(30, 30, 30)
-                    .addComponent(jLId)
+                    .addGap(90, 90, 90)
+                    .addComponent(jLValorUnitario)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jTFId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(12, 12, 12)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLDescricao)
-                        .addComponent(jLValorUnitario))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTFDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTFValorUnitario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(jLQuantidade)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jTFQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(68, Short.MAX_VALUE)))
+                    .addComponent(jTFValorUnitario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(76, Short.MAX_VALUE)))
         );
 
         pack();
@@ -150,7 +137,7 @@ public class ProdutoView extends javax.swing.JInternalFrame {
         //CADASTRAR
         
         // ATRIBUTOS        
-        Integer id, tipoId, quantidade;
+        Integer tipoId, quantidade;
         String descricao;
         double valorUnitario;
         
@@ -158,7 +145,7 @@ public class ProdutoView extends javax.swing.JInternalFrame {
         descricao = jTFDescricao.getText();
 
         // valida campos vazios antes de converter (tipo agora vem do combo, não precisa checar texto)
-        if (descricao.isEmpty() || jTFId.getText().isEmpty() || jCBTipo.getSelectedItem() == null
+        if (descricao.isEmpty() || jCBTipo.getSelectedItem() == null
             || jTFQuantidade.getText().isEmpty() || jTFValorUnitario.getText().isEmpty()) {
             
             JOptionPane.showMessageDialog(this, "Todos os campos devem ser preenchidos!", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -167,7 +154,6 @@ public class ProdutoView extends javax.swing.JInternalFrame {
         try {
             //converte os valores de string para seus repectivos formatos
             valorUnitario = Double.parseDouble(jTFValorUnitario.getText());
-            id = Integer.parseInt(jTFId.getText());
             quantidade = Integer.parseInt(jTFQuantidade.getText());
 
             //pega o tipo selecionado no combo e extrai o ID real
@@ -178,7 +164,7 @@ public class ProdutoView extends javax.swing.JInternalFrame {
             return;
         }
         //criar nova instância para produto
-        Produto produtoCadastrado = new Produto(id, descricao, valorUnitario, tipoId, quantidade);
+        Produto produtoCadastrado = new Produto(null, descricao, valorUnitario, tipoId, quantidade);
         
         //Salvar no banco
         new ProdutoDAO().cadastrarProduto(produtoCadastrado);
@@ -187,7 +173,6 @@ public class ProdutoView extends javax.swing.JInternalFrame {
         JOptionPane.showMessageDialog(rootPane, "Registro Inserido!");
         //Limpar os campos
         jTFDescricao.setText("");
-        jTFId.setText("");
         jCBTipo.setSelectedIndex(0); //volta o combo pro primeiro tipo da lista
         jTFValorUnitario.setText("");
         jTFQuantidade.setText("");
@@ -198,12 +183,10 @@ public class ProdutoView extends javax.swing.JInternalFrame {
     private javax.swing.JButton jBCadastrar;
     private javax.swing.JComboBox<TipoProduto> jCBTipo;
     private javax.swing.JLabel jLDescricao;
-    private javax.swing.JLabel jLId;
     private javax.swing.JLabel jLQuantidade;
     private javax.swing.JLabel jLTipo;
     private javax.swing.JLabel jLValorUnitario;
     private javax.swing.JTextField jTFDescricao;
-    private javax.swing.JTextField jTFId;
     private javax.swing.JTextField jTFQuantidade;
     private javax.swing.JTextField jTFValorUnitario;
     // End of variables declaration//GEN-END:variables

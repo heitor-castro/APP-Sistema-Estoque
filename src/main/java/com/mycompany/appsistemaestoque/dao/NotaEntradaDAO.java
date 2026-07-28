@@ -25,10 +25,6 @@ public class NotaEntradaDAO {
     // Construtor: Assim que o DAO é chamado, ele abre a conexão
     public NotaEntradaDAO() {
         try {
-<<<<<<< HEAD
-=======
-            // Mantendo a sua string de conexão
->>>>>>> 35f8e29bc0b602ff01fe3ca1856a364175f5741a
             conexao = DriverManager.getConnection("jdbc:mysql://localhost:3306/sistema_estoque", "root", "mysql");
         } catch (SQLException erro) {
             JOptionPane.showMessageDialog(null, "Erro ao conectar ao banco: " + erro);
