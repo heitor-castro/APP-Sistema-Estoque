@@ -45,8 +45,6 @@ public class NotaEntradaView extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLID = new javax.swing.JLabel();
-        jTID = new javax.swing.JTextField();
         jLDataDeEntrada = new javax.swing.JLabel();
         jTDataDeEntrada = new javax.swing.JTextField();
         jLIDFornecedor = new javax.swing.JLabel();
@@ -60,10 +58,6 @@ public class NotaEntradaView extends javax.swing.JInternalFrame {
         setMaximizable(true);
         setResizable(true);
         setTitle("Cadastro de Nota de Entrada");
-
-        jLID.setText("ID:");
-
-        jTID.setEditable(false);
 
         jLDataDeEntrada.setText("Data de Entrada:");
 
@@ -82,35 +76,26 @@ public class NotaEntradaView extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLID)
-                    .addComponent(jLDataDeEntrada)
-                    .addComponent(jLIDFornecedor)
-                    .addComponent(jLValorTotal))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTDataDeEntrada)
-                            .addComponent(jTID)
-                            .addComponent(jTValorTotal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE)))
-                    .addComponent(cbFornecedor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(25, 25, 25))
-            .addGroup(layout.createSequentialGroup()
                 .addGap(60, 60, 60)
                 .addComponent(jBCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(75, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLDataDeEntrada)
+                    .addComponent(jLIDFornecedor)
+                    .addComponent(jLValorTotal))
+                .addGap(18, 58, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jTDataDeEntrada)
+                    .addComponent(jTValorTotal, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE)
+                    .addComponent(cbFornecedor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLID)
-                    .addComponent(jTID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLDataDeEntrada)
                     .addComponent(jTDataDeEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -122,7 +107,7 @@ public class NotaEntradaView extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLValorTotal)
                     .addComponent(jTValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
                 .addComponent(jBCadastrar)
                 .addGap(30, 30, 30))
         );
@@ -187,11 +172,9 @@ public class NotaEntradaView extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> cbFornecedor;
     private javax.swing.JButton jBCadastrar;
     private javax.swing.JLabel jLDataDeEntrada;
-    private javax.swing.JLabel jLID;
     private javax.swing.JLabel jLIDFornecedor;
     private javax.swing.JLabel jLValorTotal;
     private javax.swing.JTextField jTDataDeEntrada;
-    private javax.swing.JTextField jTID;
     private javax.swing.JTextField jTValorTotal;
     // End of variables declaration//GEN-END:variables
 }

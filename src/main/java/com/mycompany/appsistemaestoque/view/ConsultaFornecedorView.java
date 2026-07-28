@@ -115,7 +115,7 @@ public class ConsultaFornecedorView extends javax.swing.JInternalFrame {
         }
  
         java.awt.Frame janelaPrincipal = (java.awt.Frame) javax.swing.SwingUtilities.getWindowAncestor(this);
-        EditarFornecedor dialogo = new EditarFornecedor(janelaPrincipal, true, selecionado, this);
+        EditarFornecedorView dialogo = new EditarFornecedorView(janelaPrincipal, true, selecionado, this);
         dialogo.setVisible(true);
     }
     

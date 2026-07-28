@@ -13,14 +13,14 @@ import javax.swing.text.MaskFormatter;
  *
  * @author cadu0
  */
-public class EditarFornecedor extends javax.swing.JDialog {
+public class EditarFornecedorView extends javax.swing.JDialog {
     private Fornecedor fornecedor;
     private ConsultaFornecedorView telaConsulta; // referência pra atualizar a tabela depois de salvar
  
     /**
      * Creates new form EditarFornecedor
      */
-    public EditarFornecedor(java.awt.Frame parent, boolean modal, Fornecedor fornecedor, ConsultaFornecedor telaConsulta) {
+    public EditarFornecedorView(java.awt.Frame parent, boolean modal, Fornecedor fornecedor, ConsultaFornecedorView telaConsulta) {
         super(parent, modal);
         initComponents();
  
