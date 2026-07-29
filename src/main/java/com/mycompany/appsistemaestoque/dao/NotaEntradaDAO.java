@@ -10,6 +10,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -21,7 +22,7 @@ import javax.swing.JOptionPane;
 public class NotaEntradaDAO {
     // Variável que vai segurar a conexão com o banco
     private Connection conexao;
-    
+ 
     // Construtor: Assim que o DAO é chamado, ele abre a conexão
     public NotaEntradaDAO() {
         try {
@@ -30,39 +31,50 @@ public class NotaEntradaDAO {
             JOptionPane.showMessageDialog(null, "Erro ao conectar ao banco: " + erro);
         }
     }
-    
+ 
     // Método para salvar no banco
+    // ALTERADO: agora pede pro banco devolver o ID gerado (AUTO_INCREMENT) e
+    // guarda ele de volta no objeto (obj.setId(...)) — precisamos desse ID
+    // pra depois salvar os itens da nota vinculados a ela.
     public void cadastrarNotaEntrada(NotaEntrada obj) {
         // 1. Comando SQL SEM O ID (Auto_Increment resolve)
         String sql = "INSERT INTO nota_entrada (data_ent, valor_total_nota, fornecedor_id) VALUES (?, ?, ?)";
         try {
-            PreparedStatement stmt = conexao.prepareStatement(sql);
-            
+            PreparedStatement stmt = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+ 
             // 2. Troca os "?" pelos dados do objeto (note que os números mudaram de 1 a 3)
             stmt.setObject(1, obj.getDataEntrada());
             stmt.setDouble(2, obj.getValorTotal());
             stmt.setInt(3, obj.getIdFornecedor());
-            
+ 
             stmt.execute();
+ 
+            // 3. Pega o ID que o banco acabou de gerar e guarda no objeto
+            ResultSet chavesGeradas = stmt.getGeneratedKeys();
+            if (chavesGeradas.next()) {
+                obj.setId(chavesGeradas.getInt(1));
+            }
+            chavesGeradas.close();
+ 
             stmt.close();
             JOptionPane.showMessageDialog(null, "Nota de Entrada cadastrada com sucesso!");
         } catch (SQLException erro) {
             JOptionPane.showMessageDialog(null, "Erro ao cadastrar: " + erro);
         }
     }
-    
+ 
     // Método para alterar uma Nota de Entrada já cadastrada
     public void alterarNotaEntrada(NotaEntrada obj) {
         // 1. Removido o "id = ?" do SET
         String sql = "UPDATE nota_entrada SET data_ent = ?, valor_total_nota = ?, fornecedor_id = ? WHERE id = ?";
         try {
             PreparedStatement stmt = conexao.prepareStatement(sql);
-            
+ 
             stmt.setObject(1, obj.getDataEntrada());
             stmt.setDouble(2, obj.getValorTotal());
             stmt.setInt(3, obj.getIdFornecedor());
             stmt.setInt(4, obj.getId()); // O ID entra apenas na condição do WHERE
-            
+ 
             stmt.execute();
             stmt.close();
             JOptionPane.showMessageDialog(null, "Informações alteradas com sucesso!");
@@ -70,7 +82,7 @@ public class NotaEntradaDAO {
             JOptionPane.showMessageDialog(null, "Erro ao alterar informações: " + erro);
         }
     }
-    
+ 
     // Método para excluir e Listar permanecem iguais aos seus originais
     public void excluirNotaEntrada(NotaEntrada obj) {
         String sql = "DELETE FROM nota_entrada WHERE id = ?";
@@ -84,14 +96,14 @@ public class NotaEntradaDAO {
             JOptionPane.showMessageDialog(null, "Erro ao excluir: " + erro);
         }
     }
-    
+ 
     public List<NotaEntrada> listar() {
         List<NotaEntrada> lista = new ArrayList<>();
         String sql = "SELECT * FROM nota_entrada";
         try {
             PreparedStatement stmt = conexao.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
-            
+ 
             while (rs.next()) {
                 NotaEntrada obj = new NotaEntrada();
                 obj.setId(rs.getInt("id"));

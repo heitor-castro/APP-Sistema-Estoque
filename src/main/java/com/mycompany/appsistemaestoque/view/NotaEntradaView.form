@@ -80,10 +80,12 @@
                   <Component id="jLProduto" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                  <Component id="jCBFornecedores" max="32767" attributes="0"/>
-                  <Component id="jCBTipoProduto" alignment="1" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
                   <Component id="jCBProduto" alignment="1" min="-2" pref="35" max="-2" attributes="0"/>
+                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                      <Component id="jCBFornecedores" alignment="0" max="32767" attributes="0"/>
+                      <Component id="jCBTipoProduto" alignment="0" max="32767" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
