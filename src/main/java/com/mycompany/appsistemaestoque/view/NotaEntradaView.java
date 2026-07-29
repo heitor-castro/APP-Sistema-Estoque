@@ -1,5 +1,20 @@
 package com.mycompany.appsistemaestoque.view;
 
+ 
+import com.mycompany.appsistemaestoque.dao.FornecedorDAO;
+import com.mycompany.appsistemaestoque.dao.ItemNotaEntradaDAO;
+import com.mycompany.appsistemaestoque.dao.NotaEntradaDAO;
+import com.mycompany.appsistemaestoque.dao.ProdutoDAO;
+import com.mycompany.appsistemaestoque.dao.TipoProdutoDAO;
+import com.mycompany.appsistemaestoque.model.Fornecedor;
+import com.mycompany.appsistemaestoque.model.NotaEntrada;
+import com.mycompany.appsistemaestoque.model.Produto;
+import com.mycompany.appsistemaestoque.model.TipoProduto;
+import java.time.LocalDate;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
@@ -11,12 +26,54 @@ package com.mycompany.appsistemaestoque.view;
  */
 public class NotaEntradaView extends javax.swing.JInternalFrame {
 
+    
     /**
      * Creates new form GerenciaNotaEntradaView
      */
     public NotaEntradaView() {
         initComponents();
+    
+        // Remove o modelo que o NetBeans colocou (com Strings)
+        jCBFornecedores.setModel(new DefaultComboBoxModel<>());
+        jCBTipoProduto.setModel(new DefaultComboBoxModel<>());
+        jCBProduto.setModel(new DefaultComboBoxModel<>());
+
+        // Agora preenche com seus objetos
+        carregarComboFornecedores();
+        carregarComboTipos();
+        carregarComboProdutosPorTipo();
     }
+    
+    // 1. Preenche o combo de fornecedores com os dados do banco
+    private void carregarComboFornecedores() {
+        jCBFornecedores.removeAllItems(); // Limpa tudo
+        List<Fornecedor> fornecedores = new FornecedorDAO().listar();
+        for (Fornecedor f : fornecedores) {
+            jCBFornecedores.addItem(f); // Adiciona o objeto Fornecedor
+        }
+    }
+
+    private void carregarComboTipos() {
+        jCBTipoProduto.removeAllItems();
+        List<TipoProduto> tipos = new TipoProdutoDAO().listarTipos();
+        for (TipoProduto t : tipos) {
+            jCBTipoProduto.addItem(t); // Adiciona o objeto TipoProduto
+        }
+    }
+
+    private void carregarComboProdutosPorTipo() {
+        jCBProduto.removeAllItems();
+
+        TipoProduto tipoSelecionado = (TipoProduto) jCBTipoProduto.getSelectedItem();
+        if (tipoSelecionado == null) {
+            return;
+        }
+
+        List<Produto> produtos = new ProdutoDAO().listarPorTipo(tipoSelecionado.getId());
+        for (Produto p : produtos) {
+            jCBProduto.addItem(p); // Adiciona o objeto Produto
+        }
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -36,34 +93,35 @@ public class NotaEntradaView extends javax.swing.JInternalFrame {
         jLQuantidade = new javax.swing.JLabel();
         jSQuantidade = new javax.swing.JSpinner();
         jBAdicionar = new javax.swing.JButton();
-        jBCadastrar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTProdutos = new javax.swing.JTable();
+        jBCadastrar = new javax.swing.JButton();
 
-        setTitle("Gerenciar Nota de Entrada");
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
+        setTitle("Cadastrar Nota de Entrada");
 
         jLFornecedores.setText("Fornecedores:");
 
-        jCBFornecedores.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jCBFornecedores.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
         jCBFornecedores.addActionListener(this::jCBFornecedoresActionPerformed);
 
         jLTipoProduto.setText("Tipo de Produto:");
 
-        jCBTipoProduto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jCBTipoProduto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
         jCBTipoProduto.addActionListener(this::jCBTipoProdutoActionPerformed);
 
         jLProduto.setText("Produto:");
 
-        jCBProduto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jCBProduto.addActionListener(this::jCBProdutoActionPerformed);
 
         jLQuantidade.setText("Quantidade:");
 
+        jBAdicionar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jBAdicionar.setText("Adicionar");
         jBAdicionar.addActionListener(this::jBAdicionarActionPerformed);
-
-        jBCadastrar.setText("Cadastrar");
-        jBCadastrar.addActionListener(this::jBCadastrarActionPerformed);
 
         jTProdutos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -93,6 +151,9 @@ public class NotaEntradaView extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(jTProdutos);
 
+        jBCadastrar.setText("Cadastrar");
+        jBCadastrar.addActionListener(this::jBCadastrarActionPerformed);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -104,25 +165,30 @@ public class NotaEntradaView extends javax.swing.JInternalFrame {
                     .addComponent(jCBFornecedores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jSQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(97, 97, 97)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(97, 97, 97)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLTipoProduto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jCBTipoProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(74, 74, 74)
+                        .addComponent(jBAdicionar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(66, 66, 66)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jCBProduto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jLProduto)
                                 .addGap(15, 15, 15)))
                         .addGap(38, 38, 38))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jBAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
-                        .addComponent(jBCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jBCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())))
-            .addComponent(jScrollPane1)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -137,19 +203,19 @@ public class NotaEntradaView extends javax.swing.JInternalFrame {
                     .addComponent(jCBFornecedores)
                     .addComponent(jCBTipoProduto)
                     .addComponent(jCBProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(45, 45, 45)
+                .addGap(42, 42, 42)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLQuantidade)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jBAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addGap(9, 9, 9)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(9, 9, 9)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jBAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jBCadastrar))))
-                .addGap(20, 20, 20)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE))
+                .addGap(23, 23, 23)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE))
         );
 
         pack();
@@ -161,6 +227,7 @@ public class NotaEntradaView extends javax.swing.JInternalFrame {
 
     private void jCBTipoProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBTipoProdutoActionPerformed
         // TODO add your handling code here:
+        carregarComboProdutosPorTipo();
     }//GEN-LAST:event_jCBTipoProdutoActionPerformed
 
     private void jCBProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBProdutoActionPerformed
@@ -169,19 +236,93 @@ public class NotaEntradaView extends javax.swing.JInternalFrame {
 
     private void jBAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAdicionarActionPerformed
         // TODO add your handling code here:
+        Produto produtoSelecionado = (Produto) jCBProduto.getSelectedItem();
+        if (produtoSelecionado == null) {
+            JOptionPane.showMessageDialog(this, "Selecione um produto para adicionar!", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+ 
+        int quantidade = (Integer) jSQuantidade.getValue();
+        if (quantidade <= 0) {
+            JOptionPane.showMessageDialog(this, "A quantidade precisa ser maior que zero!", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+ 
+        // calcula o valor total desse item (valor unitário do produto x quantidade)
+        double valorTotalItem = produtoSelecionado.getValorUnitario() * quantidade;
+ 
+        // adiciona a linha na tabela (ID, Descrição, Quantidade, Total)
+        DefaultTableModel model = (DefaultTableModel) jTProdutos.getModel();
+        model.addRow(new Object[]{
+            produtoSelecionado.getId(),
+            produtoSelecionado.getDescricao(),
+            quantidade,
+            valorTotalItem
+        });
+ 
+        // volta o spinner pra 1, pronto pro próximo produto
+        jSQuantidade.setValue(1);               
     }//GEN-LAST:event_jBAdicionarActionPerformed
 
     private void jBCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCadastrarActionPerformed
         // TODO add your handling code here:
+        Fornecedor fornecedorSelecionado = (Fornecedor) jCBFornecedores.getSelectedItem();
+        if (fornecedorSelecionado == null) {
+            JOptionPane.showMessageDialog(this, "Selecione um fornecedor!", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+ 
+        DefaultTableModel model = (DefaultTableModel) jTProdutos.getModel();
+        if (model.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(this, "Adicione pelo menos um produto antes de cadastrar!", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+ 
+        // soma o valor total da nota (soma do "Total" de cada linha da tabela)
+        double valorTotalNota = 0.0;
+        for (int i = 0; i < model.getRowCount(); i++) {
+            valorTotalNota += (Double) model.getValueAt(i, 3);
+        }
+ 
+        // monta e salva a Nota de Entrada (data de hoje, gerada pelo sistema)
+        NotaEntrada nota = new NotaEntrada();
+        nota.setDataEntrada(LocalDate.now());
+        nota.setValorTotal(valorTotalNota);
+        nota.setIdFornecedor(fornecedorSelecionado.getID());
+ 
+        NotaEntradaDAO notaDao = new NotaEntradaDAO();
+        notaDao.cadastrarNotaEntrada(nota); // depois disso, nota.getId() já vem preenchido
+ 
+        // salva cada item da tabela vinculado ao ID da nota recém-criada
+        ItemNotaEntradaDAO itemDao = new ItemNotaEntradaDAO();
+        for (int i = 0; i < model.getRowCount(); i++) {
+            int idProduto = (Integer) model.getValueAt(i, 0);
+            int qtd = (Integer) model.getValueAt(i, 2);
+            double totalItem = (Double) model.getValueAt(i, 3);
+            itemDao.cadastrar(nota.getId(), idProduto, qtd, totalItem);
+        }
+ 
+        JOptionPane.showMessageDialog(this, "Nota de Entrada cadastrada com sucesso!");
+ 
+        // limpa tudo pra começar uma nova nota
+        model.setRowCount(0);
+        if (jCBFornecedores.getItemCount() > 0) {
+            jCBFornecedores.setSelectedIndex(0);
+        }
+        if (jCBTipoProduto.getItemCount() > 0) {
+            jCBTipoProduto.setSelectedIndex(0);
+        }
+        jSQuantidade.setValue(1);
+             
     }//GEN-LAST:event_jBCadastrarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBAdicionar;
     private javax.swing.JButton jBCadastrar;
-    private javax.swing.JComboBox<String> jCBFornecedores;
-    private javax.swing.JComboBox<String> jCBProduto;
-    private javax.swing.JComboBox<String> jCBTipoProduto;
+    private javax.swing.JComboBox<Fornecedor> jCBFornecedores;
+    private javax.swing.JComboBox<Produto> jCBProduto;
+    private javax.swing.JComboBox<TipoProduto> jCBTipoProduto;
     private javax.swing.JLabel jLFornecedores;
     private javax.swing.JLabel jLProduto;
     private javax.swing.JLabel jLQuantidade;
