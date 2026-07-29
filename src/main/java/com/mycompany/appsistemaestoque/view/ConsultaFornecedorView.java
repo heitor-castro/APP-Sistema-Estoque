@@ -49,7 +49,7 @@ public class ConsultaFornecedorView extends javax.swing.JInternalFrame {
         jTable1.setModel(model);
     }
  
-    // Pega os dados da linha selecionada na tabela e monta um Fornecedor
+    //pega os dados da linha selecionada na tabela e monta um Fornecedor
     private Fornecedor pegarFornecedorSelecionado() {
         int linha = jTable1.getSelectedRow();
  

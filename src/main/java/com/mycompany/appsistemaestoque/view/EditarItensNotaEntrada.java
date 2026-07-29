@@ -31,7 +31,7 @@ public class EditarItensNotaEntrada extends javax.swing.JInternalFrame {
     }
     
     private void preencherCampos() {
-        // Joga a quantidade do banco no campo de texto
+        //joga a quantidade do banco no campo de texto
         jTextField1.setText(String.valueOf(item.getQuantidade()));
     }
     /**
@@ -97,11 +97,11 @@ public class EditarItensNotaEntrada extends javax.swing.JInternalFrame {
         }
 
         try {
-            // 2. Pega o texto e converte para número inteiro
+            //pega o texto e converte para número inteiro
             int novaQuantidade = Integer.parseInt(jTextField1.getText().trim());
             item.setQuantidade(novaQuantidade);
             
-            // 3. Manda para o DAO atualizar no banco de dados
+            //manda para o DAO atualizar no banco de dados
             ItemNotaEntradaDAO dao = new ItemNotaEntradaDAO();
             dao.alterar(item); 
             

@@ -13,14 +13,7 @@ import com.mycompany.appsistemaestoque.model.Produto;
  */
 public class TelaPrincipalView extends javax.swing.JFrame {
     
-    /*
-    ███╗   ██╗  ██████╗  ████████╗  █████╗  ███████╗
-    ████╗  ██║ ██╔═══██╗ ╚══██╔══╝ ██╔══██╗ ██╔════╝
-    ██╔██╗ ██║ ██║   ██║    ██║    ███████║ ███████╗
-    ██║╚██╗██║ ██║   ██║    ██║    ██╔══██║ ╚════██║
-    ██║ ╚████║ ╚██████╔╝    ██║    ██║  ██║ ███████║
-    ╚═╝  ╚═══╝  ╚═════╝     ╚═╝    ╚═╝  ╚═╝ ╚══════╝
-   */
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaPrincipalView.class.getName());
     
     /**
@@ -198,7 +191,9 @@ public class TelaPrincipalView extends javax.swing.JFrame {
 
     private void jMConsultaNotaEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMConsultaNotaEntradaActionPerformed
         // TODO add your handling code here:
-        // FORM NÃO EXISTE MAIS.
+        ConsultaNotaEntradaView form = new ConsultaNotaEntradaView();
+        jdFundo.add(form);
+        form.setVisible(true);
     }//GEN-LAST:event_jMConsultaNotaEntradaActionPerformed
 
     private void jMConsultaItensNotaEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMConsultaItensNotaEntradaActionPerformed
