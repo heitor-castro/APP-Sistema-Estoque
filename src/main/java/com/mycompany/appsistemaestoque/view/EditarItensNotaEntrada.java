@@ -4,9 +4,11 @@
  */
 package com.mycompany.appsistemaestoque.view;
 
-import com.mycompany.appsistemaestoque.model.ItemNotaEntrada;
 import com.mycompany.appsistemaestoque.dao.ItemNotaEntradaDAO;
 import javax.swing.JOptionPane;
+import com.mycompany.appsistemaestoque.model.ItemNotaEntrada;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 /**
  *
@@ -43,7 +45,7 @@ public class EditarItensNotaEntrada extends javax.swing.JInternalFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        jAtualizaritem = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -53,7 +55,8 @@ public class EditarItensNotaEntrada extends javax.swing.JInternalFrame {
 
         jLabel1.setText("Quantidade:");
 
-        jButton1.setText("Atualizar Item");
+        jAtualizaritem.setText("Atualizar Item");
+        jAtualizaritem.addActionListener(this::jAtualizaritemActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -68,7 +71,7 @@ public class EditarItensNotaEntrada extends javax.swing.JInternalFrame {
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(190, 190, 190)
-                        .addComponent(jButton1)))
+                        .addComponent(jAtualizaritem)))
                 .addContainerGap(209, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -79,16 +82,44 @@ public class EditarItensNotaEntrada extends javax.swing.JInternalFrame {
                     .addComponent(jLabel1)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 99, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(jAtualizaritem)
                 .addGap(80, 80, 80))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jAtualizaritemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jAtualizaritemActionPerformed
+        // TODO add your handling code here:
+        if (jTextField1.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "A quantidade não pode ficar vazia!", "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        try {
+            // 2. Pega o texto e converte para número inteiro
+            int novaQuantidade = Integer.parseInt(jTextField1.getText().trim());
+            item.setQuantidade(novaQuantidade);
+            
+            // 3. Manda para o DAO atualizar no banco de dados
+            ItemNotaEntradaDAO dao = new ItemNotaEntradaDAO();
+            dao.alterar(item); 
+            
+            JOptionPane.showMessageDialog(this, "Quantidade atualizada com sucesso!");
+            
+            telaConsulta.atualizarTabela();
+            this.dispose(); 
+            
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Digite apenas números inteiros!", "Erro", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Erro ao atualizar: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }    
+    }//GEN-LAST:event_jAtualizaritemActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jAtualizaritem;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables

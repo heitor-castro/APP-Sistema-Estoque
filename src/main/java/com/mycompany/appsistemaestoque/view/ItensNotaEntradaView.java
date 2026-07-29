@@ -16,6 +16,35 @@ public class ItensNotaEntradaView extends javax.swing.JInternalFrame {
     public ItensNotaEntradaView() {
         initComponents();
     }
+    
+    public void atualizarTabela() {
+        try {
+            // 1. Pega o ID selecionado no ComboBox (limpando a palavra "Item " se houver)
+            String selecionado = cbBuscaNota.getSelectedItem().toString().replace("Item ", "").trim();
+            int notaId = Integer.parseInt(selecionado);
+            
+            // 2. Chama o DAO
+            com.mycompany.appsistemaestoque.dao.ItemNotaEntradaDAO dao = new com.mycompany.appsistemaestoque.dao.ItemNotaEntradaDAO();
+            java.util.List<com.mycompany.appsistemaestoque.model.ItemNotaEntrada> lista = dao.listarPorNota(notaId);
+            
+            // 3. Monta a tabela
+            javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) jTable1.getModel();
+            modelo.setNumRows(0); // Limpa as linhas antigas
+            
+            for (com.mycompany.appsistemaestoque.model.ItemNotaEntrada item : lista) {
+                modelo.addRow(new Object[]{
+                    item.getId(),
+                    item.getNotaEntradaId(), // Verifique se o nome do GET é esse no seu modelo
+                    item.getProdutoId(),     // Verifique se o nome do GET é esse no seu modelo
+                    item.getQuantidade()
+                });
+            }
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Erro ao buscar: Selecione um ID numérico válido na caixa de opções.");
+        }
+        
+        System.out.println("A tabela foi atualizada!"); 
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -54,8 +83,10 @@ public class ItensNotaEntradaView extends javax.swing.JInternalFrame {
         jLabel1.setText("ID Da Nota: ");
 
         jButton1.setText("Buscar");
+        jButton1.addActionListener(this::jButton1ActionPerformed);
 
         cbBuscaNota.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbBuscaNota.addActionListener(this::cbBuscaNotaActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -85,6 +116,15 @@ public class ItensNotaEntradaView extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void cbBuscaNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbBuscaNotaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbBuscaNotaActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        atualizarTabela();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
