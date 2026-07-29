@@ -66,4 +66,8 @@ public class NotaEntrada {
     public void setValorTotal(Double valorTotal) {
         this.valorTotal = valorTotal;
     }
+    @Override
+    public String toString() {
+        return String.valueOf(this.id);
+    }
 }

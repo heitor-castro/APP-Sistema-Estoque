@@ -71,4 +71,6 @@ public class ItemNotaEntrada {
         this.valorTotal = valorTotal;
     }
     
+    
+    
 }
