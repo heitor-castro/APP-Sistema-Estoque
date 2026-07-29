@@ -14,6 +14,7 @@ com\mycompany\appsistemaestoque\view\EditarItensNotaEntrada.class
 com\mycompany\appsistemaestoque\view\EditarProdutoView.class
 com\mycompany\appsistemaestoque\model\Fornecedor.class
 com\mycompany\appsistemaestoque\model\Produto.class
+com\mycompany\appsistemaestoque\view\NotaEntradaView$2.class
 com\mycompany\appsistemaestoque\view\EditarFornecedorView.class
 com\mycompany\appsistemaestoque\view\TelaPrincipalView$1.class
 com\mycompany\appsistemaestoque\view\ConsultaFornecedorView.class

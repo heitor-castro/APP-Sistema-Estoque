@@ -40,6 +40,12 @@ public class NotaEntradaView extends javax.swing.JInternalFrame {
         jCBFornecedores.setModel(new DefaultComboBoxModel<>());
         jCBTipoProduto.setModel(new DefaultComboBoxModel<>());
         jCBProduto.setModel(new DefaultComboBoxModel<>());
+        
+        jCBTipoProduto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                carregarComboProdutosPorTipo();
+            }
+        });
 
         // Agora preenche com seus objetos
         carregarComboFornecedores();
@@ -148,6 +154,8 @@ public class NotaEntradaView extends javax.swing.JInternalFrame {
 
         jBCadastrar.setText("Cadastrar");
         jBCadastrar.addActionListener(this::jBCadastrarActionPerformed);
+
+        jCBProduto.addActionListener(this::jCBProdutoActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -302,6 +310,11 @@ public class NotaEntradaView extends javax.swing.JInternalFrame {
         jSQuantidade.setValue(1);
              
     }//GEN-LAST:event_jBCadastrarActionPerformed
+
+    private void jCBProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBProdutoActionPerformed
+        // TODO add your handling code here:
+        carregarComboProdutosPorTipo();
+    }//GEN-LAST:event_jCBProdutoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
