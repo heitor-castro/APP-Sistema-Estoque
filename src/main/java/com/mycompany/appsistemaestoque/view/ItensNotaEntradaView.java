@@ -4,6 +4,16 @@
  */
 package com.mycompany.appsistemaestoque.view;
 
+import com.mycompany.appsistemaestoque.dao.ItemNotaEntradaDAO;
+import com.mycompany.appsistemaestoque.dao.NotaEntradaDAO;
+import com.mycompany.appsistemaestoque.model.ItemNotaEntrada;
+import com.mycompany.appsistemaestoque.model.NotaEntrada;
+import java.util.List;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Henrique
@@ -13,37 +23,146 @@ public class ItensNotaEntradaView extends javax.swing.JInternalFrame {
     /**
      * Creates new form EditarItensNotaEntrada
      */
+    // Menu que aparece ao clicar com o botão direito numa linha da tabela
+   
+    // Menu que aparece ao clicar com o botão direito numa linha da tabela
+    private final JPopupMenu menuContexto = new JPopupMenu();
+ 
+    /**
+     * Creates new form EditarItensNotaEntrada
+     */
     public ItensNotaEntradaView() {
         initComponents();
+        carregarComboNotas();
+        configurarMenuContexto();
     }
-    
-    public void atualizarTabela() {
-        try {
-            // 1. Pega o ID selecionado no ComboBox (limpando a palavra "Item " se houver)
-            String selecionado = cbBuscaNota.getSelectedItem().toString().replace("Item ", "").trim();
-            int notaId = Integer.parseInt(selecionado);
-            
-            // 2. Chama o DAO
-            com.mycompany.appsistemaestoque.dao.ItemNotaEntradaDAO dao = new com.mycompany.appsistemaestoque.dao.ItemNotaEntradaDAO();
-            java.util.List<com.mycompany.appsistemaestoque.model.ItemNotaEntrada> lista = dao.listarPorNota(notaId);
-            
-            // 3. Monta a tabela
-            javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) jTable1.getModel();
-            modelo.setNumRows(0); // Limpa as linhas antigas
-            
-            for (com.mycompany.appsistemaestoque.model.ItemNotaEntrada item : lista) {
-                modelo.addRow(new Object[]{
-                    item.getId(),
-                    item.getNotaEntradaId(), // Verifique se o nome do GET é esse no seu modelo
-                    item.getProdutoId(),     // Verifique se o nome do GET é esse no seu modelo
-                    item.getQuantidade()
-                });
-            }
-        } catch (Exception e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Erro ao buscar: Selecione um ID numérico válido na caixa de opções.");
+ 
+    // Preenche o combo com todas as notas de entrada já cadastradas
+    private void carregarComboNotas() {
+        cbBuscaNota.removeAllItems();
+        List<NotaEntrada> notas = new NotaEntradaDAO().listar();
+        for (NotaEntrada n : notas) {
+            cbBuscaNota.addItem(n);
         }
-        
-        System.out.println("A tabela foi atualizada!"); 
+    }
+ 
+    public void atualizarTabela() {
+        NotaEntrada notaSelecionada = (NotaEntrada) cbBuscaNota.getSelectedItem();
+        if (notaSelecionada == null) {
+            JOptionPane.showMessageDialog(this, "Selecione uma nota de entrada primeiro!", "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+ 
+        int notaId = notaSelecionada.getId();
+ 
+        // Chama o DAO
+        ItemNotaEntradaDAO dao = new ItemNotaEntradaDAO();
+        List<ItemNotaEntrada> lista = dao.listarPorNota(notaId);
+ 
+        // Monta a tabela
+        DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+        modelo.setRowCount(0); // Limpa as linhas antigas
+ 
+        for (ItemNotaEntrada item : lista) {
+            modelo.addRow(new Object[]{
+                item.getId(),
+                item.getNotaEntradaId(),
+                item.getProdutoId(),
+                item.getQuantidade()
+            });
+        }
+    }
+ 
+    // Pega os dados da linha selecionada na tabela e monta um ItemNotaEntrada
+    private ItemNotaEntrada pegarItemSelecionado() {
+        int linha = jTable1.getSelectedRow();
+ 
+        if (linha == -1) {
+            JOptionPane.showMessageDialog(this,
+                "Selecione um item na tabela primeiro!",
+                "Nenhum item selecionado",
+                JOptionPane.WARNING_MESSAGE);
+            return null;
+        }
+ 
+        ItemNotaEntrada item = new ItemNotaEntrada();
+        item.setId((Integer) jTable1.getValueAt(linha, 0));
+        item.setNotaEntradaId((Integer) jTable1.getValueAt(linha, 1));
+        item.setProdutoId((Integer) jTable1.getValueAt(linha, 2));
+        item.setQuantidade((Integer) jTable1.getValueAt(linha, 3));
+        return item;
+    }
+ 
+    // Monta o menu de contexto (botão direito) com as opções Alterar/Excluir
+    private void configurarMenuContexto() {
+        JMenuItem itemAlterar = new JMenuItem("Alterar");
+        itemAlterar.addActionListener(evt -> alterarItemSelecionado());
+ 
+        JMenuItem itemExcluir = new JMenuItem("Excluir");
+        itemExcluir.addActionListener(evt -> excluirItemSelecionado());
+ 
+        menuContexto.add(itemAlterar);
+        menuContexto.add(itemExcluir);
+ 
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                mostrarMenuSeForCliqueDireito(evt);
+            }
+ 
+            @Override
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                mostrarMenuSeForCliqueDireito(evt);
+            }
+        });
+    }
+ 
+    // Verifica se o clique foi o botão direito (varia entre Windows/Linux/Mac)
+    // e, se for, seleciona a linha clicada e mostra o menu ali
+    private void mostrarMenuSeForCliqueDireito(java.awt.event.MouseEvent evt) {
+        if (!evt.isPopupTrigger()) {
+            return;
+        }
+ 
+        int linha = jTable1.rowAtPoint(evt.getPoint());
+        if (linha < 0) {
+            return; // clicou fora de qualquer linha, não mostra o menu
+        }
+ 
+        jTable1.setRowSelectionInterval(linha, linha);
+        menuContexto.show(jTable1, evt.getX(), evt.getY());
+    }
+ 
+    // Abre a tela de edição já preenchida com os dados do item selecionado
+    private void alterarItemSelecionado() {
+        ItemNotaEntrada selecionado = pegarItemSelecionado();
+        if (selecionado == null) {
+            return;
+        }
+ 
+        EditarItensNotaEntrada telaEditar = new EditarItensNotaEntrada(selecionado, this);
+        getDesktopPane().add(telaEditar);
+        telaEditar.setVisible(true);
+    }
+ 
+    // Exclui o item selecionado, com confirmação antes
+    private void excluirItemSelecionado() {
+        ItemNotaEntrada selecionado = pegarItemSelecionado();
+        if (selecionado == null) {
+            return;
+        }
+ 
+        int confirmacao = JOptionPane.showConfirmDialog(this,
+            "Tem certeza que deseja excluir este item da nota?",
+            "Confirmar exclusão",
+            JOptionPane.YES_NO_OPTION);
+ 
+        if (confirmacao != JOptionPane.YES_OPTION) {
+            return;
+        }
+ 
+        new ItemNotaEntradaDAO().excluir(selecionado);
+        atualizarTabela();
     }
 
     /**
@@ -85,7 +204,6 @@ public class ItensNotaEntradaView extends javax.swing.JInternalFrame {
         jButton1.setText("Buscar");
         jButton1.addActionListener(this::jButton1ActionPerformed);
 
-        cbBuscaNota.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cbBuscaNota.addActionListener(this::cbBuscaNotaActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -128,7 +246,7 @@ public class ItensNotaEntradaView extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> cbBuscaNota;
+    private javax.swing.JComboBox<NotaEntrada> cbBuscaNota;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;

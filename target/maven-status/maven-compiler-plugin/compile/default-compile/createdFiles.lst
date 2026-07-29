@@ -33,4 +33,5 @@ com\mycompany\appsistemaestoque\dao\ItemNotaEntradaDAO.class
 com\mycompany\appsistemaestoque\view\FornecedorView$1.class
 com\mycompany\appsistemaestoque\view\ConsultaTipoProdutoView$2.class
 com\mycompany\appsistemaestoque\view\NotaEntradaView$1.class
+com\mycompany\appsistemaestoque\view\ItensNotaEntradaView$1.class
 com\mycompany\appsistemaestoque\dao\TipoProdutoDAO.class

@@ -291,8 +291,9 @@ public class NotaEntradaView extends javax.swing.JInternalFrame {
             int idProduto = (Integer) model.getValueAt(i, 0);
             int qtd = (Integer) model.getValueAt(i, 2);
             
-            // Usamos a mesma variável itemDao para chamar o método
-            itemDao.cadastrar(nota.getId(), idProduto, qtd);
+            double totalItem = (Double) model.getValueAt(i, 3);
+            
+            itemDao.cadastrar(nota.getId(), idProduto, qtd, totalItem);
         }
 
         JOptionPane.showMessageDialog(this, "Nota de Entrada cadastrada com sucesso!");
