@@ -1,39 +1,21 @@
+package com.mycompany.appsistemaestoque.view;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
  */
-package com.mycompany.appsistemaestoque.view;
-
-import com.mycompany.appsistemaestoque.model.NotaEntrada;
-import com.mycompany.appsistemaestoque.dao.NotaEntradaDAO;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import javax.swing.JOptionPane;
-
 
 /**
  *
- * @author Caio
+ * @author caioh
  */
 public class NotaEntradaView extends javax.swing.JInternalFrame {
-    java.util.List<com.mycompany.appsistemaestoque.model.Fornecedor> listaFornecedores;
+
     /**
-     * Creates new form NotaEntradaView
+     * Creates new form GerenciaNotaEntradaView
      */
     public NotaEntradaView() {
         initComponents();
-        preencherFornecedores();
-    }
-    
-    private void preencherFornecedores() {
-        com.mycompany.appsistemaestoque.dao.FornecedorDAO dao = new com.mycompany.appsistemaestoque.dao.FornecedorDAO();
-        listaFornecedores = dao.listar(); // Busca no banco
-        
-        cbFornecedor.removeAllItems(); // Limpa aquele "Item 1, Item 2..."
-        
-        for (com.mycompany.appsistemaestoque.model.Fornecedor f : listaFornecedores) {
-            cbFornecedor.addItem(f.getRazaoSocial()); // Mostra os nomes
-        }
     }
 
     /**
@@ -45,136 +27,167 @@ public class NotaEntradaView extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLDataDeEntrada = new javax.swing.JLabel();
-        jTDataDeEntrada = new javax.swing.JTextField();
-        jLIDFornecedor = new javax.swing.JLabel();
-        jLValorTotal = new javax.swing.JLabel();
-        jTValorTotal = new javax.swing.JTextField();
+        jLFornecedores = new javax.swing.JLabel();
+        jCBFornecedores = new javax.swing.JComboBox<>();
+        jLTipoProduto = new javax.swing.JLabel();
+        jCBTipoProduto = new javax.swing.JComboBox<>();
+        jLProduto = new javax.swing.JLabel();
+        jCBProduto = new javax.swing.JComboBox<>();
+        jLQuantidade = new javax.swing.JLabel();
+        jSQuantidade = new javax.swing.JSpinner();
+        jBAdicionar = new javax.swing.JButton();
         jBCadastrar = new javax.swing.JButton();
-        cbFornecedor = new javax.swing.JComboBox<>();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTProdutos = new javax.swing.JTable();
 
-        setClosable(true);
-        setIconifiable(true);
-        setMaximizable(true);
-        setResizable(true);
-        setTitle("Cadastro de Nota de Entrada");
+        setTitle("Gerenciar Nota de Entrada");
 
-        jLDataDeEntrada.setText("Data de Entrada:");
+        jLFornecedores.setText("Fornecedores:");
 
-        jLIDFornecedor.setText("ID do Fornecedor:");
+        jCBFornecedores.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jCBFornecedores.addActionListener(this::jCBFornecedoresActionPerformed);
 
-        jLValorTotal.setText("Valor Total:");
+        jLTipoProduto.setText("Tipo de Produto:");
+
+        jCBTipoProduto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jCBTipoProduto.addActionListener(this::jCBTipoProdutoActionPerformed);
+
+        jLProduto.setText("Produto:");
+
+        jCBProduto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jCBProduto.addActionListener(this::jCBProdutoActionPerformed);
+
+        jLQuantidade.setText("Quantidade:");
+
+        jBAdicionar.setText("Adicionar");
+        jBAdicionar.addActionListener(this::jBAdicionarActionPerformed);
 
         jBCadastrar.setText("Cadastrar");
         jBCadastrar.addActionListener(this::jBCadastrarActionPerformed);
 
-        cbFornecedor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cbFornecedor.addActionListener(this::cbFornecedorActionPerformed);
+        jTProdutos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "ID Produto", "Descrição", "Quantidade", "Total"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jTProdutos);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(60, 60, 60)
-                .addComponent(jBCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(75, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLDataDeEntrada)
-                    .addComponent(jLIDFornecedor)
-                    .addComponent(jLValorTotal))
-                .addGap(18, 58, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTDataDeEntrada)
-                    .addComponent(jTValorTotal, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE)
-                    .addComponent(cbFornecedor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addComponent(jLFornecedores, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jCBFornecedores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jSQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(97, 97, 97)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLTipoProduto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jCBTipoProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jCBProduto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLProduto)
+                                .addGap(15, 15, 15)))
+                        .addGap(38, 38, 38))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jBAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                        .addComponent(jBCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
+            .addComponent(jScrollPane1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(25, 25, 25)
+                .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLDataDeEntrada)
-                    .addComponent(jTDataDeEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLIDFornecedor)
-                    .addComponent(cbFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLValorTotal)
-                    .addComponent(jTValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
-                .addComponent(jBCadastrar)
-                .addGap(30, 30, 30))
+                    .addComponent(jLFornecedores)
+                    .addComponent(jLTipoProduto)
+                    .addComponent(jLProduto))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jCBFornecedores)
+                    .addComponent(jCBTipoProduto)
+                    .addComponent(jCBProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(45, 45, 45)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLQuantidade)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jBAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addGap(9, 9, 9)
+                            .addComponent(jBCadastrar))))
+                .addGap(20, 20, 20)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jBCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCadastrarActionPerformed
-        // TODO add your handling code here:                             
-        // Verifica se a Data ou o Valor estão vazios (Tiramos o ID da verificação!)
-        if (jTDataDeEntrada.getText().isEmpty() || jTValorTotal.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Preencha a Data e o Valor Total!", "Erro", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        
-        // Verifica se selecionou um fornecedor na caixinha
-        if (cbFornecedor.getSelectedIndex() == -1) {
-            JOptionPane.showMessageDialog(this, "Selecione um fornecedor!");
-            return;
-        }
-
-        try {
-            NotaEntrada nota = new NotaEntrada();
-            
-            // Tratamento da Data: convertendo String para LocalDate
-            nota.setDataEntrada(LocalDate.parse(jTDataDeEntrada.getText()));
-            
-            // Captura o Valor Total
-            nota.setValorTotal(Double.parseDouble(jTValorTotal.getText()));
-            
-            // CAPTURA DO COMBOBOX: Pega a posição na tela e acha o ID correspondente na lista
-            int indexSelecionado = cbFornecedor.getSelectedIndex();
-            int idFornecedor = listaFornecedores.get(indexSelecionado).getID(); 
-            nota.setIdFornecedor(idFornecedor);
-            
-            // Salvar no banco (Sem passar o ID da nota, o banco gera 1, 2, 3...)
-            new NotaEntradaDAO().cadastrarNotaEntrada(nota);
-            
-            JOptionPane.showMessageDialog(rootPane, "Nota de Entrada cadastrada com sucesso!");
-            
-            // Limpar campos
-            jTDataDeEntrada.setText("");
-            jTValorTotal.setText("");
-            cbFornecedor.setSelectedIndex(-1);
-            
-        } catch (java.time.format.DateTimeParseException e) {
-            JOptionPane.showMessageDialog(this, "Formato de data inválido! Use AAAA-MM-DD.");
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "O Valor Total deve ser numérico!");
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Erro: " + e.getMessage());
-        }
-    
-    }//GEN-LAST:event_jBCadastrarActionPerformed
-
-    private void cbFornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFornecedorActionPerformed
+    private void jCBFornecedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBFornecedoresActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cbFornecedorActionPerformed
+    }//GEN-LAST:event_jCBFornecedoresActionPerformed
+
+    private void jCBTipoProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBTipoProdutoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCBTipoProdutoActionPerformed
+
+    private void jCBProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBProdutoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCBProdutoActionPerformed
+
+    private void jBAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAdicionarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jBAdicionarActionPerformed
+
+    private void jBCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCadastrarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jBCadastrarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> cbFornecedor;
+    private javax.swing.JButton jBAdicionar;
     private javax.swing.JButton jBCadastrar;
-    private javax.swing.JLabel jLDataDeEntrada;
-    private javax.swing.JLabel jLIDFornecedor;
-    private javax.swing.JLabel jLValorTotal;
-    private javax.swing.JTextField jTDataDeEntrada;
-    private javax.swing.JTextField jTValorTotal;
+    private javax.swing.JComboBox<String> jCBFornecedores;
+    private javax.swing.JComboBox<String> jCBProduto;
+    private javax.swing.JComboBox<String> jCBTipoProduto;
+    private javax.swing.JLabel jLFornecedores;
+    private javax.swing.JLabel jLProduto;
+    private javax.swing.JLabel jLQuantidade;
+    private javax.swing.JLabel jLTipoProduto;
+    private javax.swing.JSpinner jSQuantidade;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTProdutos;
     // End of variables declaration//GEN-END:variables
 }
