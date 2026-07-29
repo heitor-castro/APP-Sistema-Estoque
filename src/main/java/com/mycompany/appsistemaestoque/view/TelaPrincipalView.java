@@ -13,14 +13,7 @@ import com.mycompany.appsistemaestoque.model.Produto;
  */
 public class TelaPrincipalView extends javax.swing.JFrame {
     
-    /*
-    ███╗   ██╗  ██████╗  ████████╗  █████╗  ███████╗
-    ████╗  ██║ ██╔═══██╗ ╚══██╔══╝ ██╔══██╗ ██╔════╝
-    ██╔██╗ ██║ ██║   ██║    ██║    ███████║ ███████╗
-    ██║╚██╗██║ ██║   ██║    ██║    ██╔══██║ ╚════██║
-    ██║ ╚████║ ╚██████╔╝    ██║    ██║  ██║ ███████║
-    ╚═╝  ╚═══╝  ╚═════╝     ╚═╝    ╚═╝  ╚═╝ ╚══════╝
-   */
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaPrincipalView.class.getName());
     
     /**
