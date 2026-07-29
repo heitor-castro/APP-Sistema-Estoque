@@ -32,6 +32,12 @@ public class ItensNotaEntradaView extends javax.swing.JInternalFrame {
         jButton1 = new javax.swing.JButton();
         cbBuscaNota = new javax.swing.JComboBox<>();
 
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
+        setTitle("Itens Nota de Entrada");
+
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
