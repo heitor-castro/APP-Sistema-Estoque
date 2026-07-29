@@ -59,11 +59,10 @@ public class Fornecedor {
     public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
-
-    
-    
-    
-    
-    
-
+   @Override
+    public String toString() {
+        // Isso vai mostrar na tela algo como: "1 - Coca Cola"
+        return this.ID + " - " + this.razaoSocial; 
+    }
+ 
 }

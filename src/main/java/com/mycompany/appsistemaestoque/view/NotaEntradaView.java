@@ -32,6 +32,9 @@ public class NotaEntradaView extends javax.swing.JInternalFrame {
      */
     public NotaEntradaView() {
         initComponents();
+        
+        
+        ((DefaultTableModel) jTProdutos.getModel()).setRowCount(0);
     
         // Remove o modelo que o NetBeans colocou (com Strings)
         jCBFornecedores.setModel(new DefaultComboBoxModel<>());
@@ -150,7 +153,6 @@ public class NotaEntradaView extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -162,15 +164,13 @@ public class NotaEntradaView extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(74, 74, 74)
-                                .addComponent(jBAdicionar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jBAdicionar, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(97, 97, 97)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jCBTipoProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLTipoProduto)))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jCBFornecedores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jCBFornecedores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(78, 78, 78)
@@ -185,6 +185,7 @@ public class NotaEntradaView extends javax.swing.JInternalFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jCBProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(35, 35, 35))))))
+            .addComponent(jScrollPane1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -211,7 +212,7 @@ public class NotaEntradaView extends javax.swing.JInternalFrame {
                             .addComponent(jBAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jBCadastrar))))
                 .addGap(23, 23, 23)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 285, Short.MAX_VALUE))
         );
 
         pack();
@@ -276,14 +277,17 @@ public class NotaEntradaView extends javax.swing.JInternalFrame {
         NotaEntradaDAO notaDao = new NotaEntradaDAO();
         notaDao.cadastrarNotaEntrada(nota); // depois disso, nota.getId() já vem preenchido
  
-        // salva cada item da tabela vinculado ao ID da nota recém-criada
-        ItemNotaEntradaDAO itemDao = new ItemNotaEntradaDAO();
+        ItemNotaEntradaDAO itemDao = new ItemNotaEntradaDAO(); // Variável criada como itemDao
+        
         for (int i = 0; i < model.getRowCount(); i++) {
             int idProduto = (Integer) model.getValueAt(i, 0);
             int qtd = (Integer) model.getValueAt(i, 2);
-            double totalItem = (Double) model.getValueAt(i, 3);
-            itemDao.cadastrar(nota.getId(), idProduto, qtd, totalItem);
+            
+            // Usamos a mesma variável itemDao para chamar o método
+            itemDao.cadastrar(nota.getId(), idProduto, qtd);
         }
+
+        JOptionPane.showMessageDialog(this, "Nota de Entrada cadastrada com sucesso!");
  
         JOptionPane.showMessageDialog(this, "Nota de Entrada cadastrada com sucesso!");
  

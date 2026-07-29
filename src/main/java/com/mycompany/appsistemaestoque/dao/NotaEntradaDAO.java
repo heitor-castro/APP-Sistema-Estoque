@@ -32,10 +32,6 @@ public class NotaEntradaDAO {
         }
     }
  
-    // Método para salvar no banco
-    // ALTERADO: agora pede pro banco devolver o ID gerado (AUTO_INCREMENT) e
-    // guarda ele de volta no objeto (obj.setId(...)) — precisamos desse ID
-    // pra depois salvar os itens da nota vinculados a ela.
     public void cadastrarNotaEntrada(NotaEntrada obj) {
         // 1. Comando SQL SEM O ID (Auto_Increment resolve)
         String sql = "INSERT INTO nota_entrada (data_ent, valor_total_nota, fornecedor_id) VALUES (?, ?, ?)";

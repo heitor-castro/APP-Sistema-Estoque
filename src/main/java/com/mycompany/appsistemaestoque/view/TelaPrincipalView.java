@@ -61,11 +61,11 @@ public class TelaPrincipalView extends javax.swing.JFrame {
         jdFundo.setLayout(jdFundoLayout);
         jdFundoLayout.setHorizontalGroup(
             jdFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 659, Short.MAX_VALUE)
+            .addGap(0, 1002, Short.MAX_VALUE)
         );
         jdFundoLayout.setVerticalGroup(
             jdFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 370, Short.MAX_VALUE)
+            .addGap(0, 540, Short.MAX_VALUE)
         );
 
         jMArquivo.setText("Arquivo");
@@ -119,6 +119,7 @@ public class TelaPrincipalView extends javax.swing.JFrame {
         jMConsulta.add(jMConsultaNotaEntrada);
 
         jMConsultaItensNotaEntrada.setText("Itens Nota de Entrada");
+        jMConsultaItensNotaEntrada.addActionListener(this::jMConsultaItensNotaEntradaActionPerformed);
         jMConsulta.add(jMConsultaItensNotaEntrada);
 
         jMenuBar1.add(jMConsulta);
@@ -129,15 +130,11 @@ public class TelaPrincipalView extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jdFundo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jdFundo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jdFundo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jdFundo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -203,6 +200,17 @@ public class TelaPrincipalView extends javax.swing.JFrame {
         // TODO add your handling code here:
         // FORM NÃO EXISTE MAIS.
     }//GEN-LAST:event_jMConsultaNotaEntradaActionPerformed
+
+    private void jMConsultaItensNotaEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMConsultaItensNotaEntradaActionPerformed
+        // TODO add your handling code here:
+        ItensNotaEntradaView telaItens = new ItensNotaEntradaView();
+        
+        // Adiciona a janela dentro do painel principal (jdFundo)
+        jdFundo.add(telaItens);
+        
+        // Torna a tela visível
+        telaItens.setVisible(true);
+    }//GEN-LAST:event_jMConsultaItensNotaEntradaActionPerformed
 
 
     /**

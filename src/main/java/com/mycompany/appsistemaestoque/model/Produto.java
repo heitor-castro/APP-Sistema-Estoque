@@ -62,4 +62,8 @@ public class Produto {
         this.quantidade = quantidade;
     }
     
+    @Override
+    public String toString() {
+        return this.id + " - " + this.descricao;
+    }
 }
