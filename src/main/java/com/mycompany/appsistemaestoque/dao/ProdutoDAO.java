@@ -91,7 +91,16 @@ public class ProdutoDAO {
             stmt.close();
             JOptionPane.showMessageDialog(null, "Produto excluído com sucesso!");
         } catch (SQLException erro) {
-            JOptionPane.showMessageDialog(null, "Erro ao excluir: " + erro);
+            // Verifica se o erro é o 1451 (produto travado na nota de entrada)
+            if (erro.getErrorCode() == 1451) {
+                JOptionPane.showMessageDialog(null, 
+                    "Não é possível excluir: Este produto já está sendo usado em uma Nota de Entrada.", 
+                    "Aviso de Segurança", 
+                    JOptionPane.WARNING_MESSAGE);
+            } else {
+                // Se for outro erro, exibe a mensagem padrão
+                JOptionPane.showMessageDialog(null, "Erro ao excluir: " + erro);
+            }
         }
     }
     //método para listar todos os Produtos (ex: preencher uma tabela na tela)
