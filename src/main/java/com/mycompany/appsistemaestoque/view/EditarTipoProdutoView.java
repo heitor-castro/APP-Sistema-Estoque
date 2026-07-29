@@ -58,6 +58,8 @@ public class EditarTipoProdutoView extends javax.swing.JDialog {
 
         jLDescricao.setText("Descrição:");
 
+        jTDescricao.addActionListener(this::jTDescricaoActionPerformed);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -111,6 +113,10 @@ public class EditarTipoProdutoView extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Erro: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTDescricaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTDescricaoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTDescricaoActionPerformed
 
     /**
      * @param args the command line arguments
